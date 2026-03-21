@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>GhettoPay — Logo Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:#F5F0E8;color:#1A1A1A;min-height:100vh}
+
+.page{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
+
+/* Header */
+.hero{text-align:center;padding:48px 0 40px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:#0A4A2E;color:#D4A017;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px}
+.hero h1{font-size:2.4rem;font-weight:900;color:#1A1A1A;letter-spacing:-.03em;margin-bottom:8px}
+.hero h1 span{color:#0A4A2E}
+.hero p{color:#6B7C6B;font-size:.95rem;max-width:480px;margin:0 auto;line-height:1.8}
+
+/* Section */
+.section{margin-bottom:40px}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A9280;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
+
+/* Cards grille */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+
+.logo-card{background:#fff;border-radius:20px;border:1px solid rgba(0,0,0,.07);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+.logo-card-preview{
+  display:flex;align-items:center;justify-content:center;
+  padding:36px 24px;min-height:220px;
+  position:relative;
+}
+.logo-card-preview.bg-white{background:#FFFFFF}
+.logo-card-preview.bg-cream{background:#FAF7F0}
+.logo-card-preview.bg-dark{background:#0A4A2E}
+.logo-card-preview.bg-black{background:#0D0D0D}
+.logo-card-preview.bg-checker{
+  background-image:
+    linear-gradient(45deg,#E8E0D0 25%,transparent 25%),
+    linear-gradient(-45deg,#E8E0D0 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#E8E0D0 75%),
+    linear-gradient(-45deg,transparent 75%,#E8E0D0 75%);
+  background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;
+  background-color:#F5F0E8;
+}
+
+.logo-card-footer{
+  padding:14px 18px;
+  border-top:1px solid rgba(0,0,0,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  background:#FAFAFA;
+}
+.card-name{font-size:.8rem;font-weight:700;color:#1A1A1A}
+.card-sub{font-size:.64rem;color:#8A9280;margin-top:2px}
+
+.dl-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;
+  cursor:pointer;border:none;transition:all .2s;text-decoration:none;
+}
+.dl-btn.green{background:#0A4A2E;color:#fff}
+.dl-btn.green:hover{background:#0F5C38;transform:translateY(-1px)}
+.dl-btn.gold{background:#D4A017;color:#fff}
+.dl-btn.gold:hover{background:#B8860B;transform:translateY(-1px)}
+.dl-btn.outline{background:transparent;border:1.5px solid rgba(0,0,0,.12);color:#1A1A1A}
+.dl-btn.outline:hover{border-color:#0A4A2E;color:#0A4A2E}
+.dl-btn svg{width:14px;height:14px;fill:currentColor}
+
+/* Colors palette */
+.colors{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.color-swatch{border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.07);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.swatch-body{height:80px}
+.swatch-info{padding:12px 14px;background:#fff}
+.swatch-name{font-size:.8rem;font-weight:700;color:#1A1A1A}
+.swatch-hex{font-family:'Courier New',monospace;font-size:.72rem;color:#8A9280;margin-top:3px}
+
+/* Usage */
+.usage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.usage-card{background:#fff;border-radius:16px;padding:20px;border:1px solid rgba(0,0,0,.07)}
+.usage-card h4{font-size:.84rem;font-weight:800;color:#1A1A1A;margin-bottom:8px}
+.usage-card ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.usage-card li{font-size:.76rem;color:#6B7C6B;display:flex;align-items:center;gap:8px}
+.usage-card li::before{content:'';width:6px;height:6px;border-radius:50%;background:#0A4A2E;flex-shrink:0}
+.do{border-top:3px solid #16A34A}
+.dont{border-top:3px solid #DC2626}
+.dont li::before{background:#DC2626}
+
+/* Sizes */
+.sizes{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;background:#fff;padding:24px;border-radius:16px;border:1px solid rgba(0,0,0,.07)}
+.size-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.size-lbl{font-size:.62rem;font-weight:700;color:#8A9280;text-transform:uppercase;letter-spacing:.1em}
+
+/* Copy code block */
+.code-block{background:#0D0D0D;border-radius:14px;padding:18px 20px;margin-top:12px;position:relative}
+.code-block pre{font-family:'Courier New',monospace;font-size:.78rem;color:#D4A017;overflow-x:auto;line-height:1.7}
+.copy-btn{
+  position:absolute;top:12px;right:12px;
+  background:#1A1A1A;color:#8A9280;border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:6px 12px;font-family:'Outfit',sans-serif;
+  font-size:.7rem;font-weight:600;cursor:pointer;transition:.2s;
+}
+.copy-btn:hover{color:#D4A017;border-color:rgba(212,160,23,.3)}
+
+.actions-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+
+@media(max-width:640px){
+  .hero h1{font-size:1.8rem}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Logo Kit Officiel
+    </div>
+    <h1><span>Ghetto</span>Pay — Identité Visuelle</h1>
+    <p>Logo, icône et charte graphique officielle. Télécharge les fichiers SVG pour utiliser sur ton site, l'app et tes supports.</p>
+  </div>
+
+  <!-- Logos -->
+  <div class="section">
+    <div class="section-label">Logos principaux</div>
+    <div class="grid">
+
+      <!-- Logo fond blanc -->
+      <div class="logo-card">
+        <div class="logo-card-preview bg-white">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" width="180">
+            <defs>
+              <linearGradient id="f1" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#C8390A"/><stop offset="40%" stop-color="#E8720C"/><stop offset="75%" stop-color="#F5B230"/><stop offset="100%" stop-color="#FDE87A" stop-opacity="0.7"/></linearGradient>
+              <linearGradient id="f2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#B02800"/><stop offset="55%" stop-color="#D96010"/><stop offset="100%" stop-color="#F5C040" stop-opacity="0.5"/></linearGradient>
+              <linearGradient id="sk" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5C3A10"/><stop offset="40%" stop-color="#7A4E1A"/><stop offset="100%" stop-color="#4A2D0A"/></linearGradient>
+              <linearGradient id="hd" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3D2208"/><stop offset="50%" stop-color="#5C3010"/><stop offset="100%" stop-color="#3A1E06"/></linearGradient>
+              <linearGradient id="co" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0C040"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#A87010"/></linearGradient>
+              <linearGradient id="cs" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FDE68A" stop-opacity="0.7"/><stop offset="100%" stop-color="#FDE68A" stop-opacity="0"/></linearGradient>
+              <radialGradient id="ag" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="#F5A020" stop-opacity="0.15"/><stop offset="100%" stop-color="#F5A020" stop-opacity="0"/></radialGradient>
+              <pattern id="wg" x="0" y="0" width="4" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="2" x2="4" y2="2" stroke="#3A1E06" stroke-width="0.4" stroke-opacity="0.35"/></pattern>
+            </defs>
+            <ellipse cx="240" cy="200" rx="150" ry="130" fill="url(#ag)"/>
+            <rect x="226" y="252" width="28" height="160" rx="6" fill="url(#sk)"/><rect x="226" y="252" width="28" height="160" rx="6" fill="url(#wg)" opacity="0.6"/><rect x="230" y="252" width="4" height="160" rx="2" fill="#9C6830" opacity="0.25"/>
+            <line x1="226" y1="322" x2="254" y2="327" stroke="#1A0D04" stroke-width="2.5" opacity="0.45"/><line x1="226" y1="331" x2="254" y2="336" stroke="#1A0D04" stroke-width="2" opacity="0.35"/>
+            <rect x="223" y="394" width="34" height="16" rx="5" fill="#2E1205"/>
+            <rect x="213" y="207" width="54" height="55" rx="8" fill="url(#hd)"/><rect x="212" y="214" width="56" height="7" rx="2" fill="#1A0A03" opacity="0.5"/><rect x="213" y="225" width="54" height="6" rx="2" fill="#220F05" opacity="0.45"/><rect x="212" y="235" width="56" height="6" rx="2" fill="#1A0A03" opacity="0.4"/><rect x="211" y="208" width="6" height="53" rx="3" fill="#0D0603" opacity="0.6"/><rect x="263" y="208" width="6" height="53" rx="3" fill="#0D0603" opacity="0.6"/><rect x="218" y="250" width="44" height="10" rx="3" fill="#0D0603"/>
+            <ellipse cx="240" cy="170" rx="55" ry="62" fill="#E07010" opacity="0.07"/>
+            <path d="M240,202 C218,190 206,170 210,147 C213,130 222,117 230,102 C235,90 238,74 240,57 C242,74 245,90 250,102 C258,117 267,130 270,147 C274,170 262,190 240,202Z" fill="url(#f1)"/>
+            <path d="M235,200 C220,190 212,172 215,152 C218,137 226,124 230,110 C233,98 236,82 237,67 C240,82 241,100 238,117 C235,134 230,150 234,167 C236,180 238,192 235,200Z" fill="url(#f2)" opacity="0.75"/>
+            <path d="M245,200 C260,190 268,172 265,152 C262,137 254,124 250,110 C247,98 244,82 243,67 C241,82 242,100 245,117 C248,134 253,150 249,167 C247,180 245,192 245,200Z" fill="url(#f2)" opacity="0.7"/>
+            <path d="M240,200 C232,187 228,172 230,157 C232,144 238,132 240,117 C242,132 248,144 250,157 C252,172 248,187 240,200Z" fill="#FDE68A" opacity="0.9"/>
+            <path d="M240,198 C234,184 231,170 233,156 C235,145 239,134 240,122 C241,134 245,145 247,156 C249,170 246,184 240,198Z" fill="#FEFCE8" opacity="0.55"/>
+            <circle cx="220" cy="132" r="2" fill="#FDE68A" opacity="0.7"/><circle cx="262" cy="124" r="1.8" fill="#FDE68A" opacity="0.6"/><circle cx="240" cy="54" r="1.5" fill="#FFF0AA" opacity="0.5"/>
+            <circle cx="183" cy="294" r="26" fill="url(#co)"/><circle cx="183" cy="294" r="26" fill="none" stroke="#A07010" stroke-width="2.5"/><ellipse cx="177" cy="285" rx="10" ry="6" fill="url(#cs)" opacity="0.55"/>
+            <text x="183" y="289" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#5C3008">F</text>
+            <text x="183" y="302" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="9" font-weight="600" fill="#7A4A10">CFA</text>
+            <path d="M171,294 L194,294" stroke="#7A4A10" stroke-width="1.5" fill="none" opacity="0.6"/><path d="M189,290 L195,294 L189,298" fill="none" stroke="#7A4A10" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>
+            <g opacity="0.18" transform="translate(130, 295) scale(0.85)"><path d="M60,0 C80,0 105,8 115,22 C128,38 130,55 122,68 C112,82 95,88 80,95 C65,102 50,108 40,120 C28,133 25,150 32,163 C40,177 58,185 75,190 C92,195 108,190 118,178 C130,165 132,148 125,135 C117,120 102,112 90,100 C76,87 70,70 72,55 C74,40 84,28 80,15 C78,8 70,2 60,0Z" fill="#0A4A2E"/></g>
+            <text x="242" y="460" text-anchor="middle" font-family="Georgia,serif" font-size="58" font-weight="900" font-style="italic" fill="#0A1A0A" opacity="0.15" letter-spacing="-1">GhettoPay</text>
+            <text x="240" y="458" text-anchor="middle" font-family="Georgia,serif" font-size="58" font-weight="900" font-style="italic" letter-spacing="-1"><tspan fill="#1A1A1A">Ghetto</tspan><tspan fill="#D4A017">Pay</tspan></text>
+            <text x="240" y="486" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="500" fill="#0A4A2E" letter-spacing="5">LIBREVILLE · GABON</text>
+            <line x1="148" y1="494" x2="196" y2="494" stroke="#D4A017" stroke-width="1" opacity="0.6"/><circle cx="240" cy="494" r="2.5" fill="#D4A017" opacity="0.7"/><line x1="284" y1="494" x2="332" y2="494" stroke="#D4A017" stroke-width="1" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="logo-card-footer">
+          <div>
+            <div class="card-name">Logo principal</div>
+            <div class="card-sub">SVG · Fond blanc/crème</div>
+          </div>
+          <a href="ghettopay-logo.svg" download="ghettopay-logo.svg" class="dl-btn green">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Télécharger
+          </a>
+        </div>
+      </div>
+
+      <!-- Logo fond sombre -->
+      <div class="logo-card">
+        <div class="logo-card-preview bg-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" width="180">
+            <defs>
+              <linearGradient id="f1b" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#C8390A"/><stop offset="40%" stop-color="#E8720C"/><stop offset="75%" stop-color="#F5B230"/><stop offset="100%" stop-color="#FDE87A" stop-opacity="0.7"/></linearGradient>
+              <linearGradient id="f2b" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#B02800"/><stop offset="55%" stop-color="#D96010"/><stop offset="100%" stop-color="#F5C040" stop-opacity="0.5"/></linearGradient>
+              <linearGradient id="skb" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5C3A10"/><stop offset="40%" stop-color="#7A4E1A"/><stop offset="100%" stop-color="#4A2D0A"/></linearGradient>
+              <linearGradient id="hdb" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3D2208"/><stop offset="50%" stop-color="#5C3010"/><stop offset="100%" stop-color="#3A1E06"/></linearGradient>
+              <linearGradient id="cob" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0C040"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#A87010"/></linearGradient>
+              <linearGradient id="csb" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FDE68A" stop-opacity="0.7"/><stop offset="100%" stop-color="#FDE68A" stop-opacity="0"/></linearGradient>
+              <radialGradient id="agb" cx="50%" cy="55%" r="50%"><stop offset="0%" stop-color="#F5A020" stop-opacity="0.2"/><stop offset="100%" stop-color="#F5A020" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="240" cy="200" rx="150" ry="130" fill="url(#agb)"/>
+            <rect x="226" y="252" width="28" height="160" rx="6" fill="url(#skb)"/>
+            <rect x="223" y="394" width="34" height="16" rx="5" fill="#2E1205"/>
+            <rect x="213" y="207" width="54" height="55" rx="8" fill="url(#hdb)"/><rect x="212" y="214" width="56" height="7" rx="2" fill="#1A0A03" opacity="0.5"/><rect x="213" y="225" width="54" height="6" rx="2" fill="#220F05" opacity="0.45"/><rect x="212" y="235" width="56" height="6" rx="2" fill="#1A0A03" opacity="0.4"/><rect x="211" y="208" width="6" height="53" rx="3" fill="#0D0603" opacity="0.6"/><rect x="263" y="208" width="6" height="53" rx="3" fill="#0D0603" opacity="0.6"/><rect x="218" y="250" width="44" height="10" rx="3" fill="#0D0603"/>
+            <path d="M240,202 C218,190 206,170 210,147 C213,130 222,117 230,102 C235,90 238,74 240,57 C242,74 245,90 250,102 C258,117 267,130 270,147 C274,170 262,190 240,202Z" fill="url(#f1b)"/>
+            <path d="M235,200 C220,190 212,172 215,152 C218,137 226,124 230,110 C233,98 236,82 237,67 C240,82 241,100 238,117 C235,134 230,150 234,167 C236,180 238,192 235,200Z" fill="url(#f2b)" opacity="0.75"/>
+            <path d="M245,200 C260,190 268,172 265,152 C262,137 254,124 250,110 C247,98 244,82 243,67 C241,82 242,100 245,117 C248,134 253,150 249,167 C247,180 245,192 245,200Z" fill="url(#f2b)" opacity="0.7"/>
+            <path d="M240,200 C232,187 228,172 230,157 C232,144 238,132 240,117 C242,132 248,144 250,157 C252,172 248,187 240,200Z" fill="#FDE68A" opacity="0.9"/>
+            <circle cx="183" cy="294" r="26" fill="url(#cob)"/><circle cx="183" cy="294" r="26" fill="none" stroke="#A07010" stroke-width="2.5"/><ellipse cx="177" cy="285" rx="10" ry="6" fill="url(#csb)" opacity="0.55"/>
+            <text x="183" y="289" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#5C3008">F</text>
+            <text x="183" y="302" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="9" font-weight="600" fill="#7A4A10">CFA</text>
+            <path d="M171,294 L194,294" stroke="#7A4A10" stroke-width="1.5" fill="none" opacity="0.6"/><path d="M189,290 L195,294 L189,298" fill="none" stroke="#7A4A10" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>
+            <text x="240" y="458" text-anchor="middle" font-family="Georgia,serif" font-size="58" font-weight="900" font-style="italic" letter-spacing="-1"><tspan fill="#FFFFFF">Ghetto</tspan><tspan fill="#D4A017">Pay</tspan></text>
+            <text x="240" y="486" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="500" fill="#D4A017" letter-spacing="5">LIBREVILLE · GABON</text>
+            <line x1="148" y1="494" x2="196" y2="494" stroke="#D4A017" stroke-width="1" opacity="0.6"/><circle cx="240" cy="494" r="2.5" fill="#D4A017" opacity="0.7"/><line x1="284" y1="494" x2="332" y2="494" stroke="#D4A017" stroke-width="1" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="logo-card-footer">
+          <div>
+            <div class="card-name">Logo version claire</div>
+            <div class="card-sub">SVG · Fond sombre / app</div>
+          </div>
+          <a href="ghettopay-logo.svg" download="ghettopay-logo-dark.svg" class="dl-btn gold">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Télécharger
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icône ronde -->
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+      <div class="logo-card">
+        <div class="logo-card-preview bg-checker">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120">
+            <defs>
+              <linearGradient id="bgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0A4A2E"/><stop offset="100%" stop-color="#0F5C38"/></linearGradient>
+              <linearGradient id="fli1" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#C8390A"/><stop offset="45%" stop-color="#E8720C"/><stop offset="80%" stop-color="#F5B230"/><stop offset="100%" stop-color="#FDE87A" stop-opacity="0.7"/></linearGradient>
+              <linearGradient id="fli2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#B02800"/><stop offset="100%" stop-color="#F5C040" stop-opacity="0.5"/></linearGradient>
+              <linearGradient id="ski" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5C3A10"/><stop offset="50%" stop-color="#7A4E1A"/><stop offset="100%" stop-color="#4A2D0A"/></linearGradient>
+              <linearGradient id="hdi" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3D2208"/><stop offset="50%" stop-color="#5C3010"/><stop offset="100%" stop-color="#3A1E06"/></linearGradient>
+              <linearGradient id="coi" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0C040"/><stop offset="100%" stop-color="#A87010"/></linearGradient>
+              <clipPath id="cc"><circle cx="100" cy="100" r="96"/></clipPath>
+            </defs>
+            <circle cx="100" cy="100" r="100" fill="url(#bgG)"/>
+            <circle cx="100" cy="100" r="96" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+            <circle cx="100" cy="100" r="90" fill="none" stroke="#D4A017" stroke-width="0.8" opacity="0.4"/>
+            <g clip-path="url(#cc)">
+              <rect x="92" y="128" width="16" height="90" rx="4" fill="url(#ski)"/>
+              <line x1="92" y1="158" x2="108" y2="162" stroke="#1A0D04" stroke-width="2" opacity="0.45"/>
+              <line x1="92" y1="166" x2="108" y2="170" stroke="#1A0D04" stroke-width="1.5" opacity="0.35"/>
+              <rect x="90" y="205" width="20" height="10" rx="3" fill="#2E1205"/>
+              <rect x="83" y="104" width="34" height="34" rx="6" fill="url(#hdi)"/>
+              <rect x="82" y="109" width="36" height="5" rx="1.5" fill="#1A0A03" opacity="0.5"/>
+              <rect x="83" y="117" width="34" height="4" rx="1.5" fill="#220F05" opacity="0.45"/>
+              <rect x="82" y="124" width="36" height="4" rx="1.5" fill="#1A0A03" opacity="0.4"/>
+              <rect x="81" y="105" width="5" height="33" rx="2.5" fill="#0D0603" opacity="0.65"/>
+              <rect x="114" y="105" width="5" height="33" rx="2.5" fill="#0D0603" opacity="0.65"/>
+              <rect x="86" y="128" width="28" height="8" rx="2" fill="#0D0603"/>
+              <path d="M100,107 C86,98 79,84 82,68 C84,57 90,48 95,38 C97,31 99,22 100,13 C101,22 103,31 105,38 C110,48 116,57 118,68 C121,84 114,98 100,107Z" fill="url(#fli1)"/>
+              <path d="M97,106 C86,97 80,82 83,66 C85,54 91,44 94,33 C96,25 98,16 98,8 C100,17 101,28 99,42 C97,55 93,67 96,80 C98,90 99,100 97,106Z" fill="url(#fli2)" opacity="0.7"/>
+              <path d="M103,106 C114,97 120,82 117,66 C115,54 109,44 106,33 C104,25 102,16 102,8 C100,17 99,28 101,42 C103,55 107,67 104,80 C102,90 101,100 103,106Z" fill="url(#fli2)" opacity="0.65"/>
+              <path d="M100,106 C94,96 91,84 93,72 C95,62 99,52 100,41 C101,52 105,62 107,72 C109,84 106,96 100,106Z" fill="#FDE68A" opacity="0.9"/>
+              <path d="M100,104 C95,93 93,81 95,70 C97,61 99,52 100,43 C101,52 103,61 105,70 C107,81 105,93 100,104Z" fill="#FEFCE8" opacity="0.55"/>
+              <circle cx="68" cy="158" r="20" fill="url(#coi)"/>
+              <circle cx="68" cy="158" r="20" fill="none" stroke="#A07010" stroke-width="2"/>
+              <text x="68" y="153" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#5C3008">F</text>
+              <text x="68" y="164" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="7" font-weight="600" fill="#7A4A10">CFA</text>
+              <path d="M58,158 L78,158" stroke="#7A4A10" stroke-width="1.5" fill="none" opacity="0.65"/>
+              <path d="M74,154 L79,158 L74,162" fill="none" stroke="#7A4A10" stroke-width="1.5" stroke-linejoin="round" opacity="0.65"/>
+            </g>
+            <text x="100" y="196" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="14" font-weight="900" font-style="italic" fill="#D4A017" letter-spacing="2">GP</text>
+          </svg>
+        </div>
+        <div class="logo-card-footer">
+          <div>
+            <div class="card-name">Icône ronde</div>
+            <div class="card-sub">SVG · App / Favicon</div>
+          </div>
+          <a href="ghettopay-icon.svg" download="ghettopay-icon.svg" class="dl-btn green">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Télécharger
+          </a>
+        </div>
+      </div>
+
+      <!-- Tailles -->
+      <div class="logo-card">
+        <div class="logo-card-preview bg-checker" style="min-height:160px;flex-direction:column;gap:12px">
+          <div class="sizes" style="background:transparent;border:none;padding:0;gap:16px">
+            <div class="size-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="64">
+                <circle cx="100" cy="100" r="100" fill="#0A4A2E"/>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+                <text x="100" y="106" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="40" font-weight="900" font-style="italic" fill="#D4A017">GP</text>
+              </svg>
+              <span class="size-lbl">64px</span>
+            </div>
+            <div class="size-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="48">
+                <circle cx="100" cy="100" r="100" fill="#0A4A2E"/>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+                <text x="100" y="106" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="40" font-weight="900" font-style="italic" fill="#D4A017">GP</text>
+              </svg>
+              <span class="size-lbl">48px</span>
+            </div>
+            <div class="size-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="32">
+                <circle cx="100" cy="100" r="100" fill="#0A4A2E"/>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+                <text x="100" y="106" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="40" font-weight="900" font-style="italic" fill="#D4A017">GP</text>
+              </svg>
+              <span class="size-lbl">32px</span>
+            </div>
+            <div class="size-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="20">
+                <circle cx="100" cy="100" r="100" fill="#0A4A2E"/>
+                <text x="100" y="106" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="40" font-weight="900" font-style="italic" fill="#D4A017">GP</text>
+              </svg>
+              <span class="size-lbl">20px</span>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card-footer">
+          <div>
+            <div class="card-name">Tailles recommandées</div>
+            <div class="card-sub">Favicon · Nav · Splash · Icon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Couleurs -->
+  <div class="section">
+    <div class="section-label">Palette officielle</div>
+    <div class="colors">
+      <div class="color-swatch">
+        <div class="swatch-body" style="background:#0A4A2E"></div>
+        <div class="swatch-info"><div class="swatch-name">Vert Forêt</div><div class="swatch-hex">#0A4A2E · Couleur principale</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-body" style="background:#D4A017"></div>
+        <div class="swatch-info"><div class="swatch-name">Or Gabonais</div><div class="swatch-hex">#D4A017 · CTA / Accent</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-body" style="background:#F0C040"></div>
+        <div class="swatch-info"><div class="swatch-name">Or Clair</div><div class="swatch-hex">#F0C040 · Highlight</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-body" style="background:#1A1A1A"></div>
+        <div class="swatch-info"><div class="swatch-name">Noir Profond</div><div class="swatch-hex">#1A1A1A · Texte / Fond dark</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-body" style="background:#FAF7F0"></div>
+        <div class="swatch-info"><div class="swatch-name">Crème</div><div class="swatch-hex">#FAF7F0 · Background</div></div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-body" style="background:#16A34A"></div>
+        <div class="swatch-info"><div class="swatch-name">Vert Succès</div><div class="swatch-hex">#16A34A · Validation</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code d'intégration -->
+  <div class="section">
+    <div class="section-label">Intégration dans ton code HTML</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <p style="font-size:.8rem;color:#6B7C6B;margin-bottom:10px;font-weight:600">Dans ta navbar (logo principal)</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this, 'nav-code')">Copier</button>
+          <pre id="nav-code">&lt;img src="ghettopay-logo.svg" 
+  alt="GhettoPay"
+  width="140"
+  height="auto"/&gt;</pre>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:.8rem;color:#6B7C6B;margin-bottom:10px;font-weight:600">Favicon (dans &lt;head&gt;)</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this, 'fav-code')">Copier</button>
+          <pre id="fav-code">&lt;link rel="icon" 
+  type="image/svg+xml"
+  href="ghettopay-icon.svg"/&gt;
+&lt;link rel="apple-touch-icon"
+  href="ghettopay-icon.svg"/&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage rules -->
+  <div class="section">
+    <div class="section-label">Règles d'utilisation</div>
+    <div class="usage-grid">
+      <div class="usage-card do">
+        <h4>✓ À faire</h4>
+        <ul>
+          <li>Logo sur fond blanc ou crème</li>
+          <li>Logo blanc sur fond vert foncé</li>
+          <li>Respecter les proportions</li>
+          <li>Espace libre autour du logo</li>
+          <li>Taille minimum 32px de haut</li>
+        </ul>
+      </div>
+      <div class="usage-card dont">
+        <h4>✗ À éviter</h4>
+        <ul>
+          <li>Déformer ou étirer le logo</li>
+          <li>Changer les couleurs</li>
+          <li>Ajouter des effets ou filtres</li>
+          <li>Logo sur fond complexe / photo</li>
+          <li>Utiliser sous 20px</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Télécharger tout -->
+  <div class="section">
+    <div class="section-label">Téléchargements</div>
+    <div class="actions-row">
+      <a href="ghettopay-logo.svg" download="ghettopay-logo.svg" class="dl-btn green" style="font-size:.88rem;padding:13px 22px">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Logo principal SVG
+      </a>
+      <a href="ghettopay-icon.svg" download="ghettopay-icon.svg" class="dl-btn gold" style="font-size:.88rem;padding:13px 22px">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Icône ronde SVG
+      </a>
+    </div>
+    <p style="font-size:.74rem;color:#8A9280;margin-top:12px">Les fichiers SVG sont vectoriels — parfaits pour toutes les tailles, web, impression, app.</p>
+  </div>
+
+</div>
+
+<script>
+function copyCode(btn, id) {
+  const code = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copié !';
+    btn.style.color = '#D4A017';
+    setTimeout(() => { btn.textContent = 'Copier'; btn.style.color = ''; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
