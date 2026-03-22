@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -45,7 +44,7 @@ nav{
 }
 nav.sc{background:rgba(250,247,240,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,.05);box-shadow:0 2px 24px rgba(0,0,0,.05)}
 .logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
-.logo-mark{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(10,74,46,.3)}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--forest),var(--forest2));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(10,74,46,.3)}
 .logo-mark svg{width:18px;height:18px;stroke:var(--gold2);stroke-width:2.5;fill:none}
 .logo-txt{font-family:var(--fd);font-size:1.08rem;font-weight:900;color:var(--ink);font-style:italic;letter-spacing:-.01em}
 .logo-txt span{color:var(--forest)}
@@ -69,7 +68,7 @@ nav.sc{background:rgba(250,247,240,.97);backdrop-filter:blur(24px);border-bottom
 .b2{width:500px;height:500px;background:rgba(212,160,23,.07);left:-120px;bottom:-80px}
 .b3{width:280px;height:280px;background:rgba(34,197,94,.05);right:28%;top:55%}
 
-.hero-inner{max-width:1320px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.15fr;gap:5rem;align-items:center;position:relative;z-index:2}
+.hero-inner{max-width:1320px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.15fr;gap:4rem;align-items:center;position:relative;z-index:2}
 
 .hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:var(--forest);border-radius:100px;padding:.35rem .9rem .35rem .4rem;margin-bottom:1.7rem;animation:fup .5s both}
 .badge-dot{width:24px;height:24px;border-radius:50%;background:var(--gold2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -101,94 +100,16 @@ h1.hero-title .ghost{-webkit-text-stroke:2.5px var(--forest);color:transparent}
 /* ── DEVICE SHOWCASE ─── */
 .devices{position:relative;height:640px;animation:fup .9s .08s both}
 
-  /* iPhone 15 Pro Max - Titanium */
-  .d-phone{
-    position:absolute;right:0;bottom:0;
-    width:250px;height:540px;
-    --titanium: linear-gradient(145deg, #C4C4C4 0%, #E0E0E0 30%, #D8D8D8 70%, #C4C4C4 100%);
-    --titanium-dark: linear-gradient(145deg, #A8A8A8 0%, #C8C8C8 50%, #B8B8B8 100%);
-    background:var(--titanium);
-    border-radius:42px;
-    padding:7px 7px 12px;
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,.3),
-      0 8px 32px rgba(0,0,0,.4),
-      0 20px 60px rgba(0,0,0,.3),
-      inset 0 1px 0 rgba(255,255,255,.2);
-    z-index:10;
-  }
-  .d-phone::before{
-    content:'';
-    position:absolute;
-    inset:3px;
-    background:var(--cream);
-    border-radius:38px;
-    z-index:1;
-  }
-  .d-phone-inner{
-    position:relative;z-index:2;
-    height:526px;overflow:hidden;
-    background:var(--cream);
-    border-radius:38px;
-    margin:0 2px 5px;
-  }
-  /* Dynamic Island */
-  .d-island{
-    position:absolute;top:12px;left:50%;transform:translateX(-50%);
-    width:40px;height:28px;background:#000;
-    border-radius:20px;
-    z-index:15;
-    box-shadow:0 2px 8px rgba(0,0,0,.4);
-  }
-  .d-island::before{
-    content:'';position:absolute;top:2px;left:4px;right:4px;height:10px;
-    background:linear-gradient(90deg,rgba(255,255,255,.3),transparent 50%,rgba(255,255,255,.3));
-    border-radius:3px;
-  }
-  /* Rear Camera Bump */
-  .d-camera{
-    position:absolute;bottom:22px;right:20px;z-index:3;
-    width:32px;height:32px;background:var(--titanium-dark);
-    border-radius:50%;
-    box-shadow:0 4px 16px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3);
-  }
-  .d-camera::before{
-    content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:18px;height:18px;background:#000;border-radius:50%;
-    box-shadow:inset 0 1px 3px rgba(255,255,255,.2);
-  }
-  .d-camera::after{
-    content:'';position:absolute;top:4px;right:4px;
-    width:12px;height:12px;background:#000;border-radius:50%;
-  }
-  /* Side details: Mute switch, volume */
-  .d-mute{
-    position:absolute;top:90px;left:-3px;width:3px;height:22px;
-    background:linear-gradient(180deg,#A0A0A0,#D0D0D0);
-    border-radius:2px;
-    box-shadow:1px 0 2px rgba(0,0,0,.3);
-  }
-  .d-volume{
-    position:absolute;top:140px;left:-4px;width:4px;height:60px;
-    background:var(--titanium);
-    border-radius:3px;
-    box-shadow:1px 0 3px rgba(0,0,0,.4);
-  }
-  .d-volume::before{
-    content:'';position:absolute;top:8px;left:0;right:0;height:18px;
-    background:#000;border-radius:2px;
-  }
-  .d-volume::after{
-    content:'';position:absolute;bottom:8px;left:0;right:0;height:18px;
-    background:#000;border-radius:2px;
-  }
-  /* Bottom USB-C hint */
-  .d-usbc{
-    position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);
-    width:18px;height:6px;background:var(--titanium-dark);
-    border-radius:4px 4px 0 0;
-    box-shadow:inset 0 1px 2px rgba(0,0,0,.3);
-  }
+/* Phone */
+.d-phone{
+  position:absolute;right:0;bottom:0;
+  width:250px;
+  background:var(--ink);border-radius:40px;padding:8px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 100px rgba(0,0,0,.35),0 16px 40px rgba(0,0,0,.2);
+  z-index:10;
+}
+.d-phone-inner{background:var(--cream);border-radius:33px;height:520px;overflow:hidden;position:relative}
+.d-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:70px;height:20px;background:var(--ink);border-radius:0 0 12px 12px;z-index:10}
 
 /* Tablet */
 .d-tablet{
@@ -281,7 +202,7 @@ h2.sec-title .go{color:var(--gold)}
 .screens-bg h2.sec-title em{color:var(--gold2)}
 .screens-bg .sec-sub{color:rgba(255,255,255,.42)}
 
-.screens-header{display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:end;margin-bottom:5rem}
+.screens-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem}
 
 /* Laptop demo large */
 .laptop-demo{position:relative;margin:0 auto}
@@ -297,7 +218,7 @@ h2.sec-title .go{color:var(--gold)}
 .td-cam{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);z-index:5}
 
 /* Phones row */
-.phones-row{display:flex;gap:28px;align-items:flex-end;justify-content:center}
+.phones-row{display:flex;gap:16px;align-items:flex-end;justify-content:center}
 .ph-mini{background:var(--ink);border-radius:22px;padding:5px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 16px 40px rgba(0,0,0,.35)}
 .ph-mini-inner{background:var(--cream);border-radius:17px;height:200px;width:96px;overflow:hidden;position:relative}
 .ph-mini-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:36px;height:12px;background:var(--ink);border-radius:0 0 8px 8px;z-index:5}
@@ -305,7 +226,7 @@ h2.sec-title .go{color:var(--gold)}
 .ph-big-inner{background:var(--cream);border-radius:22px;height:260px;width:126px;overflow:hidden;position:relative}
 .ph-big-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:46px;height:14px;background:var(--ink);border-radius:0 0 10px 10px;z-index:5}
 
-.devices-tabs{display:flex;gap:14px;margin-bottom:3rem}
+.devices-tabs{display:flex;gap:8px;margin-bottom:2.5rem}
 .dtab{padding:.5rem 1.2rem;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;transition:.15s;border:1.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);background:none;font-family:var(--f)}
 .dtab.on{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.3);color:var(--gold2)}
 
@@ -428,9 +349,205 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
 /* ── RESPONSIVE ─── */
-@media(max-width:1100px){.hero-inner,.coffre-grid,.tontine-grid,.amb-card{grid-template-columns:1fr}.hero-visual,.devices{display:none}.feats-intro{grid-template-columns:1fr}.screens-header{grid-template-columns:1fr}}
-@media(max-width:700px){nav{padding:0 4%}.nav-links{display:none}section{padding:5rem 4%}.feats-grid{grid-template-columns:1fr 1fr}.hero-stats{grid-template-columns:repeat(2,1fr)}.chead,.crow{grid-template-columns:1.5fr 1fr 1fr}.chead>*:last-child,.crow>*:last-child{display:none}}
-@media(max-width:480px){.feats-grid{grid-template-columns:1fr}}
+
+/* ── TABLET 1100px ── */
+@media(max-width:1100px){
+  .hero-inner,.coffre-grid,.tontine-grid{grid-template-columns:1fr}
+  .amb-card{grid-template-columns:1fr}
+  .feats-intro{grid-template-columns:1fr}
+  .screens-header{grid-template-columns:1fr}
+  /* Stack devices vertically */
+  .devices{
+    display:flex!important;flex-direction:column;align-items:center;
+    height:auto;padding:2.5rem 0;gap:1.5rem
+  }
+  .d-laptop{position:static;width:min(92vw,500px)}
+  .d-tablet{position:static;width:min(92vw,400px);height:300px;top:auto;left:auto}
+  .d-phone{position:static;width:min(80vw,240px);height:490px;right:auto;bottom:auto}
+  .fl{display:none}
+}
+
+/* ── MOBILE 700px ── */
+@media(max-width:700px){
+  /* Nav */
+  nav{padding:0 5%;height:60px}
+  .nav-links{display:none}
+  .nav-cta{padding:.5rem 1.1rem;font-size:.76rem;gap:.45rem}
+
+  /* Sections */
+  section{padding:4rem 5%}
+  .screens-bg{padding:4rem 5%}
+  .cta-bg{padding:5.5rem 5%}
+
+  /* Hero */
+  .hero{padding:5rem 5% 3.5rem;min-height:auto}
+  .hero-inner{gap:2.5rem}
+  h1.hero-title{font-size:clamp(2.5rem,11vw,3.8rem);line-height:.92}
+  .hero-desc{font-size:.9rem;line-height:1.82}
+  .hero-btns{flex-direction:column;gap:.7rem}
+  .btn-pri,.btn-sec{width:100%;justify-content:center;padding:.88rem 1.5rem;font-size:.88rem}
+  .hero-stats{grid-template-columns:repeat(2,1fr);border-radius:13px}
+  .stat{padding:.95rem .5rem}
+  .stat-val{font-size:1.3rem}
+  .stat-lbl{font-size:.5rem}
+
+  /* Features */
+  .feats-intro{gap:1.2rem;margin-bottom:2rem}
+  .feats-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .feat{padding:1.3rem 1rem;border-radius:16px}
+  .feat-ic{width:38px;height:38px;border-radius:10px;margin-bottom:.9rem}
+  .feat-ic svg{width:18px;height:18px}
+  .feat h3{font-size:.82rem}
+  .feat p{font-size:.72rem;line-height:1.72}
+  .feat-pill{font-size:.5rem;padding:.18rem .6rem}
+
+  /* Screens */
+  .devices-tabs{gap:8px;margin-bottom:2rem}
+  .dtab{font-size:.68rem;padding:.42rem .9rem}
+  .phones-row{gap:10px;flex-wrap:wrap;justify-content:center}
+  .ph-mini-inner{height:176px;width:84px;border-radius:13px}
+  .ph-mini{border-radius:19px;padding:4px}
+  .ph-big-inner{height:226px;width:110px;border-radius:18px}
+  .ph-big{border-radius:23px;padding:5px}
+
+  /* Coffre */
+  .coffre-grid{gap:2.5rem}
+  .coffre-card{padding:1.8rem;border-radius:20px}
+  .coffre-card h3{font-size:1.4rem}
+  .coffre-stats-row{gap:.55rem}
+  .c-stat{padding:.85rem .5rem;border-radius:10px}
+  .c-stat-n{font-size:1.2rem}
+  .c-stat-l{font-size:.48rem}
+  .coffre-feats{gap:.8rem}
+  .cf{padding:1rem;border-radius:12px}
+  .cf-title{font-size:.78rem}
+  .cf-desc{font-size:.7rem}
+
+  /* Tontine */
+  .tontine-grid{gap:2.5rem}
+  .tontine-card{padding:1.6rem;border-radius:18px}
+  .tontine-info{gap:.7rem}
+  .ti{padding:.9rem;border-radius:12px}
+  .ti-title{font-size:.78rem}
+  .ti-desc{font-size:.68rem}
+
+  /* Compare */
+  .ctable{border-radius:14px}
+  .chead{grid-template-columns:1.6fr 1fr 1fr;padding:.72rem 1rem}
+  .crow{grid-template-columns:1.6fr 1fr 1fr;padding:.72rem 1rem}
+  .chead>*:last-child,.crow>*:last-child{display:none}
+  .crow-feat{font-size:.76rem}
+  .crow-feat small{font-size:.6rem}
+  .cv{font-size:.7rem}
+
+  /* Ambassadeur */
+  .amb-card{padding:2rem 1.8rem;gap:2rem;border-radius:22px}
+  h3.amb-title{font-size:1.7rem}
+  .amb-desc{font-size:.82rem}
+  .amb-reward{padding:2rem 1.5rem}
+  .amb-big{font-size:2.6rem}
+  .amb-sub{font-size:.78rem}
+
+  /* CTA */
+  h2.cta-title{font-size:clamp(2rem,9vw,3rem)}
+  .cta-btns{flex-direction:column;align-items:center}
+  .cta-btns .btn-pri{width:100%;justify-content:center;max-width:320px}
+  .stores{gap:.65rem}
+  .store{padding:.62rem 1.2rem;font-size:.76rem}
+
+  /* Footer */
+  .foot-inner{flex-direction:column;align-items:flex-start;gap:.8rem}
+  .foot-links{gap:1.1rem;flex-wrap:wrap}
+  .foot-copy{order:3}
+}
+
+/* ── MOBILE SMALL 480px ── */
+@media(max-width:480px){
+  /* Base */
+  section{padding:3.2rem 4.5%}
+  .screens-bg{padding:3.2rem 4.5%}
+  .cta-bg{padding:4.5rem 4.5%}
+  nav{padding:0 4.5%}
+
+  /* Hero */
+  .hero{padding:4.5rem 4.5% 2.8rem}
+  h1.hero-title{font-size:clamp(2rem,12.5vw,2.6rem);letter-spacing:-.035em}
+  h1.hero-title .ghost{-webkit-text-stroke:1.5px var(--forest)}
+  .hero-desc{font-size:.84rem}
+  .hero-badge{margin-bottom:1.3rem}
+  .badge-txt{font-size:.64rem}
+  .hero-stats{border-radius:11px}
+  .stat{padding:.8rem .4rem}
+  .stat-val{font-size:1.15rem}
+
+  /* Features — single col */
+  .feats-grid{grid-template-columns:1fr;gap:8px}
+  .feat{padding:1.1rem .9rem;border-radius:14px;display:flex;gap:12px;align-items:flex-start;flex-direction:row}
+  .feat-ic{margin-bottom:0;flex-shrink:0;width:36px;height:36px}
+  .feat-content{flex:1}
+  .feat h3{font-size:.8rem;margin-bottom:.25rem}
+  .feat p{font-size:.7rem}
+  .feat-pill{margin-top:.6rem}
+
+  /* Section titles */
+  h2.sec-title{font-size:clamp(1.65rem,8.5vw,2.2rem)}
+  .eyebrow{font-size:.58rem;letter-spacing:.14em}
+  .sec-sub{font-size:.86rem}
+
+  /* Screens phones */
+  .phones-row{gap:6px}
+  /* Hide smallest phones on very small screens */
+  .ph-mini:nth-child(1),.ph-mini:nth-child(4){display:none}
+  .ph-big-inner{height:250px;width:124px}
+  .ph-big{border-radius:26px}
+  .ph-mini-inner{height:190px;width:90px}
+
+  /* Laptop screen */
+  .ld-screen{height:220px}
+  .ld-body{border-radius:10px 10px 0 0}
+
+  /* Coffre */
+  .coffre-card{padding:1.4rem}
+  .coffre-card h3{font-size:1.25rem}
+  .coffre-ic{width:44px;height:44px;border-radius:12px;margin-bottom:1.1rem}
+  .coffre-stats-row{gap:.4rem}
+  .c-stat{padding:.7rem .4rem}
+  .c-stat-n{font-size:1.05rem}
+
+  /* Compare — 2 columns */
+  .chead{grid-template-columns:1.5fr 1fr;padding:.6rem .85rem}
+  .crow{grid-template-columns:1.5fr 1fr;padding:.6rem .85rem}
+  .chead>*:nth-child(n+3){display:none}
+  .crow>*:nth-child(n+3){display:none}
+  /* Show a "vs GhettoPay" note */
+  .ctable::before{
+    content:'Comparaison vs Airtel Money';
+    display:block;
+    font-family:var(--fm);font-size:.56rem;color:var(--txt3);
+    padding:.5rem 1rem;background:var(--cream);
+    text-align:center;border-bottom:1px solid var(--cream2);
+  }
+
+  /* Amb */
+  .amb-card{padding:1.5rem;gap:1.8rem;border-radius:18px}
+  h3.amb-title{font-size:1.45rem}
+  .amb-reward{padding:1.6rem 1.2rem;border-radius:14px}
+  .amb-big{font-size:2rem}
+  .as-title{font-size:.78rem}
+  .as-desc{font-size:.64rem}
+  .as-n{width:24px;height:24px;font-size:.6rem}
+
+  /* CTA */
+  h2.cta-title{font-size:clamp(1.7rem,9.5vw,2.2rem)}
+  .cta-sub{font-size:.86rem}
+  .cta-btns .btn-pri{font-size:.86rem;padding:.85rem 1.5rem}
+  .legal{font-size:.56rem}
+
+  /* Footer */
+  footer{padding:1.8rem 4.5%}
+  .foot-links{gap:.85rem}
+  .foot-links a{font-size:.68rem}
+}
 </style>
 </head>
 <body>
@@ -465,14 +582,14 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">
-<img src="ghettopay-icon.svg" alt="GhettoPay" class="logo-mark"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 200 200"><defs><linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0A4A2E"/><stop offset="100%" stop-color="#0F5C38"/></linearGradient><linearGradient id="fl1" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#C8390A"/><stop offset="45%" stop-color="#E8720C"/><stop offset="80%" stop-color="#F5B230"/><stop offset="100%" stop-color="#FDE87A" stop-opacity="0.7"/></linearGradient><linearGradient id="fl2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#B02800"/><stop offset="100%" stop-color="#F5C040" stop-opacity="0.5"/></linearGradient><linearGradient id="sk" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5C3A10"/><stop offset="50%" stop-color="#7A4E1A"/><stop offset="100%" stop-color="#4A2D0A"/></linearGradient><linearGradient id="hd" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3D2208"/><stop offset="50%" stop-color="#5C3010"/><stop offset="100%" stop-color="#3A1E06"/></linearGradient><linearGradient id="co" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0C040"/><stop offset="100%" stop-color="#A87010"/></linearGradient><radialGradient id="gl" cx="50%" cy="45%" r="40%"><stop offset="0%" stop-color="#F5A020" stop-opacity="0.2"/><stop offset="100%" stop-color="#F5A020" stop-opacity="0"/></radialGradient><clipPath id="circle-clip"><circle cx="100" cy="100" r="96"/></clipPath></defs><circle cx="100" cy="100" r="100" fill="url(#bgGrad)"/><circle cx="100" cy="100" r="96" fill="none" stroke="#D4A017" stroke-width="2.5"/><circle cx="100" cy="100" r="90" fill="none" stroke="#D4A017" stroke-width="0.8" opacity="0.4"/><g clip-path="url(#circle-clip)"><ellipse cx="100" cy="95" rx="48" ry="55" fill="url(#gl)"/><rect x="92" y="128" width="16" height="90" rx="4" fill="url(#sk)"/><rect x="94" y="128" width="3" height="90" rx="1.5" fill="#9C6830" opacity="0.25"/><line x1="92" y1="158" x2="108" y2="162" stroke="#1A0D04" stroke-width="2" opacity="0.45"/><line x1="92" y1="166" x2="108" y2="170" stroke="#1A0D04" stroke-width="1.5" opacity="0.35"/><rect x="90" y="205" width="20" height="10" rx="3" fill="#2E1205"/><rect x="83" y="104" width="34" height="34" rx="6" fill="url(#hd)"/><rect x="82" y="109" width="36" height="5" rx="1.5" fill="#1A0A03" opacity="0.5"/><rect x="83" y="117" width="34" height="4" rx="1.5" fill="#220F05" opacity="0.45"/><rect x="82" y="124" width="36" height="4" rx="1.5" fill="#1A0A03" opacity="0.4"/><rect x="81" y="105" width="5" height="33" rx="2.5" fill="#0D0603" opacity="0.65"/><rect x="114" y="105" width="5" height="33" rx="2.5" fill="#0D0603" opacity="0.65"/><rect x="86" y="128" width="28" height="8" rx="2" fill="#0D0603"/><path d="M100,107 C86,98 79,84 82,68 C84,57 90,48 95,38 C97,31 99,22 100,13 C101,22 103,31 105,38 C110,48 116,57 118,68 C121,84 114,98 100,107Z" fill="url(#fl1)"/><path d="M97,106 C86,97 80,82 83,66 C85,54 91,44 94,33 C96,25 98,16 98,8 C100,17 101,28 99,42 C97,55 93,67 96,80 C98,90 99,100 97,106Z" fill="url(#fl2)" opacity="0.7"/><path d="M103,106 C114,97 120,82 117,66 C115,54 109,44 106,33 C104,25 102,16 102,8 C100,17 99,28 101,42 C103,55 107,67 104,80 C102,90 101,100 103,106Z" fill="url(#fl2)" opacity="0.65"/><path d="M100,106 C94,96 91,84 93,72 C95,62 99,52 100,41 C101,52 105,62 107,72 C109,84 106,96 100,106Z" fill="#FDE68A" opacity="0.9"/><path d="M100,104 C95,93 93,81 95,70 C97,61 99,52 100,43 C101,52 103,61 105,70 C107,81 105,93 100,104Z" fill="#FEFCE8" opacity="0.55"/><circle cx="85" cy="58" r="1.8" fill="#FDE68A" opacity="0.7"/><circle cx="82" cy="47" r="1.1" fill="#F5C040" opacity="0.55"/><circle cx="117" cy="52" r="1.6" fill="#FDE68A" opacity="0.6"/><circle cx="100" cy="10" r="1.3" fill="#FFF0AA" opacity="0.5"/><circle cx="68" cy="158" r="20" fill="url(#co)"/><circle cx="68" cy="158" r="20" fill="none" stroke="#A07010" stroke-width="2"/><circle cx="68" cy="158" r="16.5" fill="none" stroke="#F0C040" stroke-width="0.7" opacity="0.5"/><ellipse cx="63" cy="151" rx="8" ry="5" fill="#FDE68A" opacity="0.3"/><text x="68" y="153" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#5C3008">F</text><text x="68" y="164" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="7" font-weight="600" fill="#7A4A10" letter-spacing="0.5">CFA</text><path d="M58,158 L78,158" stroke="#7A4A10" stroke-width="1.5" fill="none" opacity="0.65"/><path d="M74,154 L79,158 L74,162" fill="none" stroke="#7A4A10" stroke-width="1.5" stroke-linejoin="round" opacity="0.65"/></g><text x="100" y="196" text-anchor="middle" dominant-baseline="central" font-family="Georgia,serif" font-size="14" font-weight="900" font-style="italic" fill="#D4A017" letter-spacing="2">GP</text></svg>
     <span class="logo-txt"><em>Ghetto</em><span>Pay</span></span>
   </a>
   <div class="nav-links">
     <a href="#features">Fonctionnalités</a>
     <a href="#coffre">Le Coffre</a>
     <a href="#tontine">Tontine</a>
-    <a href="#screens">L'App</a>
+    <a href="ghettopay-logo-kit.html">Kit Logo</a>
     <a href="https://ghettopay-app.vercel.app/">Application</a>
   </div>
   <a href="https://ghettopay-app.vercel.app/" class="nav-cta">
@@ -776,59 +893,59 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
     </div>
     <div class="feats-grid">
       <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#send"/></svg></div>
+        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#send"/></svg></div><div class="feat-content">
         <h3>Transferts instantanés</h3>
         <p>Envoie de l'argent en 3 secondes. Par nom, numéro ou contact favori — aucun code USSD compliqué.</p>
         <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.18)">Frais quasi nuls</span>
-      </div>
+      </div></div>
       <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.18)"><svg style="stroke:#818cf8" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#qric"/></svg></div>
+        <div class="feat-ic" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.18)"><svg style="stroke:#818cf8" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#qric"/></svg></div><div class="feat-content">
         <h3>Paiement QR Code</h3>
         <p>Scanne, confirme avec ton empreinte, c'est payé. Au marché, en boutique, au maquis — partout au Gabon.</p>
         <span class="feat-pill" style="background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.18)">2 secondes chrono</span>
-      </div>
+      </div></div>
       <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(10,74,46,.1);border:1px solid rgba(10,74,46,.18)"><svg style="stroke:var(--forest)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#lock"/></svg></div>
+        <div class="feat-ic" style="background:rgba(10,74,46,.1);border:1px solid rgba(10,74,46,.18)"><svg style="stroke:var(--forest)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#lock"/></svg></div><div class="feat-content">
         <h3>Le Coffre Forêt</h3>
         <p>Bloque ton épargne. Ton argent pousse comme les arbres centenaires de la forêt équatoriale gabonaise.</p>
         <span class="feat-pill" style="background:rgba(10,74,46,.1);color:var(--forest);border:1px solid rgba(10,74,46,.18)">5.5% rendement/an</span>
-      </div>
+      </div></div>
       <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#phone"/></svg></div>
+        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#phone"/></svg></div><div class="feat-content">
         <h3>Recharge airtime & data</h3>
         <p>Airtel, Moov — recharge crédit et internet directement depuis l'app en quelques secondes.</p>
         <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.18)">Instantané</span>
-      </div>
+      </div></div>
       <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.18)"><svg style="stroke:#3b82f6" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#home"/></svg></div>
+        <div class="feat-ic" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.18)"><svg style="stroke:#3b82f6" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#home"/></svg></div><div class="feat-content">
         <h3>Factures automatiques</h3>
         <p>SEEG eau, SEEG électricité, internet — règle tout depuis GhettoPay. Fini la queue au guichet.</p>
         <span class="feat-pill" style="background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.18)">Tout en un</span>
-      </div>
+      </div></div>
       <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.18)"><svg style="stroke:#a855f7" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#users"/></svg></div>
+        <div class="feat-ic" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.18)"><svg style="stroke:#a855f7" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#users"/></svg></div><div class="feat-content">
         <h3>Tontine digitale</h3>
         <p>Crée ou rejoins une tontine. La tradition communautaire gabonaise, enfin modernisée et sécurisée.</p>
         <span class="feat-pill" style="background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.18)">Communautaire</span>
-      </div>
+      </div></div>
       <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#chart"/></svg></div>
+        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#chart"/></svg></div><div class="feat-content">
         <h3>Budget & Analyses</h3>
         <p>Graphiques clairs, catégories automatiques. Vois exactement où va chaque franc CFA chaque mois.</p>
         <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.18)">IA intégrée</span>
-      </div>
+      </div></div>
       <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.18)"><svg style="stroke:#f97316" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#trend"/></svg></div>
+        <div class="feat-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.18)"><svg style="stroke:#f97316" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#trend"/></svg></div><div class="feat-content">
         <h3>Cashback Gabon Vert</h3>
         <p>Chaque paiement chez un partenaire te rapporte du cashback. Dépense mieux, gagne plus.</p>
         <span class="feat-pill" style="background:rgba(251,146,60,.1);color:#f97316;border:1px solid rgba(251,146,60,.18)">Jusqu'à 5%</span>
-      </div>
+      </div></div>
       <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#shield"/></svg></div>
+        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#shield"/></svg></div><div class="feat-content">
         <h3>Sécurité maximale</h3>
         <p>Empreinte, Face ID, PIN, chiffrement 256-bit. Blindé comme un coffre-fort. Certifié CEMAC.</p>
         <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.18)">Certifié CEMAC</span>
-      </div>
+      </div></div>
     </div>
   </div>
 </section>
