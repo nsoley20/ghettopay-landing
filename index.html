@@ -5,612 +5,433 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>GhettoPay — Ton argent, ton flow</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  /* Palette principale */
-  --ink:       #0D0D0D;
-  --ink2:      #1A1A1A;
-  --forest:    #0A4A2E;
-  --forest2:   #0F5C38;
-  --green:     #16A34A;
-  --green2:    #22C55E;
-  --green3:    #BBF7D0;
-  --gold:      #D4A017;
-  --gold2:     #F0C040;
-  --gold3:     #FDE68A;
-  --cream:     #FAF7F0;
-  --cream2:    #F2EDE3;
-  --cream3:    #E8E0D0;
-  --white:     #FFFFFF;
-  --txt:       #1A1A1A;
-  --txt2:      #4A5240;
-  --txt3:      #8A9280;
-  --f:         'Outfit',sans-serif;
-  --fd:        'Playfair Display',serif;
-  --fm:        'DM Mono',monospace;
+  --ink:     #0D0D0D;
+  --forest:  #0A4A2E;
+  --forest2: #0F5C38;
+  --green:   #16A34A;
+  --green2:  #22C55E;
+  --green3:  #BBF7D0;
+  --gold:    #D4A017;
+  --gold2:   #F0C040;
+  --gold3:   #FDE68A;
+  --cream:   #FAF7F0;
+  --cream2:  #F2EDE3;
+  --cream3:  #E8E0D0;
+  --white:   #FFFFFF;
+  --txt:     #1A1A1A;
+  --txt2:    #4A5240;
+  --txt3:    #8A9280;
+  --f:       'Sora',sans-serif;
+  --fd:      'Playfair Display',serif;
+  --fm:      'DM Mono',monospace;
 }
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:var(--f);background:var(--cream);color:var(--txt);overflow-x:hidden;cursor:none}
 
-/* ── CURSOR ─────────────────────────── */
-#cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;top:0;left:0;mix-blend-mode:multiply}
-#curR{position:fixed;width:32px;height:32px;border:1.5px solid var(--forest);border-radius:50%;pointer-events:none;z-index:9998;top:0;left:0;transition:transform .18s ease,border-color .18s}
-.hover-active #curR{transform:scale(1.9)!important;border-color:var(--gold)}
+/* ── CURSOR ─── */
+#cur{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;top:0;left:0;transition:transform .1s}
+#curR{position:fixed;width:28px;height:28px;border:1.5px solid var(--forest);border-radius:50%;pointer-events:none;z-index:9998;top:0;left:0;transition:border-color .18s}
+.ha #curR{border-color:var(--gold);transform:scale(2)!important}
 
-/* ── NAV ─────────────────────────────── */
+/* ── NAV ─── */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
-  height:70px;padding:0 6%;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:all .4s;
+  position:fixed;top:0;left:0;right:0;z-index:300;height:68px;
+  padding:0 5%;display:flex;align-items:center;justify-content:space-between;
+  transition:all .35s;
 }
-nav.scrolled{
-  background:rgba(250,247,240,.95);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(0,0,0,.06);
-  box-shadow:0 2px 20px rgba(0,0,0,.06);
-}
-.logo{display:flex;align-items:center;gap:.8rem;text-decoration:none}
-.logo-mark{
-  width:38px;height:38px;border-radius:10px;
-  background:linear-gradient(135deg,var(--forest),var(--forest2));
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 14px rgba(10,74,46,.3);
-}
-.logo-mark svg{width:19px;height:19px;stroke:var(--gold2);stroke-width:2.5;fill:none}
-.logo-txt{font-family:var(--fd);font-size:1.1rem;font-weight:900;color:var(--ink);font-style:italic}
+nav.sc{background:rgba(250,247,240,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,.05);box-shadow:0 2px 24px rgba(0,0,0,.05)}
+.logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.logo-mark{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(10,74,46,.3)}
+.logo-mark svg{width:18px;height:18px;stroke:var(--gold2);stroke-width:2.5;fill:none}
+.logo-txt{font-family:var(--fd);font-size:1.08rem;font-weight:900;color:var(--ink);font-style:italic;letter-spacing:-.01em}
 .logo-txt span{color:var(--forest)}
-.nav-links{display:flex;gap:2.5rem}
-.nav-links a{
-  font-size:.82rem;font-weight:600;color:var(--txt2);
-  text-decoration:none;transition:.2s;letter-spacing:.01em;
-  position:relative;
-}
-.nav-links a::after{
-  content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;
-  background:var(--gold);transform:scaleX(0);transition:.2s;
-}
+.nav-links{display:flex;gap:2.2rem}
+.nav-links a{font-size:.8rem;font-weight:600;color:var(--txt2);text-decoration:none;transition:.2s;letter-spacing:.01em;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:.2s}
 .nav-links a:hover{color:var(--forest)}
 .nav-links a:hover::after{transform:scaleX(1)}
-.nav-cta{
-  display:flex;align-items:center;gap:.55rem;
-  padding:.6rem 1.5rem;
-  background:var(--forest);
-  border-radius:10px;font-size:.82rem;font-weight:700;
-  color:var(--white);text-decoration:none;
-  transition:all .25s;
-  box-shadow:0 4px 16px rgba(10,74,46,.3);
-}
-.nav-cta svg{width:13px;height:13px;stroke:var(--gold2);stroke-width:2.5;fill:none}
+.nav-cta{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem 1.4rem;background:var(--forest);border-radius:10px;font-size:.8rem;font-weight:700;color:#fff;text-decoration:none;transition:all .22s;box-shadow:0 4px 16px rgba(10,74,46,.3)}
 .nav-cta:hover{background:var(--forest2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,74,46,.4)}
 
-/* ── HERO ───────────────────────────── */
+/* ── HERO ─── */
 .hero{
-  min-height:100vh;
-  background:var(--cream);
-  padding:8rem 6% 6rem;
-  position:relative;overflow:hidden;
+  min-height:100vh;background:var(--cream);
+  padding:6rem 5% 5rem;position:relative;overflow:hidden;
   display:flex;align-items:center;
 }
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.022) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%)}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.b1{width:700px;height:700px;background:rgba(10,74,46,.07);right:-180px;top:-120px}
+.b2{width:500px;height:500px;background:rgba(212,160,23,.07);left:-120px;bottom:-80px}
+.b3{width:280px;height:280px;background:rgba(34,197,94,.05);right:28%;top:55%}
 
-/* Texture grain légère */
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-  opacity:.5;pointer-events:none;z-index:0;
-}
+.hero-inner{max-width:1320px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.15fr;gap:5rem;align-items:center;position:relative;z-index:2}
 
-/* Blobs organiques */
-.blob{
-  position:absolute;border-radius:50%;filter:blur(80px);
-  pointer-events:none;
-}
-.blob1{width:600px;height:600px;background:rgba(10,74,46,.07);right:-200px;top:-100px}
-.blob2{width:400px;height:400px;background:rgba(212,160,23,.08);left:-100px;bottom:-50px}
-.blob3{width:300px;height:300px;background:rgba(34,197,94,.06);right:30%;top:60%}
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:var(--forest);border-radius:100px;padding:.35rem .9rem .35rem .4rem;margin-bottom:1.7rem;animation:fup .5s both}
+.badge-dot{width:24px;height:24px;border-radius:50%;background:var(--gold2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.badge-dot svg{width:11px;height:11px;stroke:var(--forest);stroke-width:2.5;fill:none}
+.badge-txt{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.05em;text-transform:uppercase}
 
-/* Grille subtile */
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(0,0,0,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,0,0,.025) 1px,transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(ellipse at 50% 50%,black 20%,transparent 75%);
-}
+h1.hero-title{font-family:var(--fd);font-size:clamp(2.8rem,5.2vw,5rem);font-weight:900;line-height:.88;letter-spacing:-.04em;color:var(--ink);margin-bottom:1.5rem;animation:fup .6s .06s both}
+h1.hero-title em{font-style:italic;color:var(--forest);display:block}
+h1.hero-title .ghost{-webkit-text-stroke:2.5px var(--forest);color:transparent}
 
-.hero-inner{
-  max-width:1280px;margin:0 auto;width:100%;
-  display:grid;grid-template-columns:1.1fr .9fr;gap:5rem;align-items:center;
-  position:relative;z-index:2;
-}
-
-.hero-badge{
-  display:inline-flex;align-items:center;gap:.65rem;
-  background:var(--forest);border-radius:100px;
-  padding:.38rem 1rem .38rem .5rem;margin-bottom:1.8rem;
-  animation:fup .5s ease both;
-}
-.badge-dot{
-  width:26px;height:26px;border-radius:50%;
-  background:var(--gold2);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.badge-dot svg{width:12px;height:12px;stroke:var(--forest);stroke-width:2.5;fill:none}
-.badge-txt{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.04em;text-transform:uppercase}
-
-.hero-title{
-  font-family:var(--fd);
-  font-size:clamp(3rem,5.5vw,5.2rem);
-  font-weight:900;line-height:.9;letter-spacing:-.04em;
-  color:var(--ink);margin-bottom:1.6rem;
-  animation:fup .6s .06s ease both;
-}
-.hero-title em{font-style:italic;color:var(--forest);display:block}
-.hero-title .ghost{
-  -webkit-text-stroke:2px var(--forest);
-  color:transparent;
-}
-
-.hero-desc{
-  font-size:1.05rem;color:var(--txt2);
-  line-height:1.85;max-width:470px;margin-bottom:2.2rem;
-  animation:fup .6s .12s ease both;
-  font-weight:400;
-}
+.hero-desc{font-size:1rem;color:var(--txt2);line-height:1.9;max-width:460px;margin-bottom:2rem;animation:fup .6s .12s both;font-weight:400}
 .hero-desc strong{color:var(--ink);font-weight:700}
 
-.hero-btns{
-  display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:2.8rem;
-  animation:fup .6s .18s ease both;
-}
-.btn-pri{
-  display:inline-flex;align-items:center;gap:.6rem;
-  padding:.95rem 2.2rem;
-  background:linear-gradient(135deg,var(--forest),var(--forest2));
-  border-radius:12px;font-size:.92rem;font-weight:700;
-  color:var(--white);text-decoration:none;
-  box-shadow:0 6px 24px rgba(10,74,46,.35);
-  transition:all .25s;
-}
-.btn-pri svg{width:15px;height:15px;stroke:var(--gold2);stroke-width:2.5;fill:none}
+.hero-btns{display:flex;gap:.85rem;flex-wrap:wrap;margin-bottom:2.5rem;animation:fup .6s .18s both}
+.btn-pri{display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 2rem;background:linear-gradient(135deg,var(--forest),var(--forest2));border-radius:12px;font-size:.9rem;font-weight:700;color:#fff;text-decoration:none;box-shadow:0 6px 24px rgba(10,74,46,.35);transition:all .22s}
+.btn-pri svg{width:14px;height:14px;stroke:var(--gold2);stroke-width:2.5;fill:none}
 .btn-pri:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(10,74,46,.45)}
+.btn-sec{display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 1.8rem;background:var(--white);border:2px solid var(--cream3);border-radius:12px;font-size:.9rem;font-weight:700;color:var(--txt);text-decoration:none;transition:all .22s;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.btn-sec svg{width:14px;height:14px;stroke:var(--forest);stroke-width:2;fill:none}
+.btn-sec:hover{border-color:var(--forest);box-shadow:0 4px 20px rgba(10,74,46,.14)}
 
-.btn-sec{
-  display:inline-flex;align-items:center;gap:.6rem;
-  padding:.95rem 2rem;
-  background:var(--white);
-  border:2px solid var(--cream3);
-  border-radius:12px;font-size:.92rem;font-weight:700;
-  color:var(--txt);text-decoration:none;transition:all .25s;
-  box-shadow:0 2px 12px rgba(0,0,0,.06);
-}
-.btn-sec svg{width:15px;height:15px;stroke:var(--forest);stroke-width:2;fill:none}
-.btn-sec:hover{border-color:var(--forest);box-shadow:0 4px 20px rgba(10,74,46,.15)}
-
-/* Stats */
-.hero-stats{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  background:var(--white);border-radius:16px;overflow:hidden;
-  border:1px solid var(--cream3);
-  box-shadow:0 4px 24px rgba(0,0,0,.06);
-  animation:fup .6s .24s ease both;
-}
-.stat{
-  padding:1.3rem .8rem;text-align:center;
-  border-right:1px solid var(--cream3);transition:.2s;
-}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--white);border-radius:16px;border:1px solid var(--cream3);box-shadow:0 4px 24px rgba(0,0,0,.05);animation:fup .6s .24s both;overflow:hidden}
+.stat{padding:1.2rem .7rem;text-align:center;border-right:1px solid var(--cream3);transition:.2s}
 .stat:last-child{border-right:none}
 .stat:hover{background:var(--cream)}
-.stat-val{font-family:var(--fd);font-size:1.6rem;font-weight:900;color:var(--forest);line-height:1}
-.stat-lbl{font-family:var(--fm);font-size:.58rem;color:var(--txt3);margin-top:.4rem;letter-spacing:.07em;text-transform:uppercase}
+.stat-val{font-family:var(--fd);font-size:1.55rem;font-weight:900;color:var(--forest);line-height:1}
+.stat-lbl{font-family:var(--fm);font-size:.54rem;color:var(--txt3);margin-top:.35rem;letter-spacing:.06em;text-transform:uppercase}
 
-/* ── PHONE MOCKUP ───────────────────── */
-.hero-visual{display:flex;justify-content:center;position:relative;animation:fup .8s .08s ease both}
+/* ── DEVICE SHOWCASE ─── */
+.devices{position:relative;height:640px;animation:fup .9s .08s both}
 
-.phone-wrap{
-  position:relative;
-}
-.phone{
-  width:292px;
-  background:var(--ink);
-  border-radius:46px;padding:10px;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.1),
-    0 50px 120px rgba(0,0,0,.35),
-    0 20px 40px rgba(0,0,0,.2);
-}
-.phone-inner{
-  background:var(--cream);border-radius:37px;
-  height:610px;overflow:hidden;
-  display:flex;flex-direction:column;position:relative;
-}
-.notch{
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:82px;height:24px;background:var(--ink);
-  border-radius:0 0 16px 16px;z-index:10;
-}
+  /* iPhone 15 Pro Max - Titanium */
+  .d-phone{
+    position:absolute;right:0;bottom:0;
+    width:250px;height:540px;
+    --titanium: linear-gradient(145deg, #C4C4C4 0%, #E0E0E0 30%, #D8D8D8 70%, #C4C4C4 100%);
+    --titanium-dark: linear-gradient(145deg, #A8A8A8 0%, #C8C8C8 50%, #B8B8B8 100%);
+    background:var(--titanium);
+    border-radius:42px;
+    padding:7px 7px 12px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.3),
+      0 8px 32px rgba(0,0,0,.4),
+      0 20px 60px rgba(0,0,0,.3),
+      inset 0 1px 0 rgba(255,255,255,.2);
+    z-index:10;
+  }
+  .d-phone::before{
+    content:'';
+    position:absolute;
+    inset:3px;
+    background:var(--cream);
+    border-radius:38px;
+    z-index:1;
+  }
+  .d-phone-inner{
+    position:relative;z-index:2;
+    height:526px;overflow:hidden;
+    background:var(--cream);
+    border-radius:38px;
+    margin:0 2px 5px;
+  }
+  /* Dynamic Island */
+  .d-island{
+    position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:40px;height:28px;background:#000;
+    border-radius:20px;
+    z-index:15;
+    box-shadow:0 2px 8px rgba(0,0,0,.4);
+  }
+  .d-island::before{
+    content:'';position:absolute;top:2px;left:4px;right:4px;height:10px;
+    background:linear-gradient(90deg,rgba(255,255,255,.3),transparent 50%,rgba(255,255,255,.3));
+    border-radius:3px;
+  }
+  /* Rear Camera Bump */
+  .d-camera{
+    position:absolute;bottom:22px;right:20px;z-index:3;
+    width:32px;height:32px;background:var(--titanium-dark);
+    border-radius:50%;
+    box-shadow:0 4px 16px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .d-camera::before{
+    content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:18px;height:18px;background:#000;border-radius:50%;
+    box-shadow:inset 0 1px 3px rgba(255,255,255,.2);
+  }
+  .d-camera::after{
+    content:'';position:absolute;top:4px;right:4px;
+    width:12px;height:12px;background:#000;border-radius:50%;
+  }
+  /* Side details: Mute switch, volume */
+  .d-mute{
+    position:absolute;top:90px;left:-3px;width:3px;height:22px;
+    background:linear-gradient(180deg,#A0A0A0,#D0D0D0);
+    border-radius:2px;
+    box-shadow:1px 0 2px rgba(0,0,0,.3);
+  }
+  .d-volume{
+    position:absolute;top:140px;left:-4px;width:4px;height:60px;
+    background:var(--titanium);
+    border-radius:3px;
+    box-shadow:1px 0 3px rgba(0,0,0,.4);
+  }
+  .d-volume::before{
+    content:'';position:absolute;top:8px;left:0;right:0;height:18px;
+    background:#000;border-radius:2px;
+  }
+  .d-volume::after{
+    content:'';position:absolute;bottom:8px;left:0;right:0;height:18px;
+    background:#000;border-radius:2px;
+  }
+  /* Bottom USB-C hint */
+  .d-usbc{
+    position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);
+    width:18px;height:6px;background:var(--titanium-dark);
+    border-radius:4px 4px 0 0;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.3);
+  }
 
-/* App UI inside phone */
-.p-hdr{
-  background:linear-gradient(155deg,var(--forest) 0%,var(--forest2) 60%,#1A7A3C 100%);
-  padding:28px 16px 18px;flex-shrink:0;position:relative;overflow:hidden;
+/* Tablet */
+.d-tablet{
+  position:absolute;left:0;top:30px;
+  width:480px;height:360px;
+  background:var(--ink);border-radius:20px;padding:6px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 30px 80px rgba(0,0,0,.28),0 12px 30px rgba(0,0,0,.18);
+  z-index:8;
 }
-.p-hdr::after{
-  content:'';position:absolute;
-  width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(212,160,23,.15),transparent 70%);
-  top:-60px;right:-40px;
-}
-.p-hdr-row{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
-.p-greet{font-size:.52rem;font-weight:600;color:rgba(255,255,255,.5);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em}
-.p-name{font-size:.85rem;font-weight:800;color:var(--white);margin-top:2px}
-.p-bell{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center}
-.p-bell svg{width:13px;height:13px;stroke:rgba(255,255,255,.8);stroke-width:2;fill:none}
+.d-tablet-inner{background:var(--cream);border-radius:15px;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.d-tablet-cam{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);z-index:5}
 
-/* Balance card inside phone */
-.p-bal{
-  margin:12px 12px 0;
-  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 55%,var(--gold3) 100%);
-  border-radius:18px;padding:14px 16px;
-  position:relative;overflow:hidden;
-  box-shadow:0 6px 24px rgba(212,160,23,.4);
+/* Laptop */
+.d-laptop{
+  position:absolute;left:-20px;bottom:0;
+  width:560px;
 }
-.p-bal::after{content:'';position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.18);bottom:-28px;right:-18px}
-.p-bal-lbl{font-size:.5rem;font-weight:700;color:rgba(0,0,0,.45);letter-spacing:.1em;text-transform:uppercase;font-family:var(--fm)}
-.p-bal-amt{font-family:var(--fd);font-size:1.5rem;font-weight:900;color:var(--ink);line-height:1;margin:.15rem 0;letter-spacing:-.02em}
-.p-bal-sub{font-size:.5rem;color:rgba(0,0,0,.42);font-family:var(--fm)}
-
-/* QA inside phone */
-.p-qa{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 12px 0}
-.p-qa-item{
-  display:flex;flex-direction:column;align-items:center;gap:5px;
-  background:var(--white);border-radius:12px;padding:10px 4px 8px;
-  box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04);
-}
-.p-qa-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.p-qa-ic svg{width:14px;height:14px;stroke-width:2;fill:none}
-.p-qa-lbl{font-size:.44rem;font-weight:800;color:var(--ink);text-align:center;line-height:1.2}
-
-/* Coffre mini inside phone */
-.p-coffre{
-  margin:8px 12px 0;
-  background:linear-gradient(135deg,var(--forest),var(--forest2));
-  border-radius:12px;padding:10px 12px;
-  display:flex;align-items:center;gap:9px;
-  border:1px solid rgba(212,160,23,.2);
-}
-.p-coffre-ic{width:26px;height:26px;border-radius:7px;background:rgba(212,160,23,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.p-coffre-ic svg{width:13px;height:13px;stroke:var(--gold2);stroke-width:2;fill:none}
-.p-coffre-t{font-size:.52rem;font-weight:800;color:var(--gold2)}
-.p-coffre-s{font-size:.46rem;color:rgba(255,255,255,.45)}
-.p-coffre-v{margin-left:auto;font-size:.62rem;font-weight:900;color:var(--gold2);font-family:var(--fd)}
-
-/* TX inside phone */
-.p-txs{padding:0 12px 8px;flex:1;overflow:hidden}
-.p-tx-hdr{font-size:.48rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin:8px 0 6px}
-.p-tx{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05)}
-.p-tx:last-child{border-bottom:none}
-.p-tx-av{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.p-tx-av svg{width:10px;height:10px;stroke:white;stroke-width:2;fill:none}
-.p-tx-name{font-size:.52rem;font-weight:700;color:var(--ink);flex:1}
-.p-tx-cat{font-size:.46rem;color:var(--txt3)}
-.p-tx-v{font-size:.56rem;font-weight:800}
-.p-tx-v.cr{color:#16a34a}
-.p-tx-v.db{color:#dc2626}
+.d-laptop-screen{background:var(--ink);border-radius:12px 12px 0 0;padding:5px 5px 0;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 20px 60px rgba(0,0,0,.25)}
+.d-laptop-inner{background:var(--cream);border-radius:8px 8px 0 0;height:320px;overflow:hidden;position:relative}
+.d-laptop-base{background:linear-gradient(180deg,#2a2a2a,#1a1a1a);height:14px;border-radius:0 0 4px 4px;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.d-laptop-foot{background:#222;height:4px;border-radius:0 0 3px 3px;margin:0 20px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 
 /* Floating badges */
-.badge-fl{
-  position:absolute;
-  background:var(--white);
-  border:1px solid var(--cream3);
-  border-radius:14px;padding:.6rem 1rem;
-  box-shadow:0 8px 32px rgba(0,0,0,.12);
-  display:flex;align-items:center;gap:.65rem;z-index:5;
-}
-.badge-fl-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.badge-fl-ic svg{width:13px;height:13px;stroke-width:2;fill:none}
-.badge-fl-title{font-size:.65rem;font-weight:800;color:var(--ink);display:block;line-height:1}
-.badge-fl-sub{font-size:.54rem;color:var(--txt3)}
-.fl1{top:12px;left:-74px;animation:fl1 5s ease-in-out infinite}
-.fl2{bottom:100px;right:-68px;animation:fl2 4.5s ease-in-out infinite}
-.fl3{top:46%;left:-70px;animation:fl1 6.5s ease-in-out infinite .6s}
-@keyframes fl1{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
-@keyframes fl2{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(10px) rotate(-1deg)}}
+.fl{position:absolute;background:var(--white);border:1px solid var(--cream3);border-radius:14px;padding:.55rem .9rem;box-shadow:0 8px 32px rgba(0,0,0,.1);display:flex;align-items:center;gap:.6rem;z-index:20}
+.fl-ic{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fl-ic svg{width:12px;height:12px;stroke-width:2;fill:none}
+.fl-t{font-size:.62rem;font-weight:800;color:var(--ink);display:block;line-height:1}
+.fl-s{font-size:.52rem;color:var(--txt3)}
+.fl1{top:0;right:20px;animation:fl1 5s ease-in-out infinite}
+.fl2{bottom:130px;right:-10px;animation:fl2 4.5s ease-in-out infinite}
+.fl3{bottom:90px;left:160px;animation:fl1 6s ease-in-out infinite .5s;z-index:15}
+@keyframes fl1{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
+@keyframes fl2{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(10px) rotate(-.5deg)}}
 
-/* Shadow phone */
-.phone-shadow{
-  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
-  width:200px;height:30px;
-  background:rgba(0,0,0,.15);
-  filter:blur(20px);border-radius:50%;
-}
+/* ── APP UI SNIPPETS (shared) ─── */
+.app-hdr{background:linear-gradient(155deg,#0A4A2E 0%,#0F5C38 60%,#1A6B40 100%);flex-shrink:0;position:relative;overflow:hidden}
+.app-hdr::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.14),transparent 70%);right:-50px;top:-60px;pointer-events:none}
+.app-topbar{display:flex;align-items:center;justify-content:space-between}
+.app-greet{font-size:.46rem;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)}
+.app-name{font-size:.72rem;font-weight:800;color:#fff;margin-top:2px}
+.app-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#0F5C38);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:900;color:#fff;border:2px solid rgba(255,255,255,.18)}
+.app-bal{background:linear-gradient(135deg,#D4A017 0%,#F0C040 55%,#FDE68A 100%);border-radius:14px;position:relative;overflow:hidden}
+.app-bal::after{content:'';position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.18);bottom:-20px;right:-14px}
+.app-bal-lbl{font-size:.4rem;font-weight:700;color:rgba(0,0,0,.45);letter-spacing:.1em;text-transform:uppercase;font-family:var(--fm)}
+.app-bal-amt{font-family:var(--fd);font-weight:900;color:#0A4A2E;line-height:1;letter-spacing:-.02em}
+.app-bal-sub{font-size:.42rem;color:rgba(0,0,0,.42);font-family:var(--fm)}
 
-/* ── DIVIDER ────────────────────────── */
+/* TX row (shared) */
+.a-tx{display:flex;align-items:center}
+.a-tx-av{border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.a-tx-av svg{stroke:white;stroke-width:2;fill:none}
+.a-tx-name{font-weight:700;color:var(--txt)}
+.a-tx-cat{color:var(--txt3);font-family:var(--fm)}
+.a-tx-v{font-weight:800}
+.a-tx-v.cr{color:#15803d}
+.a-tx-v.db{color:#dc2626}
+
+/* ── DIVIDER ─── */
 .div{height:1px;background:linear-gradient(90deg,transparent,var(--cream3) 20%,var(--cream3) 80%,transparent)}
 
-/* ── SECTIONS COMMUNES ─────────────── */
-section{padding:7rem 6%}
-.inner{max-width:1280px;margin:0 auto}
-.eyebrow{
-  font-family:var(--fm);font-size:.68rem;font-weight:500;
-  color:var(--green);letter-spacing:.18em;text-transform:uppercase;
-  display:flex;align-items:center;gap:.65rem;margin-bottom:.8rem;
-}
-.eyebrow::before{content:'';width:20px;height:2px;background:var(--gold);display:block;border-radius:1px}
-.sec-title{
-  font-family:var(--fd);
-  font-size:clamp(2rem,3.5vw,3rem);
-  font-weight:900;letter-spacing:-.04em;line-height:1.05;
-  color:var(--ink);margin-bottom:1rem;
-}
-.sec-title em{font-style:italic;color:var(--forest)}
-.sec-title .go{color:var(--gold)}
-.sec-sub{font-size:.95rem;color:var(--txt2);max-width:480px;line-height:1.9}
+/* ── SECTION COMMON ─── */
+section{padding:7rem 5%}
+.inner{max-width:1320px;margin:0 auto}
+.eyebrow{font-family:var(--fm);font-size:.66rem;font-weight:500;color:var(--green);letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.eyebrow::before{content:'';width:18px;height:2px;background:var(--gold);display:block;border-radius:1px}
+h2.sec-title{font-family:var(--fd);font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;color:var(--ink);margin-bottom:1rem}
+h2.sec-title em{font-style:italic;color:var(--forest)}
+h2.sec-title .go{color:var(--gold)}
+.sec-sub{font-size:.93rem;color:var(--txt2);max-width:460px;line-height:1.9}
 
-/* ── FEATURES ───────────────────────── */
+/* ── FEATURES ─── */
 .feats-bg{background:var(--white)}
-.feats-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;margin-bottom:4rem}
-
-.feats-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.feat{
-  background:var(--cream);border:1px solid var(--cream3);
-  border-radius:20px;padding:2rem 1.8rem;
-  transition:all .32s;position:relative;overflow:hidden;cursor:default;
-}
-.feat::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--forest),var(--gold));
-  transform:scaleX(0);transform-origin:left;transition:.35s;border-radius:0 0 0 0;
-}
-.feat:hover{background:var(--white);border-color:var(--cream3);box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-3px)}
+.feats-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem}
+.feats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{background:var(--cream);border:1px solid var(--cream3);border-radius:20px;padding:1.8rem 1.6rem;transition:all .3s;position:relative;overflow:hidden;cursor:default}
+.feat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--forest),var(--gold));transform:scaleX(0);transform-origin:left;transition:.32s}
+.feat:hover{background:var(--white);box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-4px)}
 .feat:hover::after{transform:scaleX(1)}
-.feat-ic{
-  width:48px;height:48px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:1.3rem;
-}
-.feat-ic svg{width:22px;height:22px;stroke-width:1.8;fill:none}
-.feat h3{font-size:.92rem;font-weight:800;color:var(--ink);margin-bottom:.5rem}
-.feat p{font-size:.78rem;color:var(--txt2);line-height:1.82}
-.feat-pill{
-  display:inline-block;margin-top:1rem;
-  font-family:var(--fm);font-size:.56rem;
-  padding:.25rem .75rem;border-radius:100px;font-weight:600;letter-spacing:.05em;
-}
+.feat-ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+.feat-ic svg{width:21px;height:21px;stroke-width:1.8;fill:none}
+.feat h3{font-size:.9rem;font-weight:800;color:var(--ink);margin-bottom:.4rem}
+.feat p{font-size:.76rem;color:var(--txt2);line-height:1.82}
+.feat-pill{display:inline-block;margin-top:.9rem;font-family:var(--fm);font-size:.54rem;padding:.22rem .7rem;border-radius:100px;font-weight:600;letter-spacing:.05em}
 
-/* ── COFFRE ─────────────────────────── */
+/* ── SCREENS SECTION ─── */
+.screens-bg{background:var(--ink);padding:7rem 5%}
+.screens-bg .eyebrow{color:var(--gold2)}
+.screens-bg .eyebrow::before{background:var(--gold2)}
+.screens-bg h2.sec-title{color:var(--white)}
+.screens-bg h2.sec-title em{color:var(--gold2)}
+.screens-bg .sec-sub{color:rgba(255,255,255,.42)}
+
+.screens-header{display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:end;margin-bottom:5rem}
+
+/* Laptop demo large */
+.laptop-demo{position:relative;margin:0 auto}
+.ld-body{background:#1a1a1a;border-radius:14px 14px 0 0;padding:7px 7px 0;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 30px 80px rgba(0,0,0,.5)}
+.ld-screen{background:var(--cream);border-radius:9px 9px 0 0;height:340px;overflow:hidden;position:relative}
+.ld-base{background:linear-gradient(180deg,#2a2a2a 0%,#1f1f1f 100%);height:18px;border-radius:0 0 6px 6px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.ld-foot{background:#1a1a1a;height:5px;margin:0 30px;border-radius:0 0 4px 4px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+
+/* Tablet demo */
+.tab-demo{position:relative}
+.td-body{background:#1a1a1a;border-radius:14px;padding:6px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 20px 60px rgba(0,0,0,.4)}
+.td-screen{background:var(--cream);border-radius:9px;height:280px;overflow:hidden;position:relative}
+.td-cam{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);z-index:5}
+
+/* Phones row */
+.phones-row{display:flex;gap:28px;align-items:flex-end;justify-content:center}
+.ph-mini{background:var(--ink);border-radius:22px;padding:5px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 16px 40px rgba(0,0,0,.35)}
+.ph-mini-inner{background:var(--cream);border-radius:17px;height:200px;width:96px;overflow:hidden;position:relative}
+.ph-mini-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:36px;height:12px;background:var(--ink);border-radius:0 0 8px 8px;z-index:5}
+.ph-big{background:var(--ink);border-radius:28px;padding:6px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 24px 60px rgba(0,0,0,.45)}
+.ph-big-inner{background:var(--cream);border-radius:22px;height:260px;width:126px;overflow:hidden;position:relative}
+.ph-big-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:46px;height:14px;background:var(--ink);border-radius:0 0 10px 10px;z-index:5}
+
+.devices-tabs{display:flex;gap:14px;margin-bottom:3rem}
+.dtab{padding:.5rem 1.2rem;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;transition:.15s;border:1.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);background:none;font-family:var(--f)}
+.dtab.on{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.3);color:var(--gold2)}
+
+/* ── COFFRE ─── */
 .coffre-bg{background:var(--ink)}
-.coffre-bg .sec-title{color:var(--white)}
-.coffre-bg .sec-title em{color:var(--gold2)}
-.coffre-bg .sec-sub{color:rgba(255,255,255,.45)}
 .coffre-bg .eyebrow{color:var(--gold2)}
 .coffre-bg .eyebrow::before{background:var(--gold2)}
+.coffre-bg h2.sec-title{color:#fff}
+.coffre-bg h2.sec-title em{color:var(--gold2)}
+.coffre-bg .sec-sub{color:rgba(255,255,255,.42)}
 
 .coffre-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.coffre-card{background:linear-gradient(155deg,var(--forest) 0%,#0A3D25 100%);border-radius:26px;padding:2.6rem;position:relative;overflow:hidden;border:1px solid rgba(212,160,23,.2)}
+.coffre-card::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.1),transparent 70%);top:-90px;right:-90px}
+.coffre-ic{width:56px;height:56px;border-radius:16px;background:rgba(212,160,23,.18);border:1px solid rgba(212,160,23,.28);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.coffre-ic svg{width:26px;height:26px;stroke:var(--gold2);stroke-width:1.8;fill:none}
+.coffre-card h3{font-family:var(--fd);font-size:1.7rem;font-weight:900;font-style:italic;color:#fff;margin-bottom:.6rem}
+.coffre-card p{font-size:.86rem;color:rgba(255,255,255,.48);line-height:1.9;margin-bottom:1.8rem}
+.coffre-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.c-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:1.1rem .7rem;text-align:center}
+.c-stat-n{font-family:var(--fd);font-size:1.45rem;font-weight:900;color:var(--gold2)}
+.c-stat-l{font-family:var(--fm);font-size:.52rem;color:rgba(255,255,255,.32);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
 
-.coffre-card{
-  background:linear-gradient(155deg,var(--forest) 0%,#0A3D25 100%);
-  border-radius:26px;padding:2.8rem;
-  position:relative;overflow:hidden;
-  border:1px solid rgba(212,160,23,.2);
-}
-.coffre-card::before{
-  content:'';position:absolute;
-  width:320px;height:320px;border-radius:50%;
-  background:radial-gradient(circle,rgba(212,160,23,.1),transparent 70%);
-  top:-100px;right:-100px;
-}
-.coffre-ic{
-  width:60px;height:60px;border-radius:18px;
-  background:rgba(212,160,23,.18);border:1px solid rgba(212,160,23,.3);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:1.6rem;
-}
-.coffre-ic svg{width:28px;height:28px;stroke:var(--gold2);stroke-width:1.8;fill:none}
-.coffre-card h3{font-family:var(--fd);font-size:1.8rem;font-weight:900;font-style:italic;color:var(--white);margin-bottom:.65rem}
-.coffre-card p{font-size:.88rem;color:rgba(255,255,255,.5);line-height:1.9;margin-bottom:2rem}
-.coffre-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
-.c-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:1.2rem .8rem;text-align:center}
-.c-stat-n{font-family:var(--fd);font-size:1.5rem;font-weight:900;color:var(--gold2)}
-.c-stat-l{font-family:var(--fm);font-size:.56rem;color:rgba(255,255,255,.35);margin-top:.35rem;text-transform:uppercase;letter-spacing:.06em}
-
-.coffre-feats{display:flex;flex-direction:column;gap:1.1rem}
-.cf{
-  display:flex;align-items:flex-start;gap:1.1rem;
-  padding:1.3rem;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;transition:.25s;
-}
+.coffre-feats{display:flex;flex-direction:column;gap:1rem}
+.cf{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:15px;transition:.22s}
 .cf:hover{border-color:rgba(212,160,23,.2);background:rgba(212,160,23,.05)}
-.cf-ic{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.cf-ic svg{width:17px;height:17px;stroke-width:2;fill:none}
-.cf-title{font-size:.84rem;font-weight:800;color:var(--white);margin-bottom:.25rem}
-.cf-desc{font-size:.76rem;color:rgba(255,255,255,.4);line-height:1.75}
+.cf-ic{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cf-ic svg{width:16px;height:16px;stroke-width:2;fill:none}
+.cf-title{font-size:.82rem;font-weight:800;color:#fff;margin-bottom:.22rem}
+.cf-desc{font-size:.74rem;color:rgba(255,255,255,.38);line-height:1.72}
 
-/* ── COMPARE ────────────────────────── */
+/* ── COMPARE ─── */
 .cmp-bg{background:var(--cream)}
-.ctable{margin-top:3.2rem;border:1.5px solid var(--cream3);border-radius:22px;overflow:hidden;background:var(--white)}
-.chead{
-  display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;
-  background:var(--forest);
-  padding:1rem 1.6rem;
-}
-.ch-lbl{font-family:var(--fm);font-size:.64rem;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em}
-.ch-us{font-family:var(--fm);font-size:.64rem;font-weight:800;color:var(--gold2);text-align:center;letter-spacing:.05em;text-transform:uppercase}
-.ch-oth{font-family:var(--fm);font-size:.64rem;font-weight:500;color:rgba(255,255,255,.35);text-align:center;text-transform:uppercase}
-.crow{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;padding:1rem 1.6rem;border-bottom:1px solid var(--cream2);transition:.15s}
+.ctable{margin-top:3rem;border:1.5px solid var(--cream3);border-radius:22px;overflow:hidden;background:var(--white)}
+.chead{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;background:var(--forest);padding:.9rem 1.5rem}
+.ch-lbl{font-family:var(--fm);font-size:.62rem;font-weight:600;color:rgba(255,255,255,.48);text-transform:uppercase;letter-spacing:.07em}
+.ch-us{font-family:var(--fm);font-size:.62rem;font-weight:800;color:var(--gold2);text-align:center;letter-spacing:.04em;text-transform:uppercase}
+.ch-oth{font-family:var(--fm);font-size:.62rem;font-weight:500;color:rgba(255,255,255,.32);text-align:center;text-transform:uppercase}
+.crow{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;padding:.9rem 1.5rem;border-bottom:1px solid var(--cream2);transition:.12s}
 .crow:last-child{border-bottom:none}
 .crow:hover{background:var(--cream)}
-.crow-feat{font-size:.84rem;font-weight:600;color:var(--txt)}
-.crow-feat small{display:block;font-size:.66rem;color:var(--txt3);font-weight:400;margin-top:.1rem}
-.cv{text-align:center;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:.4rem}
-.cv svg{width:13px;height:13px;stroke-width:2.5;fill:none}
+.crow-feat{font-size:.82rem;font-weight:600;color:var(--txt)}
+.crow-feat small{display:block;font-size:.64rem;color:var(--txt3);font-weight:400;margin-top:.1rem}
+.cv{text-align:center;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.cv svg{width:12px;height:12px;stroke-width:2.5;fill:none}
 .cv.yes{color:var(--green)}
 .cv.no{color:var(--cream3)}
 .cv.us{color:var(--forest);font-weight:900}
 
-/* ── QR SECTION ─────────────────────── */
-.qr-bg{background:var(--white)}
-.qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.qr-steps{display:flex;flex-direction:column;gap:1.3rem;margin-top:2.2rem}
-.step{display:flex;align-items:flex-start;gap:1.1rem}
-.step-n{
-  width:36px;height:36px;border-radius:50%;flex-shrink:0;
-  background:var(--forest);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fm);font-size:.72rem;font-weight:700;color:var(--gold2);
-  box-shadow:0 4px 14px rgba(10,74,46,.3);
-}
-.step-title{font-size:.9rem;font-weight:800;color:var(--ink);margin-bottom:.25rem}
-.step-desc{font-size:.78rem;color:var(--txt2);line-height:1.75}
+/* ── TONTINE SECTION ─── */
+.tontine-bg{background:var(--white)}
+.tontine-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.tontine-card{background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:24px;padding:2.2rem;color:#fff;position:relative;overflow:hidden}
+.tontine-card::before{content:'';position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,.06);top:-80px;right:-80px}
+.tnt-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.tnt-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.1rem;font-weight:900;color:#fff}
+.tnt-name{font-size:.9rem;font-weight:800}
+.tnt-members{font-size:.66rem;opacity:.55;margin-top:2px;font-family:var(--fm)}
+.tnt-val{margin-left:auto;text-align:right}
+.tnt-n{font-family:var(--fd);font-size:1rem;font-weight:900}
+.tnt-c{font-size:.6rem;opacity:.5;font-family:var(--fm);margin-top:2px}
+.tnt-bar-bg{background:rgba(255,255,255,.15);border-radius:100px;height:6px;overflow:hidden;margin:8px 0 6px}
+.tnt-bar{height:100%;border-radius:100px;background:var(--gold2)}
+.tnt-foot{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.56rem;opacity:.48;margin-bottom:14px}
+.tnt-btn-d{width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,.15);font-family:var(--f);font-size:.82rem;font-weight:800;color:#fff;cursor:pointer;border:1.5px solid rgba(255,255,255,.25)}
 
-.qr-card{
-  background:var(--ink);border-radius:26px;padding:2.2rem;
-  box-shadow:0 20px 60px rgba(0,0,0,.2);
-}
-.qr-demo{
-  width:150px;height:150px;margin:0 auto 1.3rem;
-  background:var(--white);border-radius:14px;padding:12px;
-}
-.qr-m-name{font-size:.95rem;font-weight:800;color:var(--white);text-align:center}
-.qr-m-phone{font-family:var(--fm);font-size:.66rem;color:rgba(255,255,255,.35);margin-top:.25rem;text-align:center;margin-bottom:1.3rem}
-.qr-amt{
-  background:rgba(255,255,255,.06);border:1px solid rgba(212,160,23,.2);
-  border-radius:12px;padding:.9rem 1.1rem;text-align:center;margin-bottom:.9rem;
-}
-.qr-amt-val{font-family:var(--fd);font-size:1.55rem;font-weight:900;color:var(--gold2)}
-.qr-pay-btn{
-  width:100%;padding:1rem;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  border-radius:12px;font-size:.88rem;font-weight:800;color:var(--ink);
-  border:none;cursor:pointer;transition:.22s;
-  display:flex;align-items:center;justify-content:center;gap:.6rem;
-  font-family:var(--f);box-shadow:0 6px 24px rgba(212,160,23,.35);
-}
-.qr-pay-btn svg{width:15px;height:15px;stroke:var(--ink);stroke-width:2.5;fill:none}
-.qr-pay-btn:hover{transform:scale(1.02);box-shadow:0 10px 32px rgba(212,160,23,.5)}
+.tontine-info{display:flex;flex-direction:column;gap:.9rem}
+.ti{display:flex;align-items:flex-start;gap:.9rem;padding:1.1rem;background:var(--cream);border:1px solid var(--cream3);border-radius:14px;transition:.2s}
+.ti:hover{background:var(--white);box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.ti-ic{width:34px;height:34px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ti-ic svg{width:15px;height:15px;stroke-width:2;fill:none}
+.ti-title{font-size:.82rem;font-weight:800;color:var(--ink);margin-bottom:.2rem}
+.ti-desc{font-size:.73rem;color:var(--txt2);line-height:1.72}
 
-/* ── AMBASSADEUR ────────────────────── */
+/* ── AMB ─── */
 .amb-bg{background:var(--cream)}
-.amb-card{
-  background:var(--forest);
-  border-radius:28px;padding:4rem;
-  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
-  position:relative;overflow:hidden;
-  box-shadow:0 20px 60px rgba(10,74,46,.25);
-}
-.amb-card::before{
-  content:'';position:absolute;
-  width:450px;height:450px;border-radius:50%;
-  background:radial-gradient(circle,rgba(212,160,23,.08),transparent 70%);
-  top:-150px;right:-100px;
-}
-.amb-card::after{
-  content:'';position:absolute;
-  width:200px;height:200px;border-radius:50%;
-  background:rgba(0,0,0,.08);
-  bottom:-60px;left:30%;
-}
-.amb-title{font-family:var(--fd);font-size:2.2rem;font-weight:900;font-style:italic;color:var(--white);margin-bottom:.75rem;line-height:1.1}
-.amb-title span{color:var(--gold2)}
-.amb-desc{font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.9;margin-bottom:2.2rem}
-.amb-steps{display:flex;flex-direction:column;gap:1rem}
-.as{display:flex;align-items:center;gap:1rem}
-.as-n{
-  width:30px;height:30px;border-radius:50%;flex-shrink:0;
-  background:var(--gold2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.68rem;font-weight:800;color:var(--forest);
-}
-.as-title{font-size:.85rem;font-weight:700;color:var(--white)}
-.as-desc{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:2px}
+.amb-card{background:var(--forest);border-radius:28px;padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(10,74,46,.22)}
+.amb-card::before{content:'';position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.08),transparent 70%);top:-130px;right:-80px}
+.amb-card::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(0,0,0,.07);bottom:-60px;left:35%}
+h3.amb-title{font-family:var(--fd);font-size:2rem;font-weight:900;font-style:italic;color:#fff;margin-bottom:.7rem;line-height:1.1}
+h3.amb-title span{color:var(--gold2)}
+.amb-desc{font-size:.88rem;color:rgba(255,255,255,.47);line-height:1.9;margin-bottom:2rem}
+.amb-steps{display:flex;flex-direction:column;gap:.85rem}
+.as{display:flex;align-items:center;gap:.9rem}
+.as-n{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:var(--gold2);display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:800;color:var(--forest)}
+.as-title{font-size:.84rem;font-weight:700;color:#fff}
+.as-desc{font-size:.7rem;color:rgba(255,255,255,.38);margin-top:2px}
+.amb-reward{background:rgba(255,255,255,.08);border:1px solid rgba(212,160,23,.2);border-radius:20px;padding:2.8rem;text-align:center;position:relative;z-index:1}
+.amb-big{font-family:var(--fd);font-size:3.2rem;font-weight:900;color:var(--gold2);line-height:1;display:block;margin-bottom:.5rem}
+.amb-sub{font-size:.82rem;color:rgba(255,255,255,.42);line-height:1.8}
+.amb-badge{display:inline-block;margin-top:1.1rem;padding:.38rem 1.1rem;background:var(--gold2);border-radius:100px;font-size:.7rem;font-weight:800;color:var(--forest)}
 
-.amb-reward{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(212,160,23,.2);
-  border-radius:22px;padding:3rem;text-align:center;
-  position:relative;z-index:1;
-}
-.amb-big{font-family:var(--fd);font-size:3.5rem;font-weight:900;color:var(--gold2);line-height:1;display:block;margin-bottom:.6rem}
-.amb-sub{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.8}
-.amb-badge{
-  display:inline-block;margin-top:1.2rem;
-  padding:.4rem 1.2rem;background:var(--gold2);
-  border-radius:100px;font-size:.72rem;font-weight:800;color:var(--forest);
-}
-
-/* ── CTA ────────────────────────────── */
-.cta-bg{
-  background:var(--white);text-align:center;
-  position:relative;overflow:hidden;padding:9rem 6%;
-}
-.cta-blob{
-  position:absolute;width:700px;height:700px;border-radius:50%;
-  background:radial-gradient(circle,rgba(10,74,46,.06) 0%,transparent 70%);
-  top:-200px;left:50%;transform:translateX(-50%);
-  pointer-events:none;
-}
-.cta-inner{max-width:640px;margin:0 auto;position:relative;z-index:2}
-.cta-title{font-family:var(--fd);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-.04em;line-height:1.05}
-.cta-title em{font-style:italic;color:var(--forest)}
-.cta-sub{font-size:.98rem;color:var(--txt2);margin-bottom:2.8rem;line-height:1.9}
-.cta-btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
-.stores{display:flex;gap:.9rem;justify-content:center;margin-top:1.4rem;flex-wrap:wrap}
-.store{
-  display:inline-flex;align-items:center;gap:.75rem;
-  padding:.75rem 1.6rem;
-  background:var(--cream);border:1.5px solid var(--cream3);
-  border-radius:12px;font-size:.82rem;font-weight:600;color:var(--txt);
-  text-decoration:none;transition:.2s;
-}
-.store svg{width:17px;height:17px;stroke:var(--txt3);stroke-width:1.5;fill:none}
+/* ── CTA ─── */
+.cta-bg{background:var(--white);text-align:center;position:relative;overflow:hidden;padding:9rem 5%}
+.cta-blob{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(10,74,46,.05),transparent 70%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
+.cta-inner{max-width:620px;margin:0 auto;position:relative;z-index:2}
+h2.cta-title{font-family:var(--fd);font-size:clamp(2.1rem,4.5vw,3.6rem);font-weight:900;color:var(--ink);margin-bottom:1.1rem;letter-spacing:-.04em;line-height:1.05}
+h2.cta-title em{font-style:italic;color:var(--forest)}
+.cta-sub{font-size:.95rem;color:var(--txt2);margin-bottom:2.6rem;line-height:1.9}
+.cta-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap}
+.stores{display:flex;gap:.85rem;justify-content:center;margin-top:1.3rem;flex-wrap:wrap}
+.store{display:inline-flex;align-items:center;gap:.7rem;padding:.7rem 1.5rem;background:var(--cream);border:1.5px solid var(--cream3);border-radius:12px;font-size:.8rem;font-weight:600;color:var(--txt);text-decoration:none;transition:.2s}
 .store:hover{border-color:var(--forest);box-shadow:0 4px 16px rgba(10,74,46,.12)}
-.store-lbl small{display:block;font-size:.58rem;color:var(--txt3);font-weight:400}
-.legal{font-family:var(--fm);font-size:.62rem;color:var(--txt3);margin-top:1.6rem}
+.store-lbl small{display:block;font-size:.56rem;color:var(--txt3);font-weight:400}
+.legal{font-family:var(--fm);font-size:.6rem;color:var(--txt3);margin-top:1.5rem}
 
-/* ── FOOTER ─────────────────────────── */
-footer{
-  background:var(--ink);padding:2.5rem 6%;
-  border-top:1px solid rgba(255,255,255,.06);
-}
-.foot-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.foot-brand{font-family:var(--fd);font-style:italic;font-size:1.1rem;font-weight:900;color:var(--gold2)}
-.foot-links{display:flex;gap:1.6rem}
-.foot-links a{font-size:.75rem;color:rgba(255,255,255,.3);text-decoration:none;transition:.15s}
+/* ── FOOTER ─── */
+footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255,255,.06)}
+.foot-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-brand{font-family:var(--fd);font-style:italic;font-size:1.05rem;font-weight:900;color:var(--gold2)}
+.foot-links{display:flex;gap:1.5rem}
+.foot-links a{font-size:.73rem;color:rgba(255,255,255,.28);text-decoration:none;transition:.15s}
 .foot-links a:hover{color:var(--gold2)}
-.foot-copy{font-family:var(--fm);font-size:.62rem;color:rgba(255,255,255,.2)}
+.foot-copy{font-family:var(--fm);font-size:.6rem;color:rgba(255,255,255,.18)}
 
-/* ── ANIMATIONS ─────────────────────── */
-@keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .72s,transform .72s}
-.reveal.in{opacity:1;transform:translateY(0)}
+/* ── ANIMS ─── */
+@keyframes fup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.rev{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.rev.in{opacity:1;transform:translateY(0)}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
-/* ── RESPONSIVE ─────────────────────── */
-@media(max-width:1020px){
-  .hero-inner,.coffre-grid,.qr-grid,.amb-card{grid-template-columns:1fr}
-  .hero-visual{display:none}
-  .feats-intro{grid-template-columns:1fr}
-  .feats-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:640px){
-  nav{padding:0 5%}.nav-links{display:none}
-  section{padding:5rem 5%}
-  .feats-grid{grid-template-columns:1fr}
-  .hero-stats{grid-template-columns:repeat(2,1fr)}
-  .chead,.crow{grid-template-columns:1.5fr 1fr 1fr}
-  .chead>*:last-child,.crow>*:last-child{display:none}
-  .hero-btns{flex-direction:column}
-}
-  </style>
-  <link rel="icon" type="image/svg+xml" href="ghettopay-icon.svg">
+/* ── RESPONSIVE ─── */
+@media(max-width:1100px){.hero-inner,.coffre-grid,.tontine-grid,.amb-card{grid-template-columns:1fr}.hero-visual,.devices{display:none}.feats-intro{grid-template-columns:1fr}.screens-header{grid-template-columns:1fr}}
+@media(max-width:700px){nav{padding:0 4%}.nav-links{display:none}section{padding:5rem 4%}.feats-grid{grid-template-columns:1fr 1fr}.hero-stats{grid-template-columns:repeat(2,1fr)}.chead,.crow{grid-template-columns:1.5fr 1fr 1fr}.chead>*:last-child,.crow>*:last-child{display:none}}
+@media(max-width:480px){.feats-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div id="cur"></div>
@@ -638,34 +459,36 @@ footer{
 <symbol id="wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 16 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></symbol>
 <symbol id="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
 <symbol id="drop" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+<symbol id="gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
 </defs></svg>
 
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">
-    <img src="ghettopay-icon.svg" alt="GhettoPay" height="60"/>
+<img src="ghettopay-icon.svg" alt="GhettoPay" class="logo-mark"/>
+    <span class="logo-txt"><em>Ghetto</em><span>Pay</span></span>
   </a>
   <div class="nav-links">
     <a href="#features">Fonctionnalités</a>
     <a href="#coffre">Le Coffre</a>
-    <a href="ghettopay-logo-kit.html">Kit Logo</a>
-    <a href="#compare">Comparer</a>
+    <a href="#tontine">Tontine</a>
+    <a href="#screens">L'App</a>
     <a href="https://ghettopay-app.vercel.app/">Application</a>
   </div>
-  <a href="https://ghettopay-app.vercel.app/" class="nav-cta"><svg><use href="#ar"/></svg>Ouvrir l'App</a>
+  <a href="https://ghettopay-app.vercel.app/" class="nav-cta">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#ar"/></svg>Ouvrir l'App
+  </a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-  <div class="hero-grid"></div>
+  <div class="hero-bg-grid"></div>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
 
   <div class="hero-inner">
     <div>
       <div class="hero-badge">
-        <div class="badge-dot"><svg><use href="#z"/></svg></div>
+        <div class="badge-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
         <span class="badge-txt">Portefeuille mobile · Made in Gabon</span>
       </div>
 
@@ -676,88 +499,264 @@ footer{
       </h1>
 
       <p class="hero-desc">
-        <strong>GhettoPay</strong> c'est ton portefeuille complet. Envoyer, recevoir, payer, épargner — tout dans une app. <strong>Sans codes compliqués, sans frais cachés.</strong> Purement gabonais.
+        <strong>GhettoPay</strong> c'est ton portefeuille complet. Envoie, reçois, paie tes factures, épargne — tout dans une app. <strong>Sans codes USSD, sans frais cachés.</strong> 100% gabonais.
       </p>
 
       <div class="hero-btns">
         <a href="https://ghettopay-app.vercel.app/" class="btn-pri">
-          <svg><use href="#ar"/></svg>Ouvrir l'Application
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#ar"/></svg>Ouvrir l'Application
         </a>
         <a href="#features" class="btn-sec">
-          <svg><use href="#z"/></svg>Voir les fonctionnalités
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2"><use href="#z"/></svg>Voir les fonctionnalités
         </a>
       </div>
 
       <div class="hero-stats">
         <div class="stat"><div class="stat-val">0%</div><div class="stat-lbl">Frais cachés</div></div>
         <div class="stat"><div class="stat-val">3s</div><div class="stat-lbl">Transfert</div></div>
+        <div class="stat"><div class="stat-val">5.5%</div><div class="stat-lbl">Coffre/an</div></div>
         <div class="stat"><div class="stat-val">100%</div><div class="stat-lbl">Gabonais</div></div>
-        <div class="stat"><div class="stat-val">256-bit</div><div class="stat-lbl">Chiffrement</div></div>
       </div>
     </div>
 
-    <!-- Phone -->
-    <div class="hero-visual">
-      <div class="badge-fl fl1">
-        <div class="badge-fl-ic" style="background:rgba(22,163,74,.12)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><use href="#chk"/></svg></div>
-        <div><span class="badge-fl-title">+25 000 FCFA</span><span class="badge-fl-sub">Reçu · Amina N.</span></div>
+    <!-- Multi-device showcase -->
+    <div class="devices" id="hero-devices">
+      <!-- Floating badges -->
+      <div class="fl fl1">
+        <div class="fl-ic" style="background:rgba(22,163,74,.12)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><use href="#chk"/></svg></div>
+        <div><span class="fl-t">+25 000 FCFA reçus</span><span class="fl-s">Amina N. · il y a 2min</span></div>
       </div>
-      <div class="badge-fl fl2">
-        <div class="badge-fl-ic" style="background:rgba(212,160,23,.12)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><use href="#lock"/></svg></div>
-        <div><span class="badge-fl-title">Coffre actif</span><span class="badge-fl-sub">245 000 FCFA</span></div>
+      <div class="fl fl2">
+        <div class="fl-ic" style="background:rgba(212,160,23,.12)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><use href="#lock"/></svg></div>
+        <div><span class="fl-t">Coffre · 5.5%/an</span><span class="fl-s">245 000 FCFA sécurisés</span></div>
       </div>
-      <div class="badge-fl fl3">
-        <div class="badge-fl-ic" style="background:rgba(10,74,46,.1)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2"><use href="#qric"/></svg></div>
-        <div><span class="badge-fl-title">QR Scanné</span><span class="badge-fl-sub">Market Mbolo</span></div>
+      <div class="fl fl3">
+        <div class="fl-ic" style="background:rgba(129,140,248,.12)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><use href="#users"/></svg></div>
+        <div><span class="fl-t">Tontine payée ✓</span><span class="fl-s">Famille Moussavou</span></div>
       </div>
 
-      <div class="phone-wrap">
-        <div class="phone">
-          <div class="phone-inner">
-            <div class="notch"></div>
-            <div class="p-hdr">
-              <div class="p-hdr-row">
-                <div><div class="p-greet">Bonjour</div><div class="p-name">Rostand M.</div></div>
-                <div class="p-bell"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2"><use href="#bell"/></svg></div>
+      <!-- Laptop -->
+      <div class="d-laptop">
+        <div class="d-laptop-screen">
+          <div class="d-laptop-inner">
+            <!-- Laptop app UI -->
+            <div style="display:flex;height:100%">
+              <!-- Sidebar -->
+              <div style="width:52px;background:var(--forest);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:16px;flex-shrink:0">
+                <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2"><use href="#home"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#chart"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#lock"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#users"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#pay"/></svg>
               </div>
-            </div>
-            <div class="p-bal">
-              <div class="p-bal-lbl">Solde disponible</div>
-              <div class="p-bal-amt">680 000 FCFA</div>
-              <div class="p-bal-sub">+ Coffre : 245 000 FCFA</div>
-            </div>
-            <div class="p-qa">
-              <div class="p-qa-item"><div class="p-qa-ic" style="background:rgba(212,160,23,.12)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><use href="#send"/></svg></div><div class="p-qa-lbl">Envoyer</div></div>
-              <div class="p-qa-item"><div class="p-qa-ic" style="background:rgba(22,163,74,.12)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><use href="#recv"/></svg></div><div class="p-qa-lbl">Recevoir</div></div>
-              <div class="p-qa-item"><div class="p-qa-ic" style="background:rgba(99,102,241,.12)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><use href="#qric"/></svg></div><div class="p-qa-lbl">Scanner</div></div>
-              <div class="p-qa-item"><div class="p-qa-ic" style="background:rgba(59,130,246,.12)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><use href="#pay"/></svg></div><div class="p-qa-lbl">Payer</div></div>
-            </div>
-            <div class="p-coffre">
-              <div class="p-coffre-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2"><use href="#lock"/></svg></div>
-              <div><div class="p-coffre-t">Mon Coffre</div><div class="p-coffre-s">Épargne sécurisée · 5.5%</div></div>
-              <div class="p-coffre-v">245K</div>
-            </div>
-            <div class="p-txs">
-              <div class="p-tx-hdr">Activité récente</div>
-              <div class="p-tx">
-                <div class="p-tx-av" style="background:linear-gradient(135deg,#d4a017,#0a4a2e)"><svg><use href="#users"/></svg></div>
-                <div style="flex:1"><div class="p-tx-name">Amina Nzamba</div><div class="p-tx-cat">Transfer · 2h</div></div>
-                <div class="p-tx-v cr">+25 000</div>
+              <!-- Main content -->
+              <div style="flex:1;padding:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px">
+                <!-- Header -->
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div style="font-size:.5rem;color:var(--txt3);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em">Tableau de bord</div>
+                    <div style="font-size:.72rem;font-weight:800;color:var(--ink)">Bonjour, Rostand !</div>
+                  </div>
+                  <div style="display:flex;gap:6px;align-items:center">
+                    <div style="width:22px;height:22px;border-radius:6px;background:var(--cream2);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="2"><use href="#bell"/></svg></div>
+                    <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#0F5C38);display:flex;align-items:center;justify-content:center;font-size:.52rem;font-weight:900;color:#fff">R</div>
+                  </div>
+                </div>
+                <!-- Cards row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+                  <div style="background:linear-gradient(135deg,#D4A017,#F0C040);border-radius:10px;padding:10px;position:relative;overflow:hidden">
+                    <div style="font-size:.4rem;color:rgba(0,0,0,.42);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)">Solde</div>
+                    <div style="font-family:var(--fd);font-size:.82rem;font-weight:900;color:#0A4A2E;margin-top:3px">680 000</div>
+                    <div style="font-size:.38rem;color:rgba(0,0,0,.4);font-family:var(--fm)">FCFA disponible</div>
+                  </div>
+                  <div style="background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:10px;padding:10px">
+                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)">Coffre</div>
+                    <div style="font-family:var(--fd);font-size:.82rem;font-weight:900;color:#F0C040;margin-top:3px">245 000</div>
+                    <div style="font-size:.38rem;color:rgba(255,255,255,.38);font-family:var(--fm)">5.5%/an · actif</div>
+                  </div>
+                  <div style="background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:10px;padding:10px">
+                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)">Cashback</div>
+                    <div style="font-family:var(--fd);font-size:.82rem;font-weight:900;color:#fff;margin-top:3px">8 200</div>
+                    <div style="font-size:.38rem;color:rgba(255,255,255,.5);font-family:var(--fm)">Gabon Vert</div>
+                  </div>
+                </div>
+                <!-- Chart placeholder -->
+                <div style="flex:1;background:var(--cream);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:.46rem;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.06em">Dépenses ce mois</div>
+                  <div style="flex:1;display:flex;align-items:flex-end;gap:4px;padding-bottom:4px">
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:40px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.7"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 1</div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:28px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.55"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 7</div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:55px;background:linear-gradient(180deg,#D4A017,#F0C040);border-radius:3px"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 14</div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:32px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.6"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 21</div></div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:48px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.8"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 25</div></div>
+                  </div>
+                </div>
               </div>
-              <div class="p-tx">
-                <div class="p-tx-av" style="background:linear-gradient(135deg,#4f46e5,#818cf8)"><svg><use href="#pay"/></svg></div>
-                <div style="flex:1"><div class="p-tx-name">Market Mbolo</div><div class="p-tx-cat">QR Pay · auj.</div></div>
-                <div class="p-tx-v db">-12 000</div>
-              </div>
-              <div class="p-tx">
-                <div class="p-tx-av" style="background:linear-gradient(135deg,#dc2626,#f59e0b)"><svg><use href="#phone"/></svg></div>
-                <div style="flex:1"><div class="p-tx-name">Airtel Recharge</div><div class="p-tx-cat">Mobile · hier</div></div>
-                <div class="p-tx-v db">-5 000</div>
+              <!-- Right panel -->
+              <div style="width:110px;border-left:1px solid var(--cream3);padding:10px;display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+                <div style="font-size:.44rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Activité récente</div>
+                <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
+                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Amina N.</div><div style="font-size:.38rem;color:var(--txt3)">2h</div></div>
+                  <div style="font-size:.44rem;font-weight:800;color:#15803d">+25K</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
+                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Mbolo Mkt</div><div style="font-size:.38rem;color:var(--txt3)">4h</div></div>
+                  <div style="font-size:.44rem;font-weight:800;color:#dc2626">-12K</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
+                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#phone"/></svg></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt)">Airtel</div><div style="font-size:.38rem;color:var(--txt3)">hier</div></div>
+                  <div style="font-size:.44rem;font-weight:800;color:#dc2626">-5K</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:5px;padding:5px 0">
+                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#059669,#34d399);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#drop"/></svg></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt)">SEEG</div><div style="font-size:.38rem;color:var(--txt3)">hier</div></div>
+                  <div style="font-size:.44rem;font-weight:800;color:#dc2626">-28K</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="phone-shadow"></div>
+        <div class="d-laptop-base"></div>
+        <div class="d-laptop-foot"></div>
+      </div>
+
+      <!-- Tablet -->
+      <div class="d-tablet">
+        <div class="d-tablet-cam"></div>
+        <div class="d-tablet-inner">
+          <!-- Tablet shows budget screen -->
+          <div style="display:flex;height:100%">
+            <div style="width:40px;background:var(--forest);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:14px;flex-shrink:0">
+              <div style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#home"/></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2"><use href="#chart"/></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#lock"/></svg>
+            </div>
+            <div style="flex:1;padding:12px;overflow:hidden;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:.52rem;font-weight:800;color:var(--ink)">Budget · Novembre 2024</div>
+              <!-- Tabs -->
+              <div style="display:flex;gap:4px;background:var(--cream2);border-radius:8px;padding:3px">
+                <div style="flex:1;text-align:center;padding:4px;border-radius:5px;background:var(--white);font-size:.42rem;font-weight:700;color:var(--txt);box-shadow:0 1px 4px rgba(0,0,0,.06)">Semaine</div>
+                <div style="flex:1;text-align:center;padding:4px;font-size:.42rem;font-weight:700;color:var(--txt3)">Mois</div>
+                <div style="flex:1;text-align:center;padding:4px;font-size:.42rem;font-weight:700;color:var(--txt3)">Année</div>
+              </div>
+              <!-- Budget cards -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div style="background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:space-between">
+                  <div><div style="font-size:.38rem;color:rgba(255,255,255,.45);text-transform:uppercase;font-family:var(--fm)">Dépenses</div><div style="font-family:var(--fd);font-size:.7rem;font-weight:900;color:#fff;margin-top:2px">78 500 F</div></div>
+                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.9"><use href="#send"/></svg></div>
+                </div>
+                <div style="background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:space-between">
+                  <div><div style="font-size:.38rem;color:rgba(255,255,255,.45);text-transform:uppercase;font-family:var(--fm)">Revenus</div><div style="font-family:var(--fd);font-size:.7rem;font-weight:900;color:#fff;margin-top:2px">76 200 F</div></div>
+                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.9"><use href="#recv"/></svg></div>
+                </div>
+              </div>
+              <!-- Categories -->
+              <div style="font-size:.42rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em">Par catégorie</div>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+                <div style="background:var(--white);border-radius:7px;border:1px solid var(--cream3);padding:5px 8px;display:flex;align-items:center;gap:6px">
+                  <div style="width:20px;height:20px;border-radius:6px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><use href="#home"/></svg></div>
+                  <div style="font-size:.42rem;font-weight:700;color:var(--txt);flex:1">Logement</div>
+                  <div style="flex:1.5;background:rgba(0,0,0,.07);border-radius:100px;height:3px;overflow:hidden"><div style="width:58%;height:100%;background:#3b82f6;border-radius:100px"></div></div>
+                  <div style="font-size:.42rem;font-weight:800;color:var(--txt);font-family:var(--fd)">28K</div>
+                </div>
+                <div style="background:var(--white);border-radius:7px;border:1px solid var(--cream3);padding:5px 8px;display:flex;align-items:center;gap:6px">
+                  <div style="width:20px;height:20px;border-radius:6px;background:rgba(212,160,23,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2"><use href="#pay"/></svg></div>
+                  <div style="font-size:.42rem;font-weight:700;color:var(--txt);flex:1">Courses</div>
+                  <div style="flex:1.5;background:rgba(0,0,0,.07);border-radius:100px;height:3px;overflow:hidden"><div style="width:35%;height:100%;background:#d4a017;border-radius:100px"></div></div>
+                  <div style="font-size:.42rem;font-weight:800;color:var(--txt);font-family:var(--fd)">12K</div>
+                </div>
+                <div style="background:var(--white);border-radius:7px;border:1px solid var(--cream3);padding:5px 8px;display:flex;align-items:center;gap:6px">
+                  <div style="width:20px;height:20px;border-radius:6px;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div>
+                  <div style="font-size:.42rem;font-weight:700;color:var(--txt);flex:1">Tontines</div>
+                  <div style="flex:1.5;background:rgba(0,0,0,.07);border-radius:100px;height:3px;overflow:hidden"><div style="width:25%;height:100%;background:#a855f7;border-radius:100px"></div></div>
+                  <div style="font-size:.42rem;font-weight:800;color:var(--txt);font-family:var(--fd)">50K</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="d-phone">
+        <div class="d-phone-inner">
+          <div class="d-notch"></div>
+          <!-- Phone app home -->
+          <div class="app-hdr" style="padding:22px 12px 14px">
+            <div class="app-topbar" style="margin-bottom:12px">
+              <div><div class="app-greet">Bonjour</div><div class="app-name">Rostand M.</div></div>
+              <div class="app-av">R</div>
+            </div>
+            <div class="app-bal" style="padding:12px 14px">
+              <div class="app-bal-lbl">Solde disponible</div>
+              <div class="app-bal-amt" style="font-size:1.25rem;margin:.1rem 0 .1rem">680 000</div>
+              <div class="app-bal-sub">+ Coffre : 245 000 FCFA</div>
+            </div>
+          </div>
+          <!-- Actions -->
+          <div style="background:#fff;padding:10px 10px 0;border-bottom:1px solid rgba(0,0,0,.06)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+              <div style="background:linear-gradient(145deg,#D4A017,#F0C040);border-radius:11px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A4A2E" stroke-width="2.2"><use href="#send"/></svg></div>
+                <div style="font-size:.56rem;font-weight:900;color:#0A4A2E;text-transform:uppercase;letter-spacing:.02em">Envoyer</div>
+                <div style="font-size:.42rem;color:rgba(0,0,0,.5);font-family:var(--fm)">Rapide</div>
+              </div>
+              <div style="background:linear-gradient(145deg,#0A4A2E,#0F5C38);border-radius:11px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><use href="#recv"/></svg></div>
+                <div style="font-size:.56rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.02em">Recevoir</div>
+                <div style="font-size:.42rem;color:rgba(255,255,255,.55);font-family:var(--fm)">QR Code</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding-bottom:10px;border-top:1px solid rgba(0,0,0,.06);padding-top:8px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.04);border-radius:9px;padding:6px 4px">
+                <div style="width:24px;height:24px;border-radius:7px;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><use href="#qric"/></svg></div>
+                <div style="font-size:.44rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Scanner</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.04);border-radius:9px;padding:6px 4px">
+                <div style="width:24px;height:24px;border-radius:7px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><use href="#pay"/></svg></div>
+                <div style="font-size:.44rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Payer</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.04);border-radius:9px;padding:6px 4px">
+                <div style="width:24px;height:24px;border-radius:7px;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div>
+                <div style="font-size:.44rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Tontine</div>
+              </div>
+            </div>
+          </div>
+          <!-- Coffre strip -->
+          <div style="margin:8px 10px 0;background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;border:1px solid rgba(212,160,23,.2)">
+            <div style="width:28px;height:28px;border-radius:8px;background:rgba(212,160,23,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F0C040" stroke-width="2"><use href="#lock"/></svg></div>
+            <div style="flex:1"><div style="font-size:.52rem;font-weight:800;color:#F0C040">Coffre Forêt</div><div style="font-size:.42rem;color:rgba(255,255,255,.42)">5.5%/an · sécurisé</div></div>
+            <div style="font-family:var(--fd);font-size:.72rem;font-weight:900;color:#F0C040">245K</div>
+          </div>
+          <!-- Recent tx -->
+          <div style="padding:8px 10px 6px">
+            <div style="font-size:.44rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Activité récente</div>
+            <div style="display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
+                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Amina Nzamba</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">Transfert · 2h</div></div>
+                <div style="font-size:.6rem;font-weight:800;color:#15803d">+25 000</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
+                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Market Mbolo</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">QR Pay · 4h</div></div>
+                <div style="font-size:.6rem;font-weight:800;color:#dc2626">-12 000</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:7px 0">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#059669,#34d399);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#drop"/></svg></div>
+                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">SEEG Électricité</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">Facture · hier</div></div>
+                <div style="font-size:.6rem;font-weight:800;color:#dc2626">-28 000</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -768,67 +767,67 @@ footer{
 <!-- FEATURES -->
 <section id="features" class="feats-bg">
   <div class="inner">
-    <div class="feats-intro reveal">
+    <div class="feats-intro rev">
       <div>
         <div class="eyebrow">01 — Fonctionnalités</div>
         <h2 class="sec-title">Un portefeuille<br/><em>vraiment complet</em></h2>
       </div>
-      <p class="sec-sub">Tout ce qu'il faut pour maîtriser ton argent. Conçu pour le Gabon, pensé pour toi.</p>
+      <p class="sec-sub">Tout ce qu'il faut pour maîtriser ton argent. Conçu pour le Gabon, pensé pour toi. Sans compromis.</p>
     </div>
     <div class="feats-grid">
-      <div class="feat reveal d1">
-        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2)"><svg style="stroke:var(--gold)"><use href="#send"/></svg></div>
+      <div class="feat rev d1">
+        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#send"/></svg></div>
         <h3>Transferts instantanés</h3>
-        <p>Envoie en 3 secondes. Par nom, numéro ou contact — aucun code USSD.</p>
-        <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.2)">Frais quasi nuls</span>
+        <p>Envoie de l'argent en 3 secondes. Par nom, numéro ou contact favori — aucun code USSD compliqué.</p>
+        <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.18)">Frais quasi nuls</span>
       </div>
-      <div class="feat reveal d2">
-        <div class="feat-ic" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)"><svg style="stroke:#818cf8"><use href="#qric"/></svg></div>
+      <div class="feat rev d2">
+        <div class="feat-ic" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.18)"><svg style="stroke:#818cf8" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#qric"/></svg></div>
         <h3>Paiement QR Code</h3>
-        <p>Scanne, confirme avec ton empreinte, c'est payé. Au marché, en boutique, partout.</p>
-        <span class="feat-pill" style="background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.2)">2 secondes chrono</span>
+        <p>Scanne, confirme avec ton empreinte, c'est payé. Au marché, en boutique, au maquis — partout au Gabon.</p>
+        <span class="feat-pill" style="background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.18)">2 secondes chrono</span>
       </div>
-      <div class="feat reveal d3">
-        <div class="feat-ic" style="background:rgba(10,74,46,.1);border:1px solid rgba(10,74,46,.2)"><svg style="stroke:var(--forest)"><use href="#lock"/></svg></div>
-        <h3>Le Coffre</h3>
-        <p>Bloque ton épargne. Ton argent pousse comme les arbres de la forêt équatoriale.</p>
-        <span class="feat-pill" style="background:rgba(10,74,46,.1);color:var(--forest);border:1px solid rgba(10,74,46,.2)">5.5% rendement/an</span>
+      <div class="feat rev d3">
+        <div class="feat-ic" style="background:rgba(10,74,46,.1);border:1px solid rgba(10,74,46,.18)"><svg style="stroke:var(--forest)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#lock"/></svg></div>
+        <h3>Le Coffre Forêt</h3>
+        <p>Bloque ton épargne. Ton argent pousse comme les arbres centenaires de la forêt équatoriale gabonaise.</p>
+        <span class="feat-pill" style="background:rgba(10,74,46,.1);color:var(--forest);border:1px solid rgba(10,74,46,.18)">5.5% rendement/an</span>
       </div>
-      <div class="feat reveal d1">
-        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.2)"><svg style="stroke:var(--green)"><use href="#phone"/></svg></div>
+      <div class="feat rev d1">
+        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#phone"/></svg></div>
         <h3>Recharge airtime & data</h3>
-        <p>Airtel, Moov — recharge crédit et internet directement depuis l'app.</p>
-        <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.2)">Instantané</span>
+        <p>Airtel, Moov — recharge crédit et internet directement depuis l'app en quelques secondes.</p>
+        <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.18)">Instantané</span>
       </div>
-      <div class="feat reveal d2">
-        <div class="feat-ic" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2)"><svg style="stroke:#3b82f6"><use href="#home"/></svg></div>
-        <h3>Paiement factures</h3>
-        <p>Eau, électricité, internet — règle tout depuis GhettoPay. Fini la queue.</p>
-        <span class="feat-pill" style="background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.2)">Tout en un</span>
+      <div class="feat rev d2">
+        <div class="feat-ic" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.18)"><svg style="stroke:#3b82f6" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#home"/></svg></div>
+        <h3>Factures automatiques</h3>
+        <p>SEEG eau, SEEG électricité, internet — règle tout depuis GhettoPay. Fini la queue au guichet.</p>
+        <span class="feat-pill" style="background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.18)">Tout en un</span>
       </div>
-      <div class="feat reveal d3">
-        <div class="feat-ic" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2)"><svg style="stroke:#a855f7"><use href="#users"/></svg></div>
+      <div class="feat rev d3">
+        <div class="feat-ic" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.18)"><svg style="stroke:#a855f7" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#users"/></svg></div>
         <h3>Tontine digitale</h3>
-        <p>Crée ou rejoins une tontine. La tradition communautaire, modernisée.</p>
-        <span class="feat-pill" style="background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.2)">Communautaire</span>
+        <p>Crée ou rejoins une tontine. La tradition communautaire gabonaise, enfin modernisée et sécurisée.</p>
+        <span class="feat-pill" style="background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.18)">Communautaire</span>
       </div>
-      <div class="feat reveal d1">
-        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.2)"><svg style="stroke:var(--gold)"><use href="#chart"/></svg></div>
+      <div class="feat rev d1">
+        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#chart"/></svg></div>
         <h3>Budget & Analyses</h3>
-        <p>Graphiques clairs, catégories auto. Vois exactement où va chaque franc.</p>
-        <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.2)">IA intégrée</span>
+        <p>Graphiques clairs, catégories automatiques. Vois exactement où va chaque franc CFA chaque mois.</p>
+        <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.18)">IA intégrée</span>
       </div>
-      <div class="feat reveal d2">
-        <div class="feat-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2)"><svg style="stroke:#f97316"><use href="#trend"/></svg></div>
+      <div class="feat rev d2">
+        <div class="feat-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.18)"><svg style="stroke:#f97316" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#trend"/></svg></div>
         <h3>Cashback Gabon Vert</h3>
-        <p>Chaque paiement chez un partenaire te rapporte du cashback.</p>
-        <span class="feat-pill" style="background:rgba(251,146,60,.1);color:#f97316;border:1px solid rgba(251,146,60,.2)">Jusqu'à 5%</span>
+        <p>Chaque paiement chez un partenaire te rapporte du cashback. Dépense mieux, gagne plus.</p>
+        <span class="feat-pill" style="background:rgba(251,146,60,.1);color:#f97316;border:1px solid rgba(251,146,60,.18)">Jusqu'à 5%</span>
       </div>
-      <div class="feat reveal d3">
-        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.2)"><svg style="stroke:var(--green)"><use href="#shield"/></svg></div>
-        <h3>Sécurité militaire</h3>
-        <p>Empreinte, Face ID, PIN, chiffrement 256-bit. Blindé comme un coffre-fort.</p>
-        <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.2)">Certifié CEMAC</span>
+      <div class="feat rev d3">
+        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#shield"/></svg></div>
+        <h3>Sécurité maximale</h3>
+        <p>Empreinte, Face ID, PIN, chiffrement 256-bit. Blindé comme un coffre-fort. Certifié CEMAC.</p>
+        <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.18)">Certifié CEMAC</span>
       </div>
     </div>
   </div>
@@ -836,12 +835,287 @@ footer{
 
 <div class="div"></div>
 
+<!-- SCREENS SECTION -->
+<section id="screens" class="screens-bg">
+  <div class="inner">
+    <div class="screens-header rev">
+      <div>
+        <div class="eyebrow">02 — L'Application</div>
+        <h2 class="sec-title">Sur tous tes<br/><em>écrans</em></h2>
+      </div>
+      <div>
+        <p class="sec-sub">GhettoPay s'adapte à ton appareil. Mobile pour envoyer en déplacement, tablette pour analyser ton budget, laptop pour gérer tes finances pro.</p>
+        <div class="devices-tabs" style="margin-top:1.5rem">
+          <button class="dtab on">Mobile</button>
+          <button class="dtab">Budget</button>
+          <button class="dtab">Coffre</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phones row showcase -->
+    <div class="phones-row rev d2">
+      <!-- Phone 1 — PIN screen -->
+      <div class="ph-mini">
+        <div class="ph-mini-inner">
+          <div class="ph-mini-notch"></div>
+          <div style="height:100%;background:linear-gradient(155deg,#0A4A2E 0%,#0D0D0D 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px">
+            <div style="width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(212,160,23,.4)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
+            <div style="text-align:center"><div style="font-family:var(--fd);font-size:.8rem;font-weight:900;color:#fff;font-style:italic">GhettoPay</div><div style="font-size:.4rem;color:rgba(255,255,255,.4);font-family:var(--fm);margin-top:3px">PIN • 1234</div></div>
+            <div style="display:flex;gap:8px">
+              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:100%">
+              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">1</div>
+              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">2</div>
+              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">3</div>
+              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">4</div>
+              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">5</div>
+              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone 2 — Home (main, larger) -->
+      <div class="ph-big">
+        <div class="ph-big-inner">
+          <div class="ph-big-notch"></div>
+          <div class="app-hdr" style="padding:18px 10px 10px">
+            <div class="app-topbar" style="margin-bottom:8px">
+              <div><div class="app-greet" style="font-size:.38rem">Bonjour</div><div class="app-name" style="font-size:.6rem">Rostand M.</div></div>
+              <div class="app-av" style="width:22px;height:22px;font-size:.5rem">R</div>
+            </div>
+            <div class="app-bal" style="padding:8px 10px">
+              <div class="app-bal-lbl" style="font-size:.32rem">Solde disponible</div>
+              <div class="app-bal-amt" style="font-size:.82rem;margin:.08rem 0 .05rem">680 000</div>
+              <div class="app-bal-sub" style="font-size:.3rem">+ Coffre 245K</div>
+            </div>
+          </div>
+          <!-- Quick actions new layout -->
+          <div style="background:#fff;padding:6px 8px 0;border-bottom:1px solid rgba(0,0,0,.06)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px">
+              <div style="background:linear-gradient(145deg,#D4A017,#F0C040);border-radius:8px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <div style="width:22px;height:22px;border-radius:6px;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0A4A2E" stroke-width="2.2"><use href="#send"/></svg></div>
+                <div style="font-size:.44rem;font-weight:900;color:#0A4A2E;text-transform:uppercase">Envoyer</div>
+              </div>
+              <div style="background:linear-gradient(145deg,#0A4A2E,#0F5C38);border-radius:8px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><use href="#recv"/></svg></div>
+                <div style="font-size:.44rem;font-weight:900;color:#fff;text-transform:uppercase">Recevoir</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding-bottom:7px;border-top:1px solid rgba(0,0,0,.05);padding-top:6px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(0,0,0,.04);border-radius:7px;padding:4px 2px">
+                <div style="width:18px;height:18px;border-radius:5px;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><use href="#qric"/></svg></div>
+                <div style="font-size:.36rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Scanner</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(0,0,0,.04);border-radius:7px;padding:4px 2px">
+                <div style="width:18px;height:18px;border-radius:5px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><use href="#pay"/></svg></div>
+                <div style="font-size:.36rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Payer</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(0,0,0,.04);border-radius:7px;padding:4px 2px">
+                <div style="width:18px;height:18px;border-radius:5px;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div>
+                <div style="font-size:.36rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Tontine</div>
+              </div>
+            </div>
+          </div>
+          <!-- Coffre + tx -->
+          <div style="margin:6px 8px 0;background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:9px;padding:7px 9px;display:flex;align-items:center;gap:7px">
+            <div style="width:22px;height:22px;border-radius:6px;background:rgba(212,160,23,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#F0C040" stroke-width="2"><use href="#lock"/></svg></div>
+            <div style="flex:1"><div style="font-size:.42rem;font-weight:800;color:#F0C040">Coffre Forêt</div><div style="font-size:.34rem;color:rgba(255,255,255,.42)">5.5%/an</div></div>
+            <div style="font-family:var(--fd);font-size:.56rem;font-weight:900;color:#F0C040">245K</div>
+          </div>
+          <div style="padding:6px 8px">
+            <div style="font-size:.36rem;font-weight:700;color:var(--txt3);text-transform:uppercase;margin-bottom:5px">Récent</div>
+            <div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+              <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
+              <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Amina N.</div></div>
+              <div style="font-size:.48rem;font-weight:800;color:#15803d">+25K</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;padding:4px 0">
+              <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
+              <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Market Mbolo</div></div>
+              <div style="font-size:.48rem;font-weight:800;color:#dc2626">-12K</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone 3 — QR screen -->
+      <div class="ph-mini">
+        <div class="ph-mini-inner">
+          <div class="ph-mini-notch"></div>
+          <div style="height:100%;background:#0D0D0D;display:flex;flex-direction:column;align-items:center;padding:14px 10px 10px;gap:8px">
+            <div style="font-size:.5rem;font-weight:800;color:#fff">QR Code</div>
+            <div style="width:80px;height:80px;border-radius:12px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;position:relative;border:1px solid rgba(255,255,255,.08)">
+              <div style="position:absolute;top:5px;left:5px;width:14px;height:14px;border-top:2px solid #F0C040;border-left:2px solid #F0C040;border-radius:2px 0 0 0"></div>
+              <div style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-top:2px solid #F0C040;border-right:2px solid #F0C040;border-radius:0 2px 0 0"></div>
+              <div style="position:absolute;bottom:5px;left:5px;width:14px;height:14px;border-bottom:2px solid #F0C040;border-left:2px solid #F0C040;border-radius:0 0 0 2px"></div>
+              <div style="position:absolute;bottom:5px;right:5px;width:14px;height:14px;border-bottom:2px solid #F0C040;border-right:2px solid #F0C040;border-radius:0 0 2px 0"></div>
+              <svg width="32" height="32" viewBox="0 0 80 80" style="opacity:.06"><rect x="8" y="8" width="22" height="22" fill="white" rx="2"/><rect x="50" y="8" width="22" height="22" fill="white" rx="2"/><rect x="8" y="50" width="22" height="22" fill="white" rx="2"/></svg>
+            </div>
+            <div style="text-align:center"><div style="font-size:.52rem;font-weight:800;color:#fff">Rostand M.</div><div style="font-size:.38rem;color:rgba(255,255,255,.35);font-family:var(--fm)">+241 06 12 34 56</div></div>
+            <div style="width:100%;background:rgba(255,255,255,.06);border-radius:8px;padding:6px 8px;text-align:center;border:1px solid rgba(212,160,23,.2)">
+              <div style="font-size:.4rem;color:rgba(255,255,255,.35);font-family:var(--fm)">Montant</div>
+              <div style="font-family:var(--fd);font-size:.7rem;font-weight:900;color:#F0C040">3 500 FCFA</div>
+            </div>
+            <div style="width:100%;padding:7px;background:linear-gradient(135deg,#D4A017,#F0C040);border-radius:8px;text-align:center;font-size:.48rem;font-weight:800;color:var(--forest)">🔒 Payer maintenant</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone 4 — Coffre screen -->
+      <div class="ph-mini">
+        <div class="ph-mini-inner">
+          <div class="ph-mini-notch"></div>
+          <div style="height:100%;display:flex;flex-direction:column">
+            <div style="background:linear-gradient(155deg,#0A4A2E,#0F5C38);padding:14px 10px 10px;flex-shrink:0">
+              <div style="font-size:.52rem;font-weight:800;color:#F0C040;font-style:italic;margin-bottom:8px">Le Coffre</div>
+              <div style="font-size:.4rem;color:rgba(255,255,255,.42);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em">Total épargné</div>
+              <div style="font-family:var(--fd);font-size:.9rem;font-weight:900;color:#fff;margin:.1rem 0 .1rem">245 000 F</div>
+              <div style="display:inline-flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(34,197,94,.18);border-radius:6px">
+                <div style="font-size:.36rem;color:#BBF7D0;font-family:var(--fm)">+5.5%/an · actif</div>
+              </div>
+            </div>
+            <div style="flex:1;padding:8px;display:flex;flex-direction:column;gap:6px;overflow:hidden">
+              <div style="background:#fff;border-radius:9px;border:1px solid rgba(0,0,0,.07);padding:8px">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(212,160,23,.18);border:1px solid rgba(212,160,23,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2"><use href="#target"/></svg></div>
+                  <div><div style="font-size:.44rem;font-weight:800;color:var(--ink)">Voyage France</div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Déc 2024</div></div>
+                  <div style="margin-left:auto;text-align:right"><div style="font-family:var(--fd);font-size:.52rem;font-weight:900;color:var(--txt)">180K</div><div style="font-size:.34rem;color:#15803d">+5.5%</div></div>
+                </div>
+                <div style="background:rgba(0,0,0,.07);border-radius:100px;height:4px;overflow:hidden"><div style="width:72%;height:100%;background:#D4A017;border-radius:100px"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">180K / 250K</span><span style="font-size:.34rem;color:#D4A017;font-weight:800">72%</span></div>
+              </div>
+              <div style="background:#fff;border-radius:9px;border:1px solid rgba(0,0,0,.07);padding:8px">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><use href="#shield"/></svg></div>
+                  <div><div style="font-size:.44rem;font-weight:800;color:var(--ink)">Fond urgence</div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Mars 2025</div></div>
+                  <div style="margin-left:auto;text-align:right"><div style="font-family:var(--fd);font-size:.52rem;font-weight:900;color:var(--txt)">65K</div><div style="font-size:.34rem;color:#15803d">+5.5%</div></div>
+                </div>
+                <div style="background:rgba(0,0,0,.07);border-radius:100px;height:4px;overflow:hidden"><div style="width:43%;height:100%;background:#16A34A;border-radius:100px"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">65K / 150K</span><span style="font-size:.34rem;color:#16A34A;font-weight:800">43%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Laptop large display -->
+    <div style="margin-top:3rem" class="rev d3">
+      <div class="laptop-demo">
+        <div class="ld-body">
+          <div class="ld-screen">
+            <!-- Dashboard complet sur laptop -->
+            <div style="display:flex;height:100%">
+              <!-- Sidebar large -->
+              <div style="width:60px;background:var(--forest);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:18px;flex-shrink:0">
+                <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(212,160,23,.4)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;flex:1">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2"><use href="#home"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#chart"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#lock"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#users"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#pay"/></svg>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#bell"/></svg>
+                </div>
+              </div>
+              <!-- Main -->
+              <div style="flex:1;padding:16px;overflow:hidden;display:flex;flex-direction:column;gap:12px;background:var(--cream)">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div style="font-size:.48rem;color:var(--txt3);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em">Bonjour, Rostand 👋</div>
+                    <div style="font-size:.78rem;font-weight:800;color:var(--ink);margin-top:2px">Tableau de bord · Novembre 2024</div>
+                  </div>
+                  <div style="display:flex;gap:7px;align-items:center">
+                    <div style="width:26px;height:26px;border-radius:8px;background:var(--cream2);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.06)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="2"><use href="#bell"/></svg></div>
+                    <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#0F5C38);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:900;color:#fff;border:2px solid rgba(255,255,255,.4)">R</div>
+                  </div>
+                </div>
+                <!-- Cards -->
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+                  <div style="background:linear-gradient(135deg,#D4A017,#F0C040);border-radius:12px;padding:12px;position:relative;overflow:hidden;box-shadow:0 6px 20px rgba(212,160,23,.35)">
+                    <div style="font-size:.4rem;color:rgba(0,0,0,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Solde</div>
+                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#0A4A2E;margin-top:4px;letter-spacing:-.02em">680 000</div>
+                    <div style="font-size:.38rem;color:rgba(0,0,0,.4);font-family:var(--fm);margin-top:2px">FCFA disponible</div>
+                  </div>
+                  <div style="background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:12px;padding:12px">
+                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Coffre</div>
+                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#F0C040;margin-top:4px">245 000</div>
+                    <div style="font-size:.38rem;color:rgba(255,255,255,.38);font-family:var(--fm);margin-top:2px">+5.5%/an · actif</div>
+                  </div>
+                  <div style="background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:12px;padding:12px">
+                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Cashback</div>
+                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#fff;margin-top:4px">8 200</div>
+                    <div style="font-size:.38rem;color:rgba(255,255,255,.5);font-family:var(--fm);margin-top:2px">Gabon Vert</div>
+                  </div>
+                  <div style="background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:12px;padding:12px">
+                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Tontines</div>
+                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#fff;margin-top:4px">3</div>
+                    <div style="font-size:.38rem;color:rgba(255,255,255,.5);font-family:var(--fm);margin-top:2px">actives ce mois</div>
+                  </div>
+                </div>
+                <!-- Bottom row -->
+                <div style="display:grid;grid-template-columns:2fr 1.2fr;gap:10px;flex:1">
+                  <!-- Chart -->
+                  <div style="background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--cream3);display:flex;flex-direction:column">
+                    <div style="font-size:.48rem;font-weight:700;color:var(--ink);margin-bottom:10px">Évolution des dépenses · Novembre</div>
+                    <div style="flex:1;display:flex;align-items:flex-end;gap:5px">
+                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:45px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.65"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S1</div></div>
+                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:30px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.5"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S2</div></div>
+                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:68px;background:linear-gradient(180deg,#D4A017,#F0C040);border-radius:4px"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S3</div></div>
+                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:38px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.6"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S4</div></div>
+                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:55px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.75"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S5</div></div>
+                    </div>
+                  </div>
+                  <!-- Recent -->
+                  <div style="background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--cream3);display:flex;flex-direction:column;gap:6px">
+                    <div style="font-size:.46rem;font-weight:700;color:var(--ink)">Activité récente</div>
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
+                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
+                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Amina Nzamba</div><div style="font-size:.38rem;color:var(--txt3)">Transfert · 2h</div></div>
+                      <div style="font-size:.46rem;font-weight:800;color:#15803d">+25K</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
+                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
+                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Market Mbolo</div><div style="font-size:.38rem;color:var(--txt3)">QR Pay · 4h</div></div>
+                      <div style="font-size:.46rem;font-weight:800;color:#dc2626">-12K</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
+                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#059669,#34d399);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#drop"/></svg></div>
+                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">SEEG Électricité</div><div style="font-size:.38rem;color:var(--txt3)">Facture · hier</div></div>
+                      <div style="font-size:.46rem;font-weight:800;color:#dc2626">-28K</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0">
+                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#users"/></svg></div>
+                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Jean-Paul Ekang</div><div style="font-size:.38rem;color:var(--txt3)">Tontine · hier</div></div>
+                      <div style="font-size:.46rem;font-weight:800;color:#15803d">+50K</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ld-base"></div>
+        <div class="ld-foot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="background:rgba(255,255,255,.06)"></div>
+
 <!-- COFFRE -->
 <section id="coffre" class="coffre-bg">
   <div class="inner">
     <div class="coffre-grid">
-      <div class="coffre-card reveal">
-        <div class="coffre-ic"><svg><use href="#lock"/></svg></div>
+      <div class="coffre-card rev">
+        <div class="coffre-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.8"><use href="#lock"/></svg></div>
         <h3>Le Coffre Forêt</h3>
         <p>Ton épargne protégée qui grandit en silence — comme les arbres centenaires de la forêt équatoriale. Tu bloques, tu attends, tu récoltes.</p>
         <div class="coffre-stats-row">
@@ -850,26 +1124,70 @@ footer{
           <div class="c-stat"><div class="c-stat-n">100%</div><div class="c-stat-l">Sécurisé</div></div>
         </div>
       </div>
-      <div class="coffre-feats reveal d2">
-        <div class="eyebrow">02 — Le Coffre</div>
-        <h2 class="sec-title" style="margin-bottom:1.6rem">Épargne comme<br/><em>jamais avant</em></h2>
+      <div class="rev d2">
+        <div class="eyebrow">03 — Le Coffre</div>
+        <h2 class="sec-title" style="margin-bottom:1.5rem">Épargne comme<br/><em>jamais avant</em></h2>
         <div class="coffre-feats">
           <div class="cf">
-            <div class="cf-ic" style="background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.2)"><svg style="stroke:var(--gold2)"><use href="#target"/></svg></div>
-            <div><div class="cf-title">Objectif d'épargne</div><div class="cf-desc">Définis un objectif et GhettoPay suit ta progression automatiquement.</div></div>
+            <div class="cf-ic" style="background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2"><use href="#target"/></svg></div>
+            <div><div class="cf-title">Objectif d'épargne</div><div class="cf-desc">Définis un objectif chiffré. GhettoPay suit ta progression automatiquement en temps réel.</div></div>
           </div>
           <div class="cf">
-            <div class="cf-ic" style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.2)"><svg style="stroke:#a5b4fc"><use href="#clock"/></svg></div>
-            <div><div class="cf-title">Épargne programmée</div><div class="cf-desc">Automatise tes virements — semaine, mois, comme tu veux. C'est toi qui choisis.</div></div>
+            <div class="cf-ic" style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><use href="#clock"/></svg></div>
+            <div><div class="cf-title">Épargne programmée</div><div class="cf-desc">Automatise tes virements — semaine, mois, comme tu veux. C'est toi qui décides.</div></div>
           </div>
           <div class="cf">
-            <div class="cf-ic" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)"><svg style="stroke:var(--green2)"><use href="#trend"/></svg></div>
-            <div><div class="cf-title">Rendement Coffre Forêt</div><div class="cf-desc">Bloque 6 mois ou plus et ton argent rapporte des intérêts. L'épargne qui travaille.</div></div>
+            <div class="cf-ic" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green2)" stroke-width="2"><use href="#trend"/></svg></div>
+            <div><div class="cf-title">Rendement Coffre Forêt</div><div class="cf-desc">Bloque 6 mois ou plus et ton argent rapporte 5.5%/an. L'épargne qui travaille pour toi.</div></div>
           </div>
           <div class="cf">
-            <div class="cf-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2)"><svg style="stroke:#fb923c"><use href="#shield"/></svg></div>
+            <div class="cf-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2"><use href="#shield"/></svg></div>
             <div><div class="cf-title">Protection anti-impulsion</div><div class="cf-desc">Impossible de retirer avant la date — la meilleure protection contre toi-même.</div></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- TONTINE -->
+<section id="tontine" class="tontine-bg">
+  <div class="inner">
+    <div class="tontine-grid">
+      <div class="rev">
+        <div class="eyebrow">04 — Tontine</div>
+        <h2 class="sec-title" style="margin-bottom:.8rem">La tradition,<br/><em>digitalisée</em></h2>
+        <p class="sec-sub" style="margin-bottom:2rem">La tontine est au cœur de la culture gabonaise. GhettoPay la modernise — suivi en temps réel, cotisations automatiques, aucun risque de perte.</p>
+        <div class="tontine-info">
+          <div class="ti"><div class="ti-ic" style="background:rgba(168,85,247,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div><div><div class="ti-title">Crée ta tontine en 30 secondes</div><div class="ti-desc">Définis le montant, la fréquence, invite tes amis par leur numéro. C'est parti.</div></div></div>
+          <div class="ti"><div class="ti-ic" style="background:rgba(34,197,94,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><use href="#chk"/></svg></div><div><div class="ti-title">Suivi automatique des tours</div><div class="ti-desc">GhettoPay notifie chaque membre quand c'est son tour. Plus de disputes, plus de confusion.</div></div></div>
+          <div class="ti"><div class="ti-ic" style="background:rgba(212,160,23,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><use href="#shield"/></svg></div><div><div class="ti-title">Argent sécurisé</div><div class="ti-desc">Chaque cotisation est tracée, chaque paiement confirmé. La confiance est automatique.</div></div></div>
+        </div>
+      </div>
+      <div class="rev d2" style="display:flex;flex-direction:column;gap:12px">
+        <!-- Tontine card -->
+        <div class="tontine-card">
+          <div class="tnt-head">
+            <div class="tnt-av" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);width:38px;height:38px;font-size:.85rem">F</div>
+            <div><div class="tnt-name" style="font-size:.78rem">Famille Moussavou</div><div class="tnt-members">8 membres · Mensuel</div></div>
+            <div class="tnt-val"><div class="tnt-n" style="font-size:.85rem">400 000</div><div class="tnt-c">FCFA/cycle</div></div>
+          </div>
+          <div style="background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:6px 10px;font-size:.64rem;font-weight:700;color:#86efac;margin-bottom:10px">🎉 C'est ton tour de recevoir ce mois !</div>
+          <div class="tnt-bar-bg"><div class="tnt-bar" style="width:62%"></div></div>
+          <div class="tnt-foot"><span>5 / 8 ont cotisé</span><span>Échéance : 15 déc.</span></div>
+          <div class="tnt-btn-d" style="font-size:.76rem">Cotiser maintenant</div>
+        </div>
+        <div class="tontine-card" style="background:linear-gradient(135deg,#0284c7,#38bdf8)">
+          <div class="tnt-head">
+            <div class="tnt-av" style="background:rgba(255,255,255,.2);width:38px;height:38px;font-size:.85rem">A</div>
+            <div><div class="tnt-name" style="font-size:.78rem">Amis Lycée Omar Bongo</div><div class="tnt-members">5 membres · Mensuel</div></div>
+            <div class="tnt-val"><div class="tnt-n" style="font-size:.85rem">250 000</div><div class="tnt-c">FCFA/cycle</div></div>
+          </div>
+          <div class="tnt-bar-bg"><div class="tnt-bar" style="width:80%;background:rgba(255,255,255,.9)"></div></div>
+          <div class="tnt-foot"><span>4 / 5 ont cotisé</span><span>Échéance : 30 nov.</span></div>
+          <div class="tnt-btn-d" style="font-size:.76rem">Voir les détails</div>
         </div>
       </div>
     </div>
@@ -881,12 +1199,12 @@ footer{
 <!-- COMPARE -->
 <section id="compare" class="cmp-bg">
   <div class="inner">
-    <div class="reveal">
-      <div class="eyebrow">03 — Comparer</div>
+    <div class="rev">
+      <div class="eyebrow">05 — Comparer</div>
       <h2 class="sec-title">La vérité<br/><em>sans filtre</em></h2>
-      <p class="sec-sub">Voilà pourquoi les Gabonais choisissent GhettoPay.</p>
+      <p class="sec-sub">Voilà pourquoi les Gabonais choisissent GhettoPay plutôt que les autres services.</p>
     </div>
-    <div class="ctable reveal d2">
+    <div class="ctable rev d2">
       <div class="chead">
         <div class="ch-lbl">Fonctionnalité</div>
         <div class="ch-us">GhettoPay</div>
@@ -894,62 +1212,13 @@ footer{
         <div class="ch-oth">Moov Money</div>
       </div>
       <div class="crow"><div class="crow-feat">Frais transfert<small>Pour 10 000 FCFA</small></div><div class="cv us">~150 F</div><div class="cv no">~400 F</div><div class="cv no">~350 F</div></div>
-      <div class="crow"><div class="crow-feat">Paiement QR Code<small>Scan & pay</small></div><div class="cv yes"><svg><use href="#chk"/></svg>Oui</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Coffre épargne<small>Épargne bloquée</small></div><div class="cv yes"><svg><use href="#chk"/></svg>Oui</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Tontine digitale<small>Collecte communautaire</small></div><div class="cv yes"><svg><use href="#chk"/></svg>Oui</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Budget & analyses<small>IA intégrée</small></div><div class="cv yes"><svg><use href="#chk"/></svg>Oui</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div></div>
+      <div class="crow"><div class="crow-feat">Paiement QR Code<small>Scan & pay instantané</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
+      <div class="crow"><div class="crow-feat">Coffre épargne<small>5.5%/an bloqué</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
+      <div class="crow"><div class="crow-feat">Tontine digitale<small>Collecte communautaire</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
+      <div class="crow"><div class="crow-feat">Budget & analyses<small>Catégories automatiques</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
       <div class="crow"><div class="crow-feat">Codes USSD<small>*127#...</small></div><div class="cv us">Jamais</div><div class="cv no">Toujours</div><div class="cv no">Toujours</div></div>
-      <div class="crow"><div class="crow-feat">Cashback partenaires<small>Argent qui revient</small></div><div class="cv yes"><svg><use href="#chk"/></svg>Oui</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div><div class="cv no"><svg><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Design & expérience<small>App moderne</small></div><div class="cv us">Premium</div><div class="cv no">Basique</div><div class="cv no">Basique</div></div>
-    </div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- QR -->
-<section id="qr" class="qr-bg">
-  <div class="inner">
-    <div class="qr-grid">
-      <div class="reveal">
-        <div class="eyebrow">04 — Scan & Pay</div>
-        <h2 class="sec-title">Scanne.<br/><em>Paye.</em><br/><span class="go">3 secondes.</span></h2>
-        <p class="sec-sub" style="margin-bottom:2.2rem">Fini chercher la monnaie. GhettoPay QR fonctionne partout — marchés, boutiques, maquis, restaurants.</p>
-        <div class="qr-steps">
-          <div class="step"><div class="step-n">1</div><div><div class="step-title">Ouvre GhettoPay</div><div class="step-desc">Tape sur "Scanner QR" — la caméra s'ouvre instantanément</div></div></div>
-          <div class="step"><div class="step-n">2</div><div><div class="step-title">Pointe vers le QR</div><div class="step-desc">Le QR du commerçant est reconnu automatiquement</div></div></div>
-          <div class="step"><div class="step-n">3</div><div><div class="step-title">Confirme avec ton empreinte</div><div class="step-desc">Ton pouce, c'est ta signature. Et c'est payé.</div></div></div>
-        </div>
-      </div>
-      <div class="qr-card reveal d2">
-        <div style="text-align:center;margin-bottom:1.2rem">
-          <div style="font-family:var(--fm);font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem">Scanner pour payer</div>
-          <div class="qr-demo">
-            <svg viewBox="0 0 7 7" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%" shape-rendering="crispEdges">
-              <rect width="7" height="7" fill="white"/>
-              <rect x="0" y="0" width="3" height="3" fill="#0d0d0d"/><rect x="1" y="1" width="1" height="1" fill="white"/>
-              <rect x="4" y="0" width="3" height="3" fill="#0d0d0d"/><rect x="5" y="1" width="1" height="1" fill="white"/>
-              <rect x="0" y="4" width="3" height="3" fill="#0d0d0d"/><rect x="1" y="5" width="1" height="1" fill="white"/>
-              <rect x="3" y="0" width="1" height="1" fill="#0d0d0d"/>
-              <rect x="4" y="3" width="1" height="1" fill="#0d0d0d"/>
-              <rect x="6" y="3" width="1" height="1" fill="#0d0d0d"/>
-              <rect x="3" y="4" width="2" height="1" fill="#0d0d0d"/>
-              <rect x="5" y="5" width="2" height="1" fill="#0d0d0d"/>
-            </svg>
-          </div>
-        </div>
-        <div class="qr-m-name">Boulangerie du Soleil</div>
-        <div class="qr-m-phone">+241 06 XX XX XX · Libreville</div>
-        <div class="qr-amt">
-          <div style="font-family:var(--fm);font-size:.54rem;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:.25rem">Montant</div>
-          <div class="qr-amt-val">3 500 FCFA</div>
-        </div>
-        <button class="qr-pay-btn" id="payBtn" onclick="
-          this.innerHTML='✓ Payé — Merci !';
-          this.style.background='linear-gradient(135deg,#16a34a,#22c55e)';
-          setTimeout(()=>{this.innerHTML='🔒 Confirmer avec empreinte';this.style.background=''},2500)
-        ">🔒 Confirmer avec empreinte</button>
-      </div>
+      <div class="crow"><div class="crow-feat">Cashback partenaires<small>Argent qui revient</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
+      <div class="crow"><div class="crow-feat">Design & expérience<small>Interface moderne</small></div><div class="cv us">Premium</div><div class="cv no">Basique</div><div class="cv no">Basique</div></div>
     </div>
   </div>
 </section>
@@ -959,10 +1228,11 @@ footer{
 <!-- AMBASSADEUR -->
 <section class="amb-bg">
   <div class="inner">
-    <div class="amb-card reveal">
+    <div class="amb-card rev">
       <div style="position:relative;z-index:1">
+        <div style="font-family:var(--fm);font-size:.66rem;color:var(--gold2);letter-spacing:.16em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:2px;background:var(--gold2);display:block"></span>06 — Programme</div>
         <h3 class="amb-title">Deviens <span>Ambassadeur</span><br/>GhettoPay</h3>
-        <p class="amb-desc">Invite ton quartier, ta famille, tes amis. Chaque invitation réussie te rapporte du cash directement sur ton compte.</p>
+        <p class="amb-desc">Invite ton quartier, ta famille, tes amis. Chaque invitation réussie te rapporte du cash directement sur ton compte GhettoPay.</p>
         <div class="amb-steps">
           <div class="as"><div class="as-n">1</div><div><div class="as-title">Partage ton code unique</div><div class="as-desc">Chaque compte a son code personnel</div></div></div>
           <div class="as"><div class="as-n">2</div><div><div class="as-title">Ton ami s'inscrit</div><div class="as-desc">Il entre ton code à la création du compte</div></div></div>
@@ -983,23 +1253,29 @@ footer{
 <!-- CTA -->
 <section class="cta-bg">
   <div class="cta-blob"></div>
-  <div class="cta-inner reveal">
+  <div class="cta-inner rev">
+    <div style="display:inline-flex;align-items:center;gap:.6rem;background:rgba(10,74,46,.08);border:1px solid rgba(10,74,46,.12);border-radius:100px;padding:.35rem .9rem .35rem .5rem;margin-bottom:1.5rem">
+      <div style="width:20px;height:20px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#z"/></svg></div>
+      <span style="font-size:.68rem;font-weight:700;color:var(--forest);letter-spacing:.04em;text-transform:uppercase">100% Gabonais · Certifié CEMAC</span>
+    </div>
     <h2 class="cta-title">Prêt à maîtriser<br/><em>ton argent ?</em></h2>
-    <p class="cta-sub">Rejoins les Gabonais qui ont choisi la liberté financière. Inscription gratuite, en 2 minutes.</p>
+    <p class="cta-sub">Rejoins les Gabonais qui ont choisi la liberté financière. Inscription gratuite, en 2 minutes. Aucune carte bancaire requise.</p>
     <div class="cta-btns">
-      <a href="https://ghettopay-app.vercel.app/" class="btn-pri" style="font-size:.95rem;padding:1.05rem 2.5rem"><svg><use href="#ar"/></svg>Ouvrir l'Application</a>
+      <a href="https://ghettopay-app.vercel.app/" class="btn-pri" style="font-size:.95rem;padding:1rem 2.4rem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#ar"/></svg>Ouvrir l'Application
+      </a>
     </div>
     <div class="stores">
       <a href="#" class="store">
-        <svg viewBox="0 0 24 24" style="stroke:var(--txt3);stroke-width:1.5;fill:none"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17" style="stroke:var(--txt3);stroke-width:1.5;fill:none"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         <div class="store-lbl"><small>Télécharger sur</small>App Store</div>
       </a>
       <a href="#" class="store">
-        <svg viewBox="0 0 24 24" style="stroke:var(--txt3);stroke-width:1.5;fill:none"><path d="M3 20.5v-17l17.5 8.5z"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17" style="stroke:var(--txt3);stroke-width:1.5;fill:none"><path d="M3 20.5v-17l17.5 8.5z"/></svg>
         <div class="store-lbl"><small>Disponible sur</small>Google Play</div>
       </a>
     </div>
-    <p class="legal">Sécurisé · Made in Gabon · Régulé CEMAC · Chiffrement 256-bit</p>
+    <p class="legal">Chiffrement 256-bit · Made in Gabon · Régulé CEMAC · 0 frais cachés</p>
   </div>
 </section>
 
@@ -1007,30 +1283,43 @@ footer{
   <div class="foot-inner">
     <span class="foot-brand">GhettoPay</span>
     <div class="foot-links">
-      <a href="#">À propos</a><a href="#">Conditions</a>
-      <a href="#">Confidentialité</a><a href="#">Contact</a>
+      <a href="#">À propos</a>
+      <a href="#">Conditions</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Contact</a>
     </div>
     <span class="foot-copy">© 2025 GhettoPay · Libreville, Gabon</span>
   </div>
 </footer>
 
 <script>
+/* Cursor */
 const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
 (function loop(){
-  rx+=(mx-rx)*.16;ry+=(my-ry)*.16;
-  cur.style.transform=`translate(${mx-4}px,${my-4}px)`;
-  curR.style.transform=`translate(${rx-16}px,${ry-16}px)`;
+  rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
+  cur.style.transform=`translate(${mx-3.5}px,${my-3.5}px)`;
+  curR.style.transform=`translate(${rx-14}px,${ry-14}px)`;
   requestAnimationFrame(loop);
 })();
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hover-active'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hover-active'));
+document.querySelectorAll('a,button,.feat,.cf,.ti,.tontine-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ha'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ha'));
 });
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50));
-const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
+
+/* Nav scroll */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>50));
+
+/* Reveal on scroll */
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:.08});
+document.querySelectorAll('.rev').forEach(e=>obs.observe(e));
+
+/* Device tabs (decorative) */
+document.querySelectorAll('.dtab').forEach(t=>t.addEventListener('click',function(){
+  document.querySelectorAll('.dtab').forEach(x=>x.classList.remove('on'));
+  this.classList.add('on');
+}));
 </script>
 </body>
 </html>
