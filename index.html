@@ -55,6 +55,10 @@ nav.sc{background:rgba(250,247,240,.97);backdrop-filter:blur(24px);border-bottom
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-cta{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem 1.4rem;background:var(--forest);border-radius:10px;font-size:.8rem;font-weight:700;color:#fff;text-decoration:none;transition:all .22s;box-shadow:0 4px 16px rgba(10,74,46,.3)}
 .nav-cta:hover{background:var(--forest2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,74,46,.4)}
+.nav-ham{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;color:var(--txt2);cursor:pointer;padding:0;border-radius:8px;transition:.2s;flex-shrink:0}
+.nav-ham:hover{background:var(--cream3);color:var(--forest)}
+.nav-ham svg{stroke-width:2.5;transition:.2s}
+.nav-ham.active svg{stroke:var(--forest)}
 
 /* ── HERO ─── */
 .hero{
@@ -374,14 +378,9 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
   /* Nav */
   nav{padding:0 4.5%;height:60px;position:fixed}
   .nav-ham{display:flex}
-  .hero{padding:6.5rem 5% 3.5rem;min-height:auto}
+  .nav-cta{display:none}
   .nav-links{display:none;opacity:0;visibility:hidden;position:absolute;top:100%;left:0;right:0;background:rgba(250,247,240,.98);backdrop-filter:blur(20px);flex-direction:column;padding:1rem 5%;gap:1rem;border-top:1px solid rgba(0,0,0,.08);transform:translateY(-10px);transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 32px rgba(0,0,0,.12)}
   .nav-links.show{display:flex;opacity:1;visibility:visible;transform:translateY(0)}
-  .nav-ham{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;color:var(--txt2);cursor:pointer;padding:0;border-radius:8px;transition:.2s;flex-shrink:0}
-  .nav-ham:hover{background:var(--cream3);color:var(--forest)}
-  .nav-ham svg{stroke-width:2.5;transition:.2s}
-  .nav-ham.active svg{stroke:var(--forest)}
-  .nav-cta{padding:.5rem 1.1rem;font-size:.76rem;gap:.45rem}
 
   /* Sections */
   section{padding:4rem 5%}
@@ -486,7 +485,6 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
   .screens-bg{padding:3.2rem 4.5%}
   .cta-bg{padding:4.5rem 4.5%}
   nav{padding:0 4.5%}
-  .hero{padding:6.5rem 4.5% 2.8rem}
 
   /* Hero */
   .hero{padding:4.5rem 4.5% 2.8rem}
@@ -558,6 +556,18 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
   footer{padding:1.8rem 4.5%}
   .foot-links{gap:.85rem}
   .foot-links a{font-size:.68rem}
+}
+
+/* ── MOBILE XS 360px ── */
+@media(max-width:360px){
+  .logo-txt{font-size:.9rem}
+  .logo-mark{width:30px;height:30px;border-radius:8px}
+  .logo-mark svg{width:15px;height:15px}
+  h1.hero-title{font-size:clamp(1.75rem,13vw,2.2rem)}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .stat-val{font-size:1rem}
+  .coffre-stats-row{grid-template-columns:repeat(2,1fr)}
+  .amb-big{font-size:1.7rem}
 }
 </style>
 </head>
@@ -1427,6 +1437,9 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
       <a href="#">Contact</a>
     </div>
     <span class="foot-copy">© 2026 GhettoPay · Libreville, Gabon</span>
+  </div>
+  <div style="text-align:center;padding:.9rem 5% 0;border-top:1px solid rgba(255,255,255,.04);margin-top:.8rem">
+    <span style="font-family:var(--fm);font-size:.58rem;color:rgba(255,255,255,.22)">Made by <a href="https://nsoleyportfolio.vercel.app/" target="_blank" rel="noopener" style="color:var(--gold2);text-decoration:none;font-weight:600;transition:.15s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">Sean Thomas Ekang Nsoley</a></span>
   </div>
 </footer>
 
