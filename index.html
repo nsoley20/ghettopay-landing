@@ -3,1519 +3,700 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>GhettoPay — Ton argent, ton flow</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<title>GhettoPay — Ton argent, libre comme la forêt</title>
+<meta name="description" content="Portefeuille, coffre d'épargne et tontines dans une seule application gabonaise. Envoie et reçois par numéro ou QR code, sans code USSD et sans agence."/>
+<meta name="theme-color" content="#04140A"/>
+<link rel="icon" href="ghettopay-icon.svg"/>
+<meta property="og:title" content="GhettoPay — Ton argent, libre comme la forêt"/>
+<meta property="og:description" content="Portefeuille, coffre et tontines dans une seule application gabonaise."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600;1,800;1,900&family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
+/* ═══════════════════════════════════════════════════════════════════════
+   GhettoPay — landing
+   Le système visuel est celui de l'application : fond forêt profonde,
+   or comme unique accent lumineux, crème pour les surfaces claires, et
+   un serif italique en titrage. Les captures de la page sont les écrans
+   réels de ghettopay.com, sans retouche.
+   ═══════════════════════════════════════════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
 :root{
-  --ink:     #0D0D0D;
+  /* Fonds — du plus profond au plus clair */
+  --nuit:    #04140A;
+  --nuit2:   #071E10;
   --forest:  #0A4A2E;
   --forest2: #0F5C38;
-  --green:   #16A34A;
-  --green2:  #22C55E;
-  --green3:  #BBF7D0;
+  --forest3: #1A6B40;
+  /* Or — l'unique accent */
   --gold:    #D4A017;
   --gold2:   #F0C040;
-  --gold3:   #FDE68A;
+  --gold3:   #F5D468;
+  /* Crème — surfaces claires et texte sur fond sombre */
   --cream:   #FAF7F0;
   --cream2:  #F2EDE3;
-  --cream3:  #E8E0D0;
-  --white:   #FFFFFF;
-  --txt:     #1A1A1A;
-  --txt2:    #4A5240;
-  --txt3:    #8A9280;
-  --f:       'Sora',sans-serif;
-  --fd:      'Playfair Display',serif;
-  --fm:      'DM Mono',monospace;
-}
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:var(--f);background:var(--cream);color:var(--txt);overflow-x:hidden;cursor:none}
+  --cream3:  #E4DDCD;
+  /* Textes. Les gris tirent tous vers le vert : un gris neutre sonne
+     faux à côté de la forêt. */
+  --ink:     #0B1F13;
+  --ink2:    #38493D;
+  --ink3:    #6F7E72;
+  --onDark:  rgba(250,247,240,.72);
+  --onDark2: rgba(250,247,240,.48);
 
-/* ── CURSOR ─── */
-#cur{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;top:0;left:0;transition:transform .1s}
-#curR{position:fixed;width:28px;height:28px;border:1.5px solid var(--forest);border-radius:50%;pointer-events:none;z-index:9998;top:0;left:0;transition:border-color .18s}
-.ha #curR{border-color:var(--gold);transform:scale(2)!important}
+  --f:  'Sora',system-ui,sans-serif;
+  --fd: 'Playfair Display',Georgia,serif;
+  --fm: 'DM Mono',ui-monospace,monospace;
 
-/* ── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;height:68px;
-  padding:0 5%;display:flex;align-items:center;justify-content:space-between;
-  transition:all .35s;
-}
-nav.sc{background:rgba(250,247,240,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,.05);box-shadow:0 2px 24px rgba(0,0,0,.05)}
-.logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
-.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--forest),var(--forest2));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(10,74,46,.3)}
-.logo-mark svg{width:18px;height:18px;stroke:var(--gold2);stroke-width:2.5;fill:none}
-.logo-txt{font-family:var(--fd);font-size:1.08rem;font-weight:900;color:var(--ink);font-style:italic;letter-spacing:-.01em}
-.logo-txt span{color:var(--forest)}
-.nav-links{display:flex;gap:2.2rem}
-.nav-links a{font-size:.8rem;font-weight:600;color:var(--txt2);text-decoration:none;transition:.2s;letter-spacing:.01em;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:.2s}
-.nav-links a:hover{color:var(--forest)}
-.nav-links a:hover::after{transform:scaleX(1)}
-.nav-cta{display:inline-flex;align-items:center;gap:.55rem;padding:.55rem 1.4rem;background:var(--forest);border-radius:10px;font-size:.8rem;font-weight:700;color:#fff;text-decoration:none;transition:all .22s;box-shadow:0 4px 16px rgba(10,74,46,.3)}
-.nav-cta:hover{background:var(--forest2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,74,46,.4)}
-.nav-ham{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;color:var(--txt2);cursor:pointer;padding:0;border-radius:8px;transition:.2s;flex-shrink:0}
-.nav-ham:hover{background:var(--cream3);color:var(--forest)}
-.nav-ham svg{stroke-width:2.5;transition:.2s}
-.nav-ham.active svg{stroke:var(--forest)}
-
-/* ── HERO ─── */
-.hero{
-  min-height:100vh;background:var(--cream);
-  padding:6rem 5% 5rem;position:relative;overflow:hidden;
-  display:flex;align-items:center;
-}
-.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.022) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%)}
-.blob{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
-.b1{width:700px;height:700px;background:rgba(10,74,46,.07);right:-180px;top:-120px}
-.b2{width:500px;height:500px;background:rgba(212,160,23,.07);left:-120px;bottom:-80px}
-.b3{width:280px;height:280px;background:rgba(34,197,94,.05);right:28%;top:55%}
-
-.hero-inner{max-width:1320px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1.15fr;gap:4rem;align-items:center;position:relative;z-index:2}
-
-.hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:var(--forest);border-radius:100px;padding:.35rem .9rem .35rem .4rem;margin-bottom:1.7rem;animation:fup .5s both}
-.badge-dot{width:24px;height:24px;border-radius:50%;background:var(--gold2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.badge-dot svg{width:11px;height:11px;stroke:var(--forest);stroke-width:2.5;fill:none}
-.badge-txt{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.05em;text-transform:uppercase}
-
-h1.hero-title{font-family:var(--fd);font-size:clamp(2.8rem,5.2vw,5rem);font-weight:900;line-height:.88;letter-spacing:-.04em;color:var(--ink);margin-bottom:1.5rem;animation:fup .6s .06s both}
-h1.hero-title em{font-style:italic;color:var(--forest);display:block}
-h1.hero-title .ghost{-webkit-text-stroke:2.5px var(--forest);color:transparent}
-
-.hero-desc{font-size:1rem;color:var(--txt2);line-height:1.9;max-width:460px;margin-bottom:2rem;animation:fup .6s .12s both;font-weight:400}
-.hero-desc strong{color:var(--ink);font-weight:700}
-
-.hero-btns{display:flex;gap:.85rem;flex-wrap:wrap;margin-bottom:2.5rem;animation:fup .6s .18s both}
-.btn-pri{display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 2rem;background:linear-gradient(135deg,var(--forest),var(--forest2));border-radius:12px;font-size:.9rem;font-weight:700;color:#fff;text-decoration:none;box-shadow:0 6px 24px rgba(10,74,46,.35);transition:all .22s}
-.btn-pri svg{width:14px;height:14px;stroke:var(--gold2);stroke-width:2.5;fill:none}
-.btn-pri:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(10,74,46,.45)}
-.btn-sec{display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 1.8rem;background:var(--white);border:2px solid var(--cream3);border-radius:12px;font-size:.9rem;font-weight:700;color:var(--txt);text-decoration:none;transition:all .22s;box-shadow:0 2px 12px rgba(0,0,0,.05)}
-.btn-sec svg{width:14px;height:14px;stroke:var(--forest);stroke-width:2;fill:none}
-.btn-sec:hover{border-color:var(--forest);box-shadow:0 4px 20px rgba(10,74,46,.14)}
-
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--white);border-radius:16px;border:1px solid var(--cream3);box-shadow:0 4px 24px rgba(0,0,0,.05);animation:fup .6s .24s both;overflow:hidden}
-.stat{padding:1.2rem .7rem;text-align:center;border-right:1px solid var(--cream3);transition:.2s}
-.stat:last-child{border-right:none}
-.stat:hover{background:var(--cream)}
-.stat-val{font-family:var(--fd);font-size:1.55rem;font-weight:900;color:var(--forest);line-height:1}
-.stat-lbl{font-family:var(--fm);font-size:.54rem;color:var(--txt3);margin-top:.35rem;letter-spacing:.06em;text-transform:uppercase}
-
-/* ── DEVICE SHOWCASE ─── */
-.devices{position:relative;height:640px;animation:fup .9s .08s both}
-
-/* Phone */
-.d-phone{
-  position:absolute;right:0;bottom:0;
-  width:250px;
-  background:var(--ink);border-radius:40px;padding:8px;
-  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 100px rgba(0,0,0,.35),0 16px 40px rgba(0,0,0,.2);
-  z-index:10;
-}
-.d-phone-inner{background:var(--cream);border-radius:33px;height:520px;overflow:hidden;position:relative}
-.d-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:70px;height:20px;background:var(--ink);border-radius:0 0 12px 12px;z-index:10}
-
-/* Tablet */
-.d-tablet{
-  position:absolute;left:0;top:30px;
-  width:480px;height:360px;
-  background:var(--ink);border-radius:20px;padding:6px;
-  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 30px 80px rgba(0,0,0,.28),0 12px 30px rgba(0,0,0,.18);
-  z-index:8;
-}
-.d-tablet-inner{background:var(--cream);border-radius:15px;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
-.d-tablet-cam{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);z-index:5}
-
-/* Laptop */
-.d-laptop{
-  position:absolute;left:-20px;bottom:0;
-  width:560px;
-}
-.d-laptop-screen{background:var(--ink);border-radius:12px 12px 0 0;padding:5px 5px 0;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 20px 60px rgba(0,0,0,.25)}
-.d-laptop-inner{background:var(--cream);border-radius:8px 8px 0 0;height:320px;overflow:hidden;position:relative}
-.d-laptop-base{background:linear-gradient(180deg,#2a2a2a,#1a1a1a);height:14px;border-radius:0 0 4px 4px;box-shadow:0 4px 16px rgba(0,0,0,.3)}
-.d-laptop-foot{background:#222;height:4px;border-radius:0 0 3px 3px;margin:0 20px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-
-/* Floating badges */
-.fl{position:absolute;background:var(--white);border:1px solid var(--cream3);border-radius:14px;padding:.55rem .9rem;box-shadow:0 8px 32px rgba(0,0,0,.1);display:flex;align-items:center;gap:.6rem;z-index:20}
-.fl-ic{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fl-ic svg{width:12px;height:12px;stroke-width:2;fill:none}
-.fl-t{font-size:.62rem;font-weight:800;color:var(--ink);display:block;line-height:1}
-.fl-s{font-size:.52rem;color:var(--txt3)}
-.fl1{top:0;right:20px;animation:fl1 5s ease-in-out infinite}
-.fl2{bottom:130px;right:-10px;animation:fl2 4.5s ease-in-out infinite}
-.fl3{bottom:90px;left:160px;animation:fl1 6s ease-in-out infinite .5s;z-index:15}
-@keyframes fl1{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(.5deg)}}
-@keyframes fl2{0%,100%{transform:translateY(0) rotate(1deg)}50%{transform:translateY(10px) rotate(-.5deg)}}
-
-/* ── APP UI SNIPPETS (shared) ─── */
-.app-hdr{background:linear-gradient(155deg,#0A4A2E 0%,#0F5C38 60%,#1A6B40 100%);flex-shrink:0;position:relative;overflow:hidden}
-.app-hdr::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.14),transparent 70%);right:-50px;top:-60px;pointer-events:none}
-.app-topbar{display:flex;align-items:center;justify-content:space-between}
-.app-greet{font-size:.46rem;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)}
-.app-name{font-size:.72rem;font-weight:800;color:#fff;margin-top:2px}
-.app-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#0F5C38);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:900;color:#fff;border:2px solid rgba(255,255,255,.18)}
-.app-bal{background:linear-gradient(135deg,#D4A017 0%,#F0C040 55%,#FDE68A 100%);border-radius:14px;position:relative;overflow:hidden}
-.app-bal::after{content:'';position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.18);bottom:-20px;right:-14px}
-.app-bal-lbl{font-size:.4rem;font-weight:700;color:rgba(0,0,0,.45);letter-spacing:.1em;text-transform:uppercase;font-family:var(--fm)}
-.app-bal-amt{font-family:var(--fd);font-weight:900;color:#0A4A2E;line-height:1;letter-spacing:-.02em}
-.app-bal-sub{font-size:.42rem;color:rgba(0,0,0,.42);font-family:var(--fm)}
-
-/* TX row (shared) */
-.a-tx{display:flex;align-items:center}
-.a-tx-av{border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.a-tx-av svg{stroke:white;stroke-width:2;fill:none}
-.a-tx-name{font-weight:700;color:var(--txt)}
-.a-tx-cat{color:var(--txt3);font-family:var(--fm)}
-.a-tx-v{font-weight:800}
-.a-tx-v.cr{color:#15803d}
-.a-tx-v.db{color:#dc2626}
-
-/* ── DIVIDER ─── */
-.div{height:1px;background:linear-gradient(90deg,transparent,var(--cream3) 20%,var(--cream3) 80%,transparent)}
-
-/* ── SECTION COMMON ─── */
-section{padding:7rem 5%}
-.inner{max-width:1320px;margin:0 auto}
-.eyebrow{font-family:var(--fm);font-size:.66rem;font-weight:500;color:var(--green);letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
-.eyebrow::before{content:'';width:18px;height:2px;background:var(--gold);display:block;border-radius:1px}
-h2.sec-title{font-family:var(--fd);font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;color:var(--ink);margin-bottom:1rem}
-h2.sec-title em{font-style:italic;color:var(--forest)}
-h2.sec-title .go{color:var(--gold)}
-.sec-sub{font-size:.93rem;color:var(--txt2);max-width:460px;line-height:1.9}
-
-/* ── FEATURES ─── */
-.feats-bg{background:var(--white)}
-.feats-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem}
-.feats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.feat{background:var(--cream);border:1px solid var(--cream3);border-radius:20px;padding:1.8rem 1.6rem;transition:all .3s;position:relative;overflow:hidden;cursor:default}
-.feat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--forest),var(--gold));transform:scaleX(0);transform-origin:left;transition:.32s}
-.feat:hover{background:var(--white);box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-4px)}
-.feat:hover::after{transform:scaleX(1)}
-.feat-ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
-.feat-ic svg{width:21px;height:21px;stroke-width:1.8;fill:none}
-.feat h3{font-size:.9rem;font-weight:800;color:var(--ink);margin-bottom:.4rem}
-.feat p{font-size:.76rem;color:var(--txt2);line-height:1.82}
-.feat-pill{display:inline-block;margin-top:.9rem;font-family:var(--fm);font-size:.54rem;padding:.22rem .7rem;border-radius:100px;font-weight:600;letter-spacing:.05em}
-
-/* ── SCREENS SECTION ─── */
-.screens-bg{background:var(--ink);padding:7rem 5%}
-.screens-bg .eyebrow{color:var(--gold2)}
-.screens-bg .eyebrow::before{background:var(--gold2)}
-.screens-bg h2.sec-title{color:var(--white)}
-.screens-bg h2.sec-title em{color:var(--gold2)}
-.screens-bg .sec-sub{color:rgba(255,255,255,.42)}
-
-.screens-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem}
-
-/* Laptop demo large */
-.laptop-demo{position:relative;margin:0 auto}
-.ld-body{background:#1a1a1a;border-radius:14px 14px 0 0;padding:7px 7px 0;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 30px 80px rgba(0,0,0,.5)}
-.ld-screen{background:var(--cream);border-radius:9px 9px 0 0;height:340px;overflow:hidden;position:relative}
-.ld-base{background:linear-gradient(180deg,#2a2a2a 0%,#1f1f1f 100%);height:18px;border-radius:0 0 6px 6px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
-.ld-foot{background:#1a1a1a;height:5px;margin:0 30px;border-radius:0 0 4px 4px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
-
-/* Tablet demo */
-.tab-demo{position:relative}
-.td-body{background:#1a1a1a;border-radius:14px;padding:6px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 20px 60px rgba(0,0,0,.4)}
-.td-screen{background:var(--cream);border-radius:9px;height:280px;overflow:hidden;position:relative}
-.td-cam{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);z-index:5}
-
-/* Phones row */
-.phones-row{display:flex;gap:16px;align-items:flex-end;justify-content:center}
-.ph-mini{background:var(--ink);border-radius:22px;padding:5px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 16px 40px rgba(0,0,0,.35)}
-.ph-mini-inner{background:var(--cream);border-radius:17px;height:200px;width:96px;overflow:hidden;position:relative}
-.ph-mini-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:36px;height:12px;background:var(--ink);border-radius:0 0 8px 8px;z-index:5}
-.ph-big{background:var(--ink);border-radius:28px;padding:6px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 24px 60px rgba(0,0,0,.45)}
-.ph-big-inner{background:var(--cream);border-radius:22px;height:260px;width:126px;overflow:hidden;position:relative}
-.ph-big-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:46px;height:14px;background:var(--ink);border-radius:0 0 10px 10px;z-index:5}
-
-.devices-tabs{display:flex;gap:8px;margin-bottom:2.5rem}
-.dtab{padding:.5rem 1.2rem;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;transition:.15s;border:1.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);background:none;font-family:var(--f)}
-.dtab.on{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.3);color:var(--gold2)}
-
-/* ── COFFRE ─── */
-.coffre-bg{background:var(--ink)}
-.coffre-bg .eyebrow{color:var(--gold2)}
-.coffre-bg .eyebrow::before{background:var(--gold2)}
-.coffre-bg h2.sec-title{color:#fff}
-.coffre-bg h2.sec-title em{color:var(--gold2)}
-.coffre-bg .sec-sub{color:rgba(255,255,255,.42)}
-
-.coffre-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.coffre-card{background:linear-gradient(155deg,var(--forest) 0%,#0A3D25 100%);border-radius:26px;padding:2.6rem;position:relative;overflow:hidden;border:1px solid rgba(212,160,23,.2)}
-.coffre-card::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.1),transparent 70%);top:-90px;right:-90px}
-.coffre-ic{width:56px;height:56px;border-radius:16px;background:rgba(212,160,23,.18);border:1px solid rgba(212,160,23,.28);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
-.coffre-ic svg{width:26px;height:26px;stroke:var(--gold2);stroke-width:1.8;fill:none}
-.coffre-card h3{font-family:var(--fd);font-size:1.7rem;font-weight:900;font-style:italic;color:#fff;margin-bottom:.6rem}
-.coffre-card p{font-size:.86rem;color:rgba(255,255,255,.48);line-height:1.9;margin-bottom:1.8rem}
-.coffre-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
-.c-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:1.1rem .7rem;text-align:center}
-.c-stat-n{font-family:var(--fd);font-size:1.45rem;font-weight:900;color:var(--gold2)}
-.c-stat-l{font-family:var(--fm);font-size:.52rem;color:rgba(255,255,255,.32);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
-
-.coffre-feats{display:flex;flex-direction:column;gap:1rem}
-.cf{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:15px;transition:.22s}
-.cf:hover{border-color:rgba(212,160,23,.2);background:rgba(212,160,23,.05)}
-.cf-ic{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.cf-ic svg{width:16px;height:16px;stroke-width:2;fill:none}
-.cf-title{font-size:.82rem;font-weight:800;color:#fff;margin-bottom:.22rem}
-.cf-desc{font-size:.74rem;color:rgba(255,255,255,.38);line-height:1.72}
-
-/* ── COMPARE ─── */
-.cmp-bg{background:var(--cream)}
-.ctable{margin-top:3rem;border:1.5px solid var(--cream3);border-radius:22px;overflow:hidden;background:var(--white)}
-.ctable-wrap{margin-top:3rem}
-.ctable-hint{display:none;font-family:var('--fm');font-size:.55rem;color:var(--txt3)}
-/* Mention concurrentielle sous le tableau. Classe distincte de .ctable-hint,
-   qui est masquée hors mobile et flanquée de flèches ←→ en pseudo-éléments. */
-.ctable-note{max-width:46rem;margin:1.1rem auto 0;font-size:.74rem;line-height:1.6;color:var(--txt3);text-align:center}
-.chead{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;background:var(--forest);padding:.9rem 1.5rem}
-.ch-lbl{font-family:var(--fm);font-size:.62rem;font-weight:600;color:rgba(255,255,255,.48);text-transform:uppercase;letter-spacing:.07em}
-.ch-us{font-family:var(--fm);font-size:.62rem;font-weight:800;color:var(--gold2);text-align:center;letter-spacing:.04em;text-transform:uppercase}
-.ch-oth{font-family:var(--fm);font-size:.62rem;font-weight:500;color:rgba(255,255,255,.32);text-align:center;text-transform:uppercase}
-.crow{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;padding:.9rem 1.5rem;border-bottom:1px solid var(--cream2);transition:.12s}
-.crow:last-child{border-bottom:none}
-.crow:hover{background:var(--cream)}
-.crow-feat{font-size:.82rem;font-weight:600;color:var(--txt)}
-.crow-feat small{display:block;font-size:.64rem;color:var(--txt3);font-weight:400;margin-top:.1rem}
-.cv{text-align:center;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:.35rem}
-.cv svg{width:12px;height:12px;stroke-width:2.5;fill:none}
-.cv.yes{color:var(--green)}
-.cv.no{color:var(--cream3)}
-.cv.us{color:var(--forest);font-weight:900}
-
-/* ── TONTINE SECTION ─── */
-.tontine-bg{background:var(--white)}
-.tontine-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.tontine-card{background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:24px;padding:2.2rem;color:#fff;position:relative;overflow:hidden}
-.tontine-card::before{content:'';position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,.06);top:-80px;right:-80px}
-.tnt-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.tnt-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.1rem;font-weight:900;color:#fff}
-.tnt-name{font-size:.9rem;font-weight:800}
-.tnt-members{font-size:.66rem;opacity:.55;margin-top:2px;font-family:var(--fm)}
-.tnt-val{margin-left:auto;text-align:right}
-.tnt-n{font-family:var(--fd);font-size:1rem;font-weight:900}
-.tnt-c{font-size:.6rem;opacity:.5;font-family:var(--fm);margin-top:2px}
-.tnt-bar-bg{background:rgba(255,255,255,.15);border-radius:100px;height:6px;overflow:hidden;margin:8px 0 6px}
-.tnt-bar{height:100%;border-radius:100px;background:var(--gold2)}
-.tnt-foot{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.56rem;opacity:.48;margin-bottom:14px}
-.tnt-btn-d{width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,.15);font-family:var(--f);font-size:.82rem;font-weight:800;color:#fff;cursor:pointer;border:1.5px solid rgba(255,255,255,.25)}
-
-.tontine-info{display:flex;flex-direction:column;gap:.9rem}
-.ti{display:flex;align-items:flex-start;gap:.9rem;padding:1.1rem;background:var(--cream);border:1px solid var(--cream3);border-radius:14px;transition:.2s}
-.ti:hover{background:var(--white);box-shadow:0 4px 18px rgba(0,0,0,.06)}
-.ti-ic{width:34px;height:34px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.ti-ic svg{width:15px;height:15px;stroke-width:2;fill:none}
-.ti-title{font-size:.82rem;font-weight:800;color:var(--ink);margin-bottom:.2rem}
-.ti-desc{font-size:.73rem;color:var(--txt2);line-height:1.72}
-
-/* ── AMB ─── */
-.amb-bg{background:var(--cream)}
-.amb-card{background:var(--forest);border-radius:28px;padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(10,74,46,.22)}
-.amb-card::before{content:'';position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,.08),transparent 70%);top:-130px;right:-80px}
-.amb-card::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(0,0,0,.07);bottom:-60px;left:35%}
-h3.amb-title{font-family:var(--fd);font-size:2rem;font-weight:900;font-style:italic;color:#fff;margin-bottom:.7rem;line-height:1.1}
-h3.amb-title span{color:var(--gold2)}
-.amb-desc{font-size:.88rem;color:rgba(255,255,255,.47);line-height:1.9;margin-bottom:2rem}
-.amb-steps{display:flex;flex-direction:column;gap:.85rem}
-.as{display:flex;align-items:center;gap:.9rem}
-.as-n{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:var(--gold2);display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:800;color:var(--forest)}
-.as-title{font-size:.84rem;font-weight:700;color:#fff}
-.as-desc{font-size:.7rem;color:rgba(255,255,255,.38);margin-top:2px}
-.amb-reward{background:rgba(255,255,255,.08);border:1px solid rgba(212,160,23,.2);border-radius:20px;padding:2.8rem;text-align:center;position:relative;z-index:1}
-.amb-big{font-family:var(--fd);font-size:3.2rem;font-weight:900;color:var(--gold2);line-height:1;display:block;margin-bottom:.5rem}
-.amb-sub{font-size:.82rem;color:rgba(255,255,255,.42);line-height:1.8}
-.amb-badge{display:inline-block;margin-top:1.1rem;padding:.38rem 1.1rem;background:var(--gold2);border-radius:100px;font-size:.7rem;font-weight:800;color:var(--forest)}
-
-/* ── CTA ─── */
-.cta-bg{background:var(--white);text-align:center;position:relative;overflow:hidden;padding:9rem 5%}
-.cta-blob{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(10,74,46,.05),transparent 70%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
-.cta-inner{max-width:620px;margin:0 auto;position:relative;z-index:2}
-h2.cta-title{font-family:var(--fd);font-size:clamp(2.1rem,4.5vw,3.6rem);font-weight:900;color:var(--ink);margin-bottom:1.1rem;letter-spacing:-.04em;line-height:1.05}
-h2.cta-title em{font-style:italic;color:var(--forest)}
-.cta-sub{font-size:.95rem;color:var(--txt2);margin-bottom:2.6rem;line-height:1.9}
-.cta-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap}
-.stores{display:flex;gap:.85rem;justify-content:center;margin-top:1.3rem;flex-wrap:wrap}
-.store{display:inline-flex;align-items:center;gap:.7rem;padding:.7rem 1.5rem;background:var(--cream);border:1.5px solid var(--cream3);border-radius:12px;font-size:.8rem;font-weight:600;color:var(--txt);text-decoration:none;transition:.2s}
-.store:hover{border-color:var(--forest);box-shadow:0 4px 16px rgba(10,74,46,.12)}
-.store-lbl small{display:block;font-size:.56rem;color:var(--txt3);font-weight:400}
-.legal{font-family:var(--fm);font-size:.6rem;color:var(--txt3);margin-top:1.5rem}
-
-/* ── FOOTER ─── */
-footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255,255,.06)}
-.foot-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.foot-brand{font-family:var(--fd);font-style:italic;font-size:1.05rem;font-weight:900;color:var(--gold2)}
-.foot-links{display:flex;gap:1.5rem}
-.foot-links a{font-size:.73rem;color:rgba(255,255,255,.28);text-decoration:none;transition:.15s}
-.foot-links a:hover{color:var(--gold2)}
-.foot-copy{font-family:var(--fm);font-size:.6rem;color:rgba(255,255,255,.18)}
-
-/* ── ANIMS ─── */
-@keyframes fup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.rev{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
-.rev.in{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
-
-/* ── RESPONSIVE ─── */
-
-/* ── TABLET 1100px ── */
-@media(max-width:1100px){
-  .hero-inner,.coffre-grid,.tontine-grid{grid-template-columns:1fr}
-  .amb-card{grid-template-columns:1fr}
-  .feats-intro{grid-template-columns:1fr}
-  .screens-header{grid-template-columns:1fr}
-  /* Stack devices vertically */
-  .devices{
-    display:flex!important;flex-direction:column;align-items:center;
-    height:auto;padding:2.5rem 0;gap:1.5rem
-  }
-  .d-laptop{position:static;width:min(92vw,500px)}
-  .d-tablet{position:static;width:min(92vw,400px);height:300px;top:auto;left:auto}
-  .d-phone{position:static;width:min(80vw,240px);height:490px;right:auto;bottom:auto}
-  .fl{display:none}
+  --pad: clamp(1.25rem,5vw,4.5rem);
+  --max: 78rem;
 }
 
-/* ── MOBILE 700px ── */
-@media(max-width:700px){
-  /* Nav */
-  nav{padding:0 4.5%;height:60px;position:fixed}
-  .nav-ham{display:flex}
-  .nav-cta{display:none}
-  .nav-links{display:none;opacity:0;visibility:hidden;position:absolute;top:100%;left:0;right:0;background:rgba(250,247,240,.98);backdrop-filter:blur(20px);flex-direction:column;padding:1rem 5%;gap:1rem;border-top:1px solid rgba(0,0,0,.08);transform:translateY(-10px);transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 32px rgba(0,0,0,.12)}
-  .nav-links.show{display:flex;opacity:1;visibility:visible;transform:translateY(0)}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--f);background:var(--nuit);color:var(--cream);
+     line-height:1.6;overflow-x:hidden;font-weight:400;
+     -webkit-font-smoothing:antialiased}
+/* height:auto est indispensable : les <img> portent un attribut height pour
+   réserver la place et éviter le décalage de mise en page. Sans lui, cette
+   hauteur intrinsèque tient bon et les captures s'étirent. */
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2.5px solid var(--gold2);outline-offset:3px;border-radius:6px}
 
-  /* Sections */
-  section{padding:4rem 5%}
-  .screens-bg{padding:4rem 5%}
-  .cta-bg{padding:5.5rem 5%}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
 
-  /* Hero */
-  .hero{padding:5rem 5% 3.5rem;min-height:auto}
-  .hero-inner{gap:2.5rem}
-  h1.hero-title{font-size:clamp(2.5rem,11vw,3.8rem);line-height:.92}
-  .hero-desc{font-size:.9rem;line-height:1.82}
-  .hero-btns{flex-direction:column;gap:.7rem}
-  .btn-pri,.btn-sec{width:100%;justify-content:center;padding:.88rem 1.5rem;font-size:.88rem}
-  .hero-stats{grid-template-columns:repeat(2,1fr);border-radius:13px}
-  .stat{padding:.95rem .5rem}
-  .stat-val{font-size:1.3rem}
-  .stat-lbl{font-size:.5rem}
+/* ── Titrage ─────────────────────────────────────────────────────────── */
+.eyebrow{font-family:var(--fm);font-size:.7rem;letter-spacing:.18em;
+         text-transform:uppercase;color:var(--gold2);display:flex;
+         align-items:center;gap:.7rem;margin-bottom:1.4rem}
+.eyebrow::before{content:'';width:1.9rem;height:1px;background:var(--gold);flex:none}
+.title{font-family:var(--fd);font-weight:800;line-height:1.02;
+       letter-spacing:-.022em;text-wrap:balance;
+       font-size:clamp(2.3rem,5.4vw,4.1rem)}
+.title em{font-style:italic;font-weight:900;color:var(--gold2)}
+.lede{font-size:clamp(1rem,1.5vw,1.12rem);color:var(--onDark);
+      max-width:34rem;margin-top:1.4rem;font-weight:300}
 
-  /* Features */
-  .feats-intro{gap:1.2rem;margin-bottom:2rem}
-  .feats-grid{grid-template-columns:1fr 1fr;gap:10px}
-  .feat{padding:1.3rem 1rem;border-radius:16px}
-  .feat-ic{width:38px;height:38px;border-radius:10px;margin-bottom:.9rem}
-  .feat-ic svg{width:18px;height:18px}
-  .feat h3{font-size:.82rem}
-  .feat p{font-size:.72rem;line-height:1.72}
-  .feat-pill{font-size:.5rem;padding:.18rem .6rem}
+/* Bandes claires : on repasse tous les tons en mode clair d'un coup. */
+.light{background:var(--cream);color:var(--ink)}
+.light .lede{color:var(--ink2)}
+.light .eyebrow{color:var(--gold)}
+.light .title em{color:var(--forest)}
 
-  /* Screens */
-  .devices-tabs{gap:8px;margin-bottom:2rem}
-  .dtab{font-size:.68rem;padding:.42rem .9rem}
-  .phones-row{gap:10px;flex-wrap:wrap;justify-content:center}
-  .ph-mini-inner{height:176px;width:84px;border-radius:13px}
-  .ph-mini{border-radius:19px;padding:4px}
-  .ph-big-inner{height:226px;width:110px;border-radius:18px}
-  .ph-big{border-radius:23px;padding:5px}
+/* ── Boutons ─────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:.6rem;font-weight:600;
+     font-size:.95rem;padding:1rem 1.9rem;border-radius:100px;
+     border:1px solid transparent;transition:transform .22s,box-shadow .22s,
+     background-color .22s,border-color .22s;will-change:transform}
+.btn svg{width:1.05em;height:1.05em;flex:none}
+.btn-gold{background:linear-gradient(140deg,var(--gold3),var(--gold2) 52%,var(--gold));
+          color:#241a00;box-shadow:0 14px 30px -14px rgba(212,160,23,.85)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 20px 38px -14px rgba(212,160,23,.95)}
+.btn-ghost{border-color:rgba(250,247,240,.26);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--gold2);color:var(--gold2)}
+.light .btn-ghost{border-color:rgba(11,31,19,.2);color:var(--ink)}
+.light .btn-ghost:hover{border-color:var(--forest);color:var(--forest)}
 
-  /* Coffre */
-  .coffre-grid{gap:2.5rem}
-  .coffre-card{padding:1.8rem;border-radius:20px}
-  .coffre-card h3{font-size:1.4rem}
-  .coffre-stats-row{gap:.55rem}
-  .c-stat{padding:.85rem .5rem;border-radius:10px}
-  .c-stat-n{font-size:1.2rem}
-  .c-stat-l{font-size:.48rem}
-  .coffre-feats{gap:.8rem}
-  .cf{padding:1rem;border-radius:12px}
-  .cf-title{font-size:.78rem}
-  .cf-desc{font-size:.7rem}
+/* ── Navigation ──────────────────────────────────────────────────────── */
+nav{position:fixed;inset:0 0 auto;z-index:60;backdrop-filter:blur(14px);
+    background:rgba(4,20,10,.72);border-bottom:1px solid rgba(250,247,240,.09);
+    transition:background-color .3s}
+.nav-in{max-width:var(--max);margin:0 auto;padding:.85rem var(--pad);
+        display:flex;align-items:center;gap:1.6rem}
+.brand{display:flex;align-items:center;gap:.65rem;font-family:var(--fd);
+       font-style:italic;font-weight:800;font-size:1.28rem;letter-spacing:-.015em}
+.brand img{width:2.1rem;height:2.1rem;border-radius:.6rem;
+           background:linear-gradient(140deg,var(--gold3),var(--gold));padding:.32rem}
+.nav-links{display:flex;gap:1.7rem;margin-left:auto;font-size:.9rem;
+           color:var(--onDark);font-weight:500}
+.nav-links a{position:relative;padding-block:.2rem}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
+                    background:var(--gold2);transition:right .3s}
+.nav-links a:hover{color:var(--cream)}
+.nav-links a:hover::after{right:0}
+@media(max-width:900px){.nav-links{display:none}}
 
-  /* Tontine */
-  .tontine-grid{gap:2.5rem}
-  .tontine-card{padding:1.6rem;border-radius:18px}
-  .tontine-info{gap:.7rem}
-  .ti{padding:.9rem;border-radius:12px}
-  .ti-title{font-size:.78rem}
-  .ti-desc{font-size:.68rem}
+/* ── Héros ───────────────────────────────────────────────────────────── */
+.hero{position:relative;padding:clamp(8rem,14vh,11rem) 0 clamp(3rem,7vw,6rem);
+      overflow:hidden;
+      background:radial-gradient(120% 130% at 76% 6%,var(--forest2) 0%,
+                 var(--forest) 22%,var(--nuit2) 58%,var(--nuit) 100%)}
+/* Trame diagonale reprise de l'écran d'authentification de l'app */
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:repeating-linear-gradient(-38deg,rgba(250,247,240,.03) 0 1px,transparent 1px 26px)}
+/* Arcs de canopée */
+.canopy{position:absolute;border:1px solid rgba(240,192,64,.09);border-radius:50%;
+        pointer-events:none}
+.hero-in{position:relative;z-index:2;display:grid;gap:clamp(2.5rem,6vw,4rem);
+         grid-template-columns:minmax(0,1fr) minmax(0,26rem);align-items:center}
+@media(max-width:940px){.hero-in{grid-template-columns:1fr}}
 
-  /* Compare — scroll horizontal, toutes colonnes visibles */
-  .ctable-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;border:1.5px solid var(--cream3);margin-top:0}
-  .ctable-wrap::-webkit-scrollbar{height:4px}
-  .ctable-wrap::-webkit-scrollbar-track{background:var(--cream2);border-radius:2px}
-  .ctable-wrap::-webkit-scrollbar-thumb{background:var(--cream3);border-radius:2px}
-  .ctable{margin-top:0;border-radius:0;border:none;min-width:480px}
-  .chead{grid-template-columns:1.6fr 1fr 1fr 1fr;padding:.72rem 1rem;font-size:.58rem}
-  .crow{grid-template-columns:1.6fr 1fr 1fr 1fr;padding:.72rem 1rem}
-  .chead>*:last-child,.crow>*:last-child{display:flex}
-  .crow-feat{font-size:.74rem}
-  .crow-feat small{font-size:.58rem}
-  .cv{font-size:.66rem;gap:.25rem}
-  .cv svg{width:10px;height:10px}
-  /* Scroll hint */
-  .ctable-hint{font-family:var(--fm);font-size:.56rem;color:var(--txt3);text-align:center;margin-top:.6rem;letter-spacing:.06em;display:flex;align-items:center;justify-content:center;gap:.4rem}
-  .ctable-hint::before{content:'←'}
-  .ctable-hint::after{content:'→'}
+.badge{display:inline-flex;align-items:center;gap:.6rem;padding:.42rem 1rem .42rem .5rem;
+       border-radius:100px;border:1px solid rgba(240,192,64,.32);
+       background:rgba(240,192,64,.07);margin-bottom:1.7rem;
+       font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;
+       text-transform:uppercase;color:var(--gold3)}
+.badge i{width:.5rem;height:.5rem;border-radius:50%;background:var(--gold2);
+         box-shadow:0 0 0 4px rgba(240,192,64,.18);flex:none;font-style:normal}
+.hero h1{font-family:var(--fd);font-weight:800;letter-spacing:-.03em;
+         line-height:.98;font-size:clamp(2.9rem,7.4vw,5.4rem)}
+.hero h1 em{font-style:italic;font-weight:900}
+.hero h1 .g{color:var(--gold2)}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2.4rem}
+/* Sous 520 px les deux boutons ne tiennent plus côte à côte : plutôt que de
+   les laisser s'empiler en escalier, on les met à la même largeur. */
+@media(max-width:520px){.hero-btns .btn{width:100%;justify-content:center}}
 
-  /* Ambassadeur */
-  .amb-card{padding:2rem 1.8rem;gap:2rem;border-radius:22px}
-  h3.amb-title{font-size:1.7rem}
-  .amb-desc{font-size:.82rem}
-  .amb-reward{padding:2rem 1.5rem}
-  .amb-big{font-size:2.6rem}
-  .amb-sub{font-size:.78rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:3rem;
+       background:rgba(250,247,240,.13);border:1px solid rgba(250,247,240,.13);
+       border-radius:1rem;overflow:hidden;max-width:34rem}
+.stat{background:var(--nuit);padding:1.05rem .8rem;text-align:center}
+.stat b{display:block;font-family:var(--fd);font-weight:800;font-size:1.55rem;
+        color:var(--gold2);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--onDark2)}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}}
 
-  /* CTA */
-  h2.cta-title{font-size:clamp(2rem,9vw,3rem)}
-  .cta-btns{flex-direction:column;align-items:center}
-  .cta-btns .btn-pri{width:100%;justify-content:center;max-width:320px}
-  .stores{gap:.65rem}
-  .store{padding:.62rem 1.2rem;font-size:.76rem}
+/* ── Téléphone ───────────────────────────────────────────────────────── */
+.phone{position:relative;border-radius:2.4rem;padding:.55rem;
+       background:linear-gradient(155deg,#26312a,#0b120e 55%,#20292300);
+       background-color:#121814;
+       box-shadow:0 44px 80px -34px rgba(0,0,0,.85),
+                  0 0 0 1px rgba(250,247,240,.09),
+                  inset 0 1px 0 rgba(250,247,240,.14)}
+.phone img{border-radius:1.95rem;width:100%}
+.phone::after{content:'';position:absolute;top:.9rem;left:50%;translate:-50% 0;
+              width:26%;height:1.05rem;border-radius:100px;background:#080c09;
+              box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.hero-phone{position:relative;justify-self:center;width:min(100%,20.5rem)}
+.hero-phone .halo{position:absolute;inset:-16%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(245,212,104,.22),transparent 64%)}
 
-  /* Footer */
-  .foot-inner{flex-direction:column;align-items:flex-start;gap:.8rem}
-  .foot-links{gap:1.1rem;flex-wrap:wrap}
-  .foot-copy{order:3}
+/* ── Sections ────────────────────────────────────────────────────────── */
+section{padding:clamp(4.5rem,10vw,8rem) 0;position:relative}
+/* La barre de navigation est fixe : sans cette marge, un lien d'ancre pose le
+   titre de section juste dessous, à moitié caché. */
+[id]{scroll-margin-top:5.5rem}
+.sec-head{max-width:44rem;margin-bottom:clamp(2.6rem,5vw,4rem)}
+
+/* ── Le parcours d'inscription : trois écrans réels ──────────────────── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,3rem)}
+@media(max-width:860px){.steps{grid-template-columns:1fr;max-width:22rem;margin-inline:auto}}
+.step-num{font-family:var(--fm);font-size:.72rem;letter-spacing:.16em;
+          color:var(--gold);margin-bottom:.9rem}
+.step h3{font-family:var(--fd);font-style:italic;font-weight:800;font-size:1.5rem;
+         letter-spacing:-.015em;margin:1.6rem 0 .5rem;color:var(--forest)}
+.step p{font-size:.95rem;color:var(--ink2);font-weight:300}
+.step .phone{background-color:#0d1410}
+
+/* ── Le rail d'écrans ────────────────────────────────────────────────── */
+.rail-head{display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;
+           justify-content:space-between}
+.rail-nav{display:flex;gap:.6rem}
+.rail-nav button{width:2.9rem;height:2.9rem;border-radius:50%;cursor:pointer;
+                 background:transparent;border:1px solid rgba(250,247,240,.24);
+                 color:var(--cream);display:grid;place-items:center;
+                 transition:background-color .2s,border-color .2s,color .2s}
+.rail-nav button:hover{background:var(--gold2);border-color:var(--gold2);color:#241a00}
+.rail-nav svg{width:1.1rem;height:1.1rem}
+/* Le rail déborde volontairement de la grille, mais sa première carte doit
+   s'aligner sur la colonne de texte : d'où la gouttière calculée plutôt que
+   le simple --pad. Sous 78rem, max() retombe sur --pad. */
+.rail{--gut:max(var(--pad),calc((100% - var(--max)) / 2 + var(--pad)));
+      display:flex;gap:clamp(1rem,2.4vw,1.9rem);overflow-x:auto;
+      scroll-snap-type:x mandatory;scrollbar-width:none;
+      padding:2.6rem var(--gut) 1rem;scroll-padding-inline:var(--gut)}
+.rail::-webkit-scrollbar{display:none}
+.card{flex:0 0 auto;width:min(15.5rem,62vw);scroll-snap-align:center}
+/* Toutes les vignettes du rail tiennent le même gabarit, sinon l'accueil —
+   recadré pour écarter les lignes d'opérateurs — casserait l'alignement des
+   légendes. contain + fond crème : l'écran se pose en haut du cadre. */
+.card .phone{aspect-ratio:640/1387}
+.card .phone img{height:100%;object-fit:contain;object-position:top center;
+                 background:var(--cream)}
+/* Voile bas : dit que l'écran continue hors cadre plutôt que de s'arrêter net. */
+.card .phone::before{content:'';position:absolute;left:.55rem;right:.55rem;bottom:.55rem;
+  height:15%;z-index:2;pointer-events:none;border-radius:0 0 1.95rem 1.95rem;
+  background:linear-gradient(180deg,rgba(4,20,10,0),rgba(4,20,10,.5))}
+/* L'accueil est le seul écran recadré : le vide crème qu'il laisse en bas du
+   cadre a besoin d'un voile plus profond pour se lire comme un fondu voulu. */
+.card-short .phone::before{height:44%;
+  background:linear-gradient(180deg,rgba(4,20,10,0),rgba(4,20,10,.78) 76%)}
+.card figcaption{margin-top:1.1rem}
+.card b{display:block;font-family:var(--fd);font-style:italic;font-weight:800;
+        font-size:1.15rem;margin-bottom:.2rem}
+.card span{font-size:.84rem;color:var(--onDark2);font-weight:300;line-height:1.5}
+.rail-hint{font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--onDark2);margin-top:.6rem}
+
+/* ── Grille de fonctionnalités ───────────────────────────────────────── */
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(16.5rem,1fr));
+       gap:1px;background:rgba(11,31,19,.1);border:1px solid rgba(11,31,19,.1);
+       border-radius:1.2rem;overflow:hidden}
+.feat{background:var(--cream);padding:2rem 1.7rem 2.1rem;
+      transition:background-color .25s}
+.feat:hover{background:var(--cream2)}
+.feat .ic{width:2.6rem;height:2.6rem;border-radius:.85rem;display:grid;
+          place-items:center;background:rgba(10,74,46,.09);
+          border:1px solid rgba(10,74,46,.14);margin-bottom:1.15rem}
+.feat .ic svg{width:1.15rem;height:1.15rem;stroke:var(--forest)}
+.feat h3{font-size:1.02rem;font-weight:600;margin-bottom:.45rem;color:var(--ink)}
+.feat p{font-size:.9rem;color:var(--ink2);font-weight:300}
+
+/* ── Duo texte + écran ───────────────────────────────────────────────── */
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,20rem);
+     gap:clamp(2.5rem,6vw,5rem);align-items:center}
+.duo.flip{grid-template-columns:minmax(0,20rem) minmax(0,1fr)}
+.duo.flip .duo-txt{order:2}
+@media(max-width:860px){
+  .duo,.duo.flip{grid-template-columns:1fr}
+  .duo.flip .duo-txt{order:0}
+  .duo .phone{max-width:20rem;margin-inline:auto}
 }
+.pts{list-style:none;margin-top:1.9rem;display:grid;gap:.95rem}
+.pts li{display:flex;gap:.75rem;align-items:flex-start;font-size:.96rem;font-weight:300}
+.pts svg{width:1.15rem;height:1.15rem;flex:none;margin-top:.28rem;stroke:var(--gold2)}
+.light .pts svg{stroke:var(--forest)}
+.light .pts li{color:var(--ink2)}
 
-/* ── MOBILE SMALL 480px ── */
-@media(max-width:480px){
-  /* Base */
-  section{padding:3.2rem 4.5%}
-  .screens-bg{padding:3.2rem 4.5%}
-  .cta-bg{padding:4.5rem 4.5%}
-  nav{padding:0 4.5%}
+/* ── Tableau comparatif ──────────────────────────────────────────────── */
+.tbl-scroll{overflow-x:auto;border-radius:1.1rem;
+            border:1px solid rgba(250,247,240,.13)}
+table{width:100%;min-width:40rem;border-collapse:collapse;font-size:.92rem}
+thead th{background:rgba(10,74,46,.55);padding:1rem 1.1rem;text-align:center;
+         font-family:var(--fm);font-size:.68rem;letter-spacing:.11em;
+         text-transform:uppercase;font-weight:500;color:var(--onDark)}
+thead th:first-child{text-align:left}
+thead th.us{color:var(--gold2)}
+tbody td{padding:.95rem 1.1rem;text-align:center;
+         border-top:1px solid rgba(250,247,240,.09)}
+tbody td:first-child{text-align:left;font-weight:500}
+tbody td small{display:block;font-weight:300;font-size:.76rem;color:var(--onDark2);
+               margin-top:.12rem}
+td.us{color:var(--gold2);font-weight:600}
+td.oth{color:var(--onDark2)}
+tbody tr:hover{background:rgba(250,247,240,.035)}
+.tbl-note{margin-top:1.2rem;font-size:.82rem;color:var(--onDark2);
+          max-width:46rem;font-weight:300}
 
-  /* Hero */
-  .hero{padding:4.5rem 4.5% 2.8rem}
-  h1.hero-title{font-size:clamp(2rem,12.5vw,2.6rem);letter-spacing:-.035em}
-  h1.hero-title .ghost{-webkit-text-stroke:1.5px var(--forest)}
-  .hero-desc{font-size:.84rem}
-  .hero-badge{margin-bottom:1.3rem}
-  .badge-txt{font-size:.64rem}
-  .hero-stats{border-radius:11px}
-  .stat{padding:.8rem .4rem}
-  .stat-val{font-size:1.15rem}
+/* ── Appel final ─────────────────────────────────────────────────────── */
+.final{text-align:center;
+       background:radial-gradient(90% 130% at 50% 0%,var(--forest2) 0%,
+                  var(--forest) 26%,var(--nuit2) 70%,var(--nuit) 100%)}
+.final .title{margin-inline:auto}
+.final .lede{margin-inline:auto;text-align:center}
+.final .hero-btns{justify-content:center}
 
-  /* Features — single col */
-  .feats-grid{grid-template-columns:1fr;gap:8px}
-  .feat{padding:1.1rem .9rem;border-radius:14px;display:flex;gap:12px;align-items:flex-start;flex-direction:row}
-  .feat-ic{margin-bottom:0;flex-shrink:0;width:36px;height:36px}
-  .feat-content{flex:1}
-  .feat h3{font-size:.8rem;margin-bottom:.25rem}
-  .feat p{font-size:.7rem}
-  .feat-pill{margin-top:.6rem}
+/* ── Pied de page ────────────────────────────────────────────────────── */
+footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
+       background:var(--nuit)}
+.foot{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;
+      justify-content:space-between}
+.foot p{font-size:.82rem;color:var(--onDark2);font-weight:300}
+.foot nav{position:static;background:none;border:0;backdrop-filter:none;
+          display:flex;gap:1.4rem;font-size:.85rem;color:var(--onDark)}
 
-  /* Section titles */
-  h2.sec-title{font-size:clamp(1.65rem,8.5vw,2.2rem)}
-  .eyebrow{font-size:.58rem;letter-spacing:.14em}
-  .sec-sub{font-size:.86rem}
+/* ── Apparitions au défilement ───────────────────────────────────────── */
+.rev{opacity:0;transform:translateY(26px);
+     transition:opacity .7s cubic-bezier(.2,.7,.3,1),
+                transform .7s cubic-bezier(.2,.7,.3,1)}
+.rev.in{opacity:1;transform:none}
+.rev.d1{transition-delay:.09s}
+.rev.d2{transition-delay:.18s}
+.rev.d3{transition-delay:.27s}
 
-  /* Screens phones */
-  .phones-row{gap:6px}
-  /* Hide smallest phones on very small screens */
-  .ph-mini:nth-child(1),.ph-mini:nth-child(4){display:none}
-  .ph-big-inner{height:250px;width:124px}
-  .ph-big{border-radius:26px}
-  .ph-mini-inner{height:190px;width:90px}
-
-  /* Laptop screen */
-  .ld-screen{height:220px}
-  .ld-body{border-radius:10px 10px 0 0}
-
-  /* Coffre */
-  .coffre-card{padding:1.4rem}
-  .coffre-card h3{font-size:1.25rem}
-  .coffre-ic{width:44px;height:44px;border-radius:12px;margin-bottom:1.1rem}
-  .coffre-stats-row{gap:.4rem}
-  .c-stat{padding:.7rem .4rem}
-  .c-stat-n{font-size:1.05rem}
-
-  /* Compare 480 — scroll, tout visible */
-  .ctable{min-width:460px}
-  .chead{grid-template-columns:1.5fr 1fr 1fr 1fr;padding:.6rem .85rem}
-  .crow{grid-template-columns:1.5fr 1fr 1fr 1fr;padding:.6rem .85rem}
-  .ctable::before{display:none}
-
-  /* Amb */
-  .amb-card{padding:1.5rem;gap:1.8rem;border-radius:18px}
-  h3.amb-title{font-size:1.45rem}
-  .amb-reward{padding:1.6rem 1.2rem;border-radius:14px}
-  .amb-big{font-size:2rem}
-  .as-title{font-size:.78rem}
-  .as-desc{font-size:.64rem}
-  .as-n{width:24px;height:24px;font-size:.6rem}
-
-  /* CTA */
-  h2.cta-title{font-size:clamp(1.7rem,9.5vw,2.2rem)}
-  .cta-sub{font-size:.86rem}
-  .cta-btns .btn-pri{font-size:.86rem;padding:.85rem 1.5rem}
-  .legal{font-size:.56rem}
-
-  /* Footer */
-  footer{padding:1.8rem 4.5%}
-  .foot-links{gap:.85rem}
-  .foot-links a{font-size:.68rem}
-}
-
-/* ── MOBILE XS 360px ── */
-@media(max-width:360px){
-  .logo-txt{font-size:.9rem}
-  .logo-mark{width:30px;height:30px;border-radius:8px}
-  .logo-mark svg{width:15px;height:15px}
-  h1.hero-title{font-size:clamp(1.75rem,13vw,2.2rem)}
-  .hero-stats{grid-template-columns:repeat(2,1fr)}
-  .stat-val{font-size:1rem}
-  .coffre-stats-row{grid-template-columns:repeat(2,1fr)}
-  .amb-big{font-size:1.7rem}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rev{opacity:1;transform:none;transition:none}
+  .btn:hover{transform:none}
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
 }
 </style>
 </head>
 <body>
-<div id="cur"></div>
-<div id="curR"></div>
 
-<svg style="display:none"><defs>
-<symbol id="z" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
-<symbol id="send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
-<symbol id="recv" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
-<symbol id="qric" viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="16" y="3" width="5" height="5" rx="1"/><rect x="3" y="16" width="5" height="5" rx="1"/><path d="M16 16h2v2h-2zM18 18h2v2h-2zM14 14h2v2h-2zM14 18h2v2h-2zM18 14h2v2h-2z"/></symbol>
-<symbol id="pay" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
-<symbol id="lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-<symbol id="bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
-<symbol id="home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
-<symbol id="chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
-<symbol id="chk" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
-<symbol id="xcross" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
-<symbol id="ar" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
-<symbol id="users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-<symbol id="shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
-<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
-<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
-<symbol id="trend" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
-<symbol id="phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
-<symbol id="wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 16 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></symbol>
-<symbol id="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
-<symbol id="drop" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
-<symbol id="gift" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
-<symbol id="link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
-<symbol id="smartphone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
-<symbol id="layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
-</defs></svg>
+<!-- Jeu d'icônes : traits seuls, 24×24, pour rester net à toute taille.
+     <symbol viewBox> et non <g> : un <use> de groupe hérite du système de
+     coordonnées de l'hôte, donc un tracé de 24 unités dans un svg de 18 px
+     se retrouve rogné. Le symbole, lui, porte son propre cadrage. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM19 19h2v2h-2z"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.2 8 11 4.6-1.8 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-userplus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+</svg>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="logo">
-    <div class="logo-mark"><svg><use href="#z"/></svg></div>
-    <span class="logo-txt"><em>Ghetto</em><span>Pay</span></span>
-  </a>
-  <button class="nav-ham" id="nav-ham" aria-label="Menu">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
-  <div class="nav-links">
-    <a href="#features">Fonctionnalités</a>
-    <a href="#coffre">Le Coffre</a>
-    <a href="#tontine">Tontine</a>
-    <a href="#screens">L'App</a>
-    <a href="https://ghettopay.com/">Application</a>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#top"><img src="ghettopay-icon.svg" alt=""/>GhettoPay</a>
+    <div class="nav-links">
+      <a href="#ouvrir">Ouvrir un compte</a>
+      <a href="#ecrans">Les écrans</a>
+      <a href="#faire">Ce que ça fait</a>
+      <a href="#comparer">Comparer</a>
+    </div>
+    <a class="btn btn-gold" href="https://ghettopay.com/" style="padding:.62rem 1.25rem;font-size:.87rem">
+      Ouvrir l&rsquo;app<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+    </a>
   </div>
-  <a href="https://ghettopay.com/" class="nav-cta">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#ar"/></svg>Ouvrir l'App
-  </a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-grid"></div>
-  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<!-- ══ HÉROS ═══════════════════════════════════════════════════════════ -->
+<header class="hero" id="top">
+  <div class="canopy" style="width:44rem;height:44rem;right:-9rem;top:-13rem"></div>
+  <div class="canopy" style="width:66rem;height:66rem;right:-17rem;top:-21rem"></div>
+  <div class="canopy" style="width:90rem;height:90rem;right:-26rem;top:-30rem"></div>
 
-  <div class="hero-inner">
+  <div class="wrap hero-in">
     <div>
-      <div class="hero-badge">
-        <div class="badge-dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
-        <span class="badge-txt">Portefeuille · EbiLling · Coffre · Tontine</span>
-      </div>
-
-      <h1 class="hero-title">
+      <span class="badge rev in"><i></i>Estuaire &middot; Gabon &middot; Bient&ocirc;t</span>
+      <h1 class="rev in">
         Ton argent,<br/>
         <em>libre comme</em><br/>
-        <span class="ghost">la forêt.</span>
+        <span class="g">la for&ecirc;t.</span>
       </h1>
-
-      <p class="hero-desc">
-        <strong>GhettoPay</strong> c'est ton portefeuille complet. Envoie et reçois par numéro ou <strong>QR code</strong>, épargne dans ton <strong>Coffre</strong>, lance une tontine et règle tes <strong>factures</strong> — tout dans une seule app. <strong>Sans codes USSD, sans frais cachés.</strong> 100% gabonais.
+      <p class="lede rev in d1">
+        Envoie, re&ccedil;ois, &eacute;pargne, cotise. GhettoPay r&eacute;unit ton portefeuille,
+        ton coffre et tes tontines dans une seule application gabonaise &mdash;
+        sans code USSD, sans agence, sans dossier &agrave; monter.
       </p>
-
-      <div class="hero-btns">
-        <a href="https://ghettopay.com/" class="btn-pri">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#ar"/></svg>Ouvrir l'Application
+      <div class="hero-btns rev in d2">
+        <a class="btn btn-gold" href="https://ghettopay.com/">
+          Ouvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
         </a>
-        <a href="#features" class="btn-sec">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2"><use href="#z"/></svg>Voir les fonctionnalités
-        </a>
+        <a class="btn btn-ghost" href="#ecrans">Voir les &eacute;crans</a>
       </div>
-
-      <div class="hero-stats">
-        <div class="stat"><div class="stat-val">0,5%</div><div class="stat-lbl">Frais P2P</div></div>
-        <div class="stat"><div class="stat-val">24/7</div><div class="stat-lbl">Disponible</div></div>
-        <div class="stat"><div class="stat-val">0</div><div class="stat-lbl">Frais cachés</div></div>
-        <div class="stat"><div class="stat-val">100%</div><div class="stat-lbl">Gabonais</div></div>
+      <div class="stats rev in d3">
+        <div class="stat"><b>0,5&thinsp;%</b><span>Frais P2P</span></div>
+        <div class="stat"><b>3</b><span>&Eacute;tapes</span></div>
+        <div class="stat"><b>24/7</b><span>Disponible</span></div>
+        <div class="stat"><b>100&thinsp;%</b><span>Gabonais</span></div>
       </div>
     </div>
 
-    <!-- Multi-device showcase -->
-    <div class="devices" id="hero-devices">
-      <!-- Floating badges -->
-      <div class="fl fl1">
-        <div class="fl-ic" style="background:rgba(22,163,74,.12)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><use href="#chk"/></svg></div>
-        <div><span class="fl-t">+25 000 FCFA reçus</span><span class="fl-s">Amina N. · il y a 2min</span></div>
+    <div class="hero-phone rev in d2">
+      <div class="halo"></div>
+      <div class="phone">
+        <img src="screens/bienvenue.webp" width="860" height="1864" fetchpriority="high"
+             alt="Écran d'accueil de GhettoPay : photo de forêt gabonaise, logo torche et boutons « Créer mon compte » et « J'ai déjà un compte »."/>
       </div>
-      <div class="fl fl2">
-        <div class="fl-ic" style="background:rgba(212,160,23,.12)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><use href="#lock"/></svg></div>
-        <div><span class="fl-t">Coffre · Rendement actif</span><span class="fl-s">50 000 FCFA sécurisés</span></div>
-      </div>
-      <div class="fl fl3">
-        <div class="fl-ic" style="background:rgba(99,102,241,.12)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><use href="#qric"/></svg></div>
-        <div><span class="fl-t">EbiLling · reçu ✓</span><span class="fl-s">15 000 FCFA · sans frais</span></div>
-      </div>
+    </div>
+  </div>
+</header>
 
-      <!-- Laptop -->
-      <div class="d-laptop">
-        <div class="d-laptop-screen">
-          <div class="d-laptop-inner">
-            <!-- Laptop app UI -->
-            <div style="display:flex;height:100%">
-              <!-- Sidebar -->
-              <div style="width:52px;background:var(--forest);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:16px;flex-shrink:0">
-                <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg>
-                </div>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2"><use href="#home"/></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#chart"/></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#lock"/></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#users"/></svg>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#pay"/></svg>
-              </div>
-              <!-- Main content -->
-              <div style="flex:1;padding:14px;overflow:hidden;display:flex;flex-direction:column;gap:10px">
-                <!-- Header -->
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                  <div>
-                    <div style="font-size:.5rem;color:var(--txt3);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em">Tableau de bord</div>
-                    <div style="font-size:.72rem;font-weight:800;color:var(--ink)">Bonjour, Rostand !</div>
-                  </div>
-                  <div style="display:flex;gap:6px;align-items:center">
-                    <div style="width:22px;height:22px;border-radius:6px;background:var(--cream2);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="2"><use href="#bell"/></svg></div>
-                    <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#0F5C38);display:flex;align-items:center;justify-content:center;font-size:.52rem;font-weight:900;color:#fff">R</div>
-                  </div>
-                </div>
-                <!-- Cards row -->
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-                  <div style="background:linear-gradient(135deg,#D4A017,#F0C040);border-radius:10px;padding:10px;position:relative;overflow:hidden">
-                    <div style="font-size:.4rem;color:rgba(0,0,0,.42);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)">Solde</div>
-                    <div style="font-family:var(--fd);font-size:.82rem;font-weight:900;color:#0A4A2E;margin-top:3px">680 000</div>
-                    <div style="font-size:.38rem;color:rgba(0,0,0,.4);font-family:var(--fm)">FCFA disponible</div>
-                  </div>
-                  <div style="background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:10px;padding:10px">
-                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)">Coffre</div>
-                    <div style="font-family:var(--fd);font-size:.82rem;font-weight:900;color:#F0C040;margin-top:3px">50 000</div>
-                    <div style="font-size:.38rem;color:rgba(255,255,255,.38);font-family:var(--fm)">Rendement actif</div>
-                  </div>
-                  <div style="background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:10px;padding:10px">
-                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.08em;font-family:var(--fm)">Cashback</div>
-                    <div style="font-family:var(--fd);font-size:.82rem;font-weight:900;color:#fff;margin-top:3px">8 200</div>
-                    <div style="font-size:.38rem;color:rgba(255,255,255,.5);font-family:var(--fm)">cumulé</div>
-                  </div>
-                </div>
-                <!-- Chart placeholder -->
-                <div style="flex:1;background:var(--cream);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px">
-                  <div style="font-size:.46rem;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.06em">Dépenses ce mois</div>
-                  <div style="flex:1;display:flex;align-items:flex-end;gap:4px;padding-bottom:4px">
-                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:40px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.7"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 1</div></div>
-                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:28px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.55"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 7</div></div>
-                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:55px;background:linear-gradient(180deg,#D4A017,#F0C040);border-radius:3px"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 14</div></div>
-                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:32px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.6"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 21</div></div>
-                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:48px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:3px;opacity:.8"></div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Nov 25</div></div>
-                  </div>
-                </div>
-              </div>
-              <!-- Right panel -->
-              <div style="width:110px;border-left:1px solid var(--cream3);padding:10px;display:flex;flex-direction:column;gap:6px;flex-shrink:0">
-                <div style="font-size:.44rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Activité récente</div>
-                <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
-                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
-                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Amina N.</div><div style="font-size:.38rem;color:var(--txt3)">2h</div></div>
-                  <div style="font-size:.44rem;font-weight:800;color:#15803d">+25K</div>
-                </div>
-                <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
-                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
-                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Mbolo Mkt</div><div style="font-size:.38rem;color:var(--txt3)">4h</div></div>
-                  <div style="font-size:.44rem;font-weight:800;color:#dc2626">-12K</div>
-                </div>
-                <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
-                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#phone"/></svg></div>
-                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt)">Crédit</div><div style="font-size:.38rem;color:var(--txt3)">hier</div></div>
-                  <div style="font-size:.44rem;font-weight:800;color:#dc2626">-5K</div>
-                </div>
-                <div style="display:flex;align-items:center;gap:5px;padding:5px 0">
-                  <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#lock"/></svg></div>
-                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt)">Coffre</div><div style="font-size:.38rem;color:var(--txt3)">hier</div></div>
-                  <div style="font-size:.44rem;font-weight:800;color:#dc2626">-50K</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="d-laptop-base"></div>
-        <div class="d-laptop-foot"></div>
-      </div>
+<!-- ══ OUVRIR UN COMPTE ════════════════════════════════════════════════ -->
+<section class="light" id="ouvrir">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <div class="eyebrow">01 &mdash; Ouvrir un compte</div>
+      <h2 class="title">Trois &eacute;crans,<br/><em>et c&rsquo;est ouvert.</em></h2>
+      <p class="lede">
+        Pas de dossier, pas de photocopie, pas de d&eacute;placement. Ton num&eacute;ro,
+        un code re&ccedil;u par email, ton code PIN. Les trois &eacute;crans ci-dessous
+        sont ceux de l&rsquo;application, tels qu&rsquo;ils s&rsquo;affichent.
+      </p>
+    </div>
 
-      <!-- Tablet -->
-      <div class="d-tablet">
-        <div class="d-tablet-cam"></div>
-        <div class="d-tablet-inner">
-          <!-- Tablet shows budget screen -->
-          <div style="display:flex;height:100%">
-            <div style="width:40px;background:var(--forest);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:14px;flex-shrink:0">
-              <div style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#home"/></svg>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2"><use href="#chart"/></svg>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#lock"/></svg>
-            </div>
-            <div style="flex:1;padding:12px;overflow:hidden;display:flex;flex-direction:column;gap:8px">
-              <div style="font-size:.52rem;font-weight:800;color:var(--ink)">Budget · Novembre 2024</div>
-              <!-- Tabs -->
-              <div style="display:flex;gap:4px;background:var(--cream2);border-radius:8px;padding:3px">
-                <div style="flex:1;text-align:center;padding:4px;border-radius:5px;background:var(--white);font-size:.42rem;font-weight:700;color:var(--txt);box-shadow:0 1px 4px rgba(0,0,0,.06)">Semaine</div>
-                <div style="flex:1;text-align:center;padding:4px;font-size:.42rem;font-weight:700;color:var(--txt3)">Mois</div>
-                <div style="flex:1;text-align:center;padding:4px;font-size:.42rem;font-weight:700;color:var(--txt3)">Année</div>
-              </div>
-              <!-- Budget cards -->
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-                <div style="background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:space-between">
-                  <div><div style="font-size:.38rem;color:rgba(255,255,255,.45);text-transform:uppercase;font-family:var(--fm)">Dépenses</div><div style="font-family:var(--fd);font-size:.7rem;font-weight:900;color:#fff;margin-top:2px">78 500 F</div></div>
-                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.9"><use href="#send"/></svg></div>
-                </div>
-                <div style="background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:space-between">
-                  <div><div style="font-size:.38rem;color:rgba(255,255,255,.45);text-transform:uppercase;font-family:var(--fm)">Revenus</div><div style="font-family:var(--fd);font-size:.7rem;font-weight:900;color:#fff;margin-top:2px">76 200 F</div></div>
-                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.9"><use href="#recv"/></svg></div>
-                </div>
-              </div>
-              <!-- Categories -->
-              <div style="font-size:.42rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em">Par catégorie</div>
-              <div style="display:flex;flex-direction:column;gap:4px;flex:1">
-                <div style="background:var(--white);border-radius:7px;border:1px solid var(--cream3);padding:5px 8px;display:flex;align-items:center;gap:6px">
-                  <div style="width:20px;height:20px;border-radius:6px;background:rgba(212,160,23,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2"><use href="#send"/></svg></div>
-                  <div style="font-size:.42rem;font-weight:700;color:var(--txt);flex:1">Transferts</div>
-                  <div style="flex:1.5;background:rgba(0,0,0,.07);border-radius:100px;height:3px;overflow:hidden"><div style="width:58%;height:100%;background:#d4a017;border-radius:100px"></div></div>
-                  <div style="font-size:.42rem;font-weight:800;color:var(--txt);font-family:var(--fd)">28K</div>
-                </div>
-                <div style="background:var(--white);border-radius:7px;border:1px solid var(--cream3);padding:5px 8px;display:flex;align-items:center;gap:6px">
-                  <div style="width:20px;height:20px;border-radius:6px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><use href="#pay"/></svg></div>
-                  <div style="font-size:.42rem;font-weight:700;color:var(--txt);flex:1">Paiements</div>
-                  <div style="flex:1.5;background:rgba(0,0,0,.07);border-radius:100px;height:3px;overflow:hidden"><div style="width:35%;height:100%;background:#3b82f6;border-radius:100px"></div></div>
-                  <div style="font-size:.42rem;font-weight:800;color:var(--txt);font-family:var(--fd)">12K</div>
-                </div>
-                <div style="background:var(--white);border-radius:7px;border:1px solid var(--cream3);padding:5px 8px;display:flex;align-items:center;gap:6px">
-                  <div style="width:20px;height:20px;border-radius:6px;background:rgba(220,38,38,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><use href="#smartphone"/></svg></div>
-                  <div style="font-size:.42rem;font-weight:700;color:var(--txt);flex:1">Recharges</div>
-                  <div style="flex:1.5;background:rgba(0,0,0,.07);border-radius:100px;height:3px;overflow:hidden"><div style="width:25%;height:100%;background:#dc2626;border-radius:100px"></div></div>
-                  <div style="font-size:.42rem;font-weight:800;color:var(--txt);font-family:var(--fd)">50K</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="steps">
+      <div class="step rev">
+        <div class="phone"><img src="screens/inscription.webp" width="640" height="1387" loading="lazy" decoding="async"
+          alt="Étape 1 sur 3 : « Ton numéro, ton passeport », champ indicatif Gabon +241 et champ email."/></div>
+        <div class="step-num">&Eacute;TAPE 1</div>
+        <h3>Ton num&eacute;ro, ton passeport</h3>
+        <p>Un num&eacute;ro mobile, une adresse email. C&rsquo;est tout ce qu&rsquo;on demande pour commencer.</p>
       </div>
-
-      <!-- Phone -->
-      <div class="d-phone">
-        <div class="d-phone-inner">
-          <div class="d-notch"></div>
-          <!-- Phone app home -->
-          <div class="app-hdr" style="padding:22px 12px 14px">
-            <div class="app-topbar" style="margin-bottom:12px">
-              <div><div class="app-greet">Bonjour</div><div class="app-name">Rostand M.</div></div>
-              <div class="app-av">R</div>
-            </div>
-            <div class="app-bal" style="padding:12px 14px">
-              <div class="app-bal-lbl">Solde disponible</div>
-              <div class="app-bal-amt" style="font-size:1.25rem;margin:.1rem 0 .1rem">680 000</div>
-              <div class="app-bal-sub">+ Coffre : 50 000 FCFA</div>
-            </div>
-          </div>
-          <!-- Actions -->
-          <div style="background:#fff;padding:10px 10px 0;border-bottom:1px solid rgba(0,0,0,.06)">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
-              <div style="background:linear-gradient(145deg,#D4A017,#F0C040);border-radius:11px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px">
-                <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0A4A2E" stroke-width="2.2"><use href="#send"/></svg></div>
-                <div style="font-size:.56rem;font-weight:900;color:#0A4A2E;text-transform:uppercase;letter-spacing:.02em">Envoyer</div>
-                <div style="font-size:.42rem;color:rgba(0,0,0,.5);font-family:var(--fm)">Rapide</div>
-              </div>
-              <div style="background:linear-gradient(145deg,#0A4A2E,#0F5C38);border-radius:11px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px">
-                <div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><use href="#recv"/></svg></div>
-                <div style="font-size:.56rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.02em">Recevoir</div>
-                <div style="font-size:.42rem;color:rgba(255,255,255,.55);font-family:var(--fm)">QR Code</div>
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding-bottom:10px;border-top:1px solid rgba(0,0,0,.06);padding-top:8px">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.04);border-radius:9px;padding:6px 4px">
-                <div style="width:24px;height:24px;border-radius:7px;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><use href="#qric"/></svg></div>
-                <div style="font-size:.44rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Scanner</div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.04);border-radius:9px;padding:6px 4px">
-                <div style="width:24px;height:24px;border-radius:7px;background:rgba(6,182,212,.12);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><use href="#wifi"/></svg></div>
-                <div style="font-size:.44rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Transfert</div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.04);border-radius:9px;padding:6px 4px">
-                <div style="width:24px;height:24px;border-radius:7px;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div>
-                <div style="font-size:.44rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Tontine</div>
-              </div>
-            </div>
-          </div>
-          <!-- Coffre strip -->
-          <div style="margin:8px 10px 0;background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;border:1px solid rgba(212,160,23,.2)">
-            <div style="width:28px;height:28px;border-radius:8px;background:rgba(212,160,23,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F0C040" stroke-width="2"><use href="#lock"/></svg></div>
-            <div style="flex:1"><div style="font-size:.52rem;font-weight:800;color:#F0C040">Coffre Forêt</div><div style="font-size:.42rem;color:rgba(255,255,255,.42)">Épargne sécurisée · taux garanti</div></div>
-            <div style="font-family:var(--fd);font-size:.72rem;font-weight:900;color:#F0C040">50K</div>
-          </div>
-          <!-- Recent tx -->
-          <div style="padding:8px 10px 6px">
-            <div style="font-size:.44rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Activité récente</div>
-            <div style="display:flex;flex-direction:column;gap:0">
-              <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.05)">
-                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
-                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Amina Nzamba</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">Transfert · 2h</div></div>
-                <div style="font-size:.6rem;font-weight:800;color:#15803d">+25 000</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.05)">
-                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
-                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Market Mbolo</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">QR Pay · 4h</div></div>
-                <div style="font-size:.6rem;font-weight:800;color:#dc2626">-12 000</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:7px 0">
-                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#smartphone"/></svg></div>
-                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Crédit tél.</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">Recharge · hier</div></div>
-                <div style="font-size:.6rem;font-weight:800;color:#dc2626">-2 000</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="step rev d1">
+        <div class="phone"><img src="screens/code.webp" width="640" height="1387" loading="lazy" decoding="async"
+          alt="Étape 2 sur 3 : « Le code est en route », six cases de saisie et compte à rebours de renvoi."/></div>
+        <div class="step-num">&Eacute;TAPE 2</div>
+        <h3>Le code est en route</h3>
+        <p>Six chiffres arrivent dans ta bo&icirc;te mail. Tu les saisis, on v&eacute;rifie que c&rsquo;est bien toi.</p>
+      </div>
+      <div class="step rev d2">
+        <div class="phone"><img src="screens/pin.webp" width="640" height="1387" loading="lazy" decoding="async"
+          alt="Écran de saisie du code PIN sur fond de forêt, avec pavé numérique."/></div>
+        <div class="step-num">&Eacute;TAPE 3</div>
+        <h3>Ton PIN, ta cl&eacute;</h3>
+        <p>Quatre chiffres que toi seul connais. Ils ouvrent l&rsquo;app &agrave; chaque fois, sans mot de passe.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="div"></div>
-
-<!-- FEATURES -->
-<section id="features" class="feats-bg">
-  <div class="inner">
-    <div class="feats-intro rev">
-      <div>
-        <div class="eyebrow">01 — Fonctionnalités</div>
-        <h2 class="sec-title">Un portefeuille<br/><em>vraiment complet</em></h2>
-      </div>
-      <p class="sec-sub">Tout ce qu'il faut pour maîtriser ton argent. Conçu pour le Gabon, pensé pour toi. Sans compromis.</p>
-    </div>
-    <div class="feats-grid">
-      <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#send"/></svg></div><div class="feat-content">
-        <h3>Transferts P2P instantanés</h3>
-        <p>Envoie de l'argent en 3 secondes — par nom, numéro, contact ou QR code. Aucun code USSD compliqué.</p>
-        <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.18)">Frais 0,5%</span>
-      </div></div>
-      <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.18)"><svg style="stroke:#818cf8" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#qric"/></svg></div><div class="feat-content">
-        <h3>Payer par QR Code</h3>
-        <p>Scanne, confirme avec ton PIN, c'est payé. Au marché, en boutique, au maquis — partout au Gabon.</p>
-        <span class="feat-pill" style="background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.18)">2 secondes chrono</span>
-      </div></div>
-      <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#recv"/></svg></div><div class="feat-content">
-        <h3>EbiLling — Fais-toi payer</h3>
-        <p>Ton QR et ton lien de paiement personnels. Partage-les par WhatsApp ou SMS, ton ami paie et ton solde est crédité en direct — sans frais.</p>
-        <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.18)">Reçois sans frais</span>
-      </div></div>
-      <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.18)"><svg style="stroke:#06b6d4" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#wifi"/></svg></div><div class="feat-content">
-        <h3>Factures &amp; abonnements</h3>
-        <p>Règle tes factures et tes abonnements depuis l'app, sans file d'attente ni déplacement. L'historique reste dans ton compte.</p>
-        <span class="feat-pill" style="background:rgba(6,182,212,.1);color:#06b6d4;border:1px solid rgba(6,182,212,.18)">Sans file d'attente</span>
-      </div></div>
-      <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.16)"><svg style="stroke:#dc2626" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#smartphone"/></svg></div><div class="feat-content">
-        <h3>Recharge crédit & data</h3>
-        <p>Recharge ton crédit d'appel et ton forfait internet directement depuis l'app, en quelques secondes.</p>
-        <span class="feat-pill" style="background:rgba(220,38,38,.08);color:#dc2626;border:1px solid rgba(220,38,38,.16)">Instantané</span>
-      </div></div>
-      <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(10,74,46,.1);border:1px solid rgba(10,74,46,.18)"><svg style="stroke:var(--forest)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#lock"/></svg></div><div class="feat-content">
-        <h3>Le Coffre Forêt</h3>
-        <p>Bloque ton épargne jusqu'à la date de ton choix. Fixe un objectif, suis ta progression, récolte à l'échéance.</p>
-        <span class="feat-pill" style="background:rgba(10,74,46,.1);color:var(--forest);border:1px solid rgba(10,74,46,.18)">Taux garanti</span>
-      </div></div>
-      <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.18)"><svg style="stroke:#a855f7" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#users"/></svg></div><div class="feat-content">
-        <h3>Tontine digitale</h3>
-        <p>Crée ou rejoins une tontine — hebdo ou mensuelle. Rotation, cotisations et tours suivis automatiquement.</p>
-        <span class="feat-pill" style="background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.18)">Communautaire</span>
-      </div></div>
-      <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.18)"><svg style="stroke:var(--gold)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#chart"/></svg></div><div class="feat-content">
-        <h3>Budget & Analyses</h3>
-        <p>Bilan net du mois, dépenses par catégorie, 6 derniers mois. Exporte tout en CSV quand tu veux.</p>
-        <span class="feat-pill" style="background:rgba(212,160,23,.1);color:var(--gold);border:1px solid rgba(212,160,23,.18)">Export CSV</span>
-      </div></div>
-      <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.18)"><svg style="stroke:#f97316" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#trend"/></svg></div><div class="feat-content">
-        <h3>Cashback partenaires</h3>
-        <p>Chaque paiement chez un partenaire te rapporte du cashback, cumulé directement sur ton profil.</p>
-        <span class="feat-pill" style="background:rgba(251,146,60,.1);color:#f97316;border:1px solid rgba(251,146,60,.18)">À chaque paiement</span>
-      </div></div>
-      <div class="feat rev d1">
-        <div class="feat-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.18)"><svg style="stroke:#f97316" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#layers"/></svg></div><div class="feat-content">
-        <h3>Niveaux de compte KYC</h3>
-        <p>Silver, Gold, Platinum — vérifie ton identité et augmente tes plafonds, jusqu'à 2 000 000 FCFA/mois et au-delà.</p>
-        <span class="feat-pill" style="background:rgba(251,146,60,.1);color:#f97316;border:1px solid rgba(251,146,60,.18)">Silver · Gold · Platinum</span>
-      </div></div>
-      <div class="feat rev d2">
-        <div class="feat-ic" style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.18)"><svg style="stroke:#818cf8" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#gift"/></svg></div><div class="feat-content">
-        <h3>Parraine tes proches</h3>
-        <p>Invite ton quartier, ta famille, tes amis. Ton compteur d'invités grimpe et tu débloques des avantages.</p>
-        <span class="feat-pill" style="background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.18)">Invite & gagne</span>
-      </div></div>
-      <div class="feat rev d3">
-        <div class="feat-ic" style="background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.18)"><svg style="stroke:var(--green)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#shield"/></svg></div><div class="feat-content">
-        <h3>Sécurité maximale</h3>
-        <p>Connexion par PIN, vérification par code email, chiffrement bout-en-bout. Tes infos restent chez toi.</p>
-        <span class="feat-pill" style="background:rgba(22,163,74,.1);color:var(--green);border:1px solid rgba(22,163,74,.18)">Chiffré bout-en-bout</span>
-      </div></div>
-    </div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- SCREENS SECTION -->
-<section id="screens" class="screens-bg">
-  <div class="inner">
-    <div class="screens-header rev">
-      <div>
-        <div class="eyebrow">02 — L'Application</div>
-        <h2 class="sec-title">Sur tous tes<br/><em>écrans</em></h2>
+<!-- ══ LES ÉCRANS ══════════════════════════════════════════════════════ -->
+<section id="ecrans">
+  <div class="wrap">
+    <div class="rail-head rev">
+      <div class="sec-head" style="margin-bottom:0">
+        <div class="eyebrow">02 &mdash; L&rsquo;application</div>
+        <h2 class="title">L&rsquo;app telle quelle.<br/><em>Aucune retouche.</em></h2>
+        <p class="lede">
+          Ce ne sont pas des maquettes. Chaque image de ce rail est une capture
+          de ghettopay.com, prise sur un t&eacute;l&eacute;phone.
+        </p>
       </div>
       <div>
-        <p class="sec-sub">GhettoPay s'adapte à ton appareil. Mobile pour envoyer en déplacement, tablette pour analyser ton budget, laptop pour gérer tes finances pro.</p>
-        <div class="devices-tabs" style="margin-top:1.5rem">
-          <button class="dtab on">Mobile</button>
-          <button class="dtab">Budget</button>
-          <button class="dtab">Coffre</button>
+        <div class="rail-nav">
+          <button type="button" data-rail="-1" aria-label="Écran précédent"><svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-left"/></svg></button>
+          <button type="button" data-rail="1" aria-label="Écran suivant"><svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-right"/></svg></button>
         </div>
+        <p class="rail-hint">Glisse &middot; 8 &eacute;crans</p>
       </div>
     </div>
+  </div>
 
-    <!-- Phones row showcase -->
-    <div class="phones-row rev d2">
-      <!-- Phone 1 — PIN screen -->
-      <div class="ph-mini">
-        <div class="ph-mini-inner">
-          <div class="ph-mini-notch"></div>
-          <div style="height:100%;background:linear-gradient(155deg,#0A4A2E 0%,#0D0D0D 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px">
-            <div style="width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(212,160,23,.4)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
-            <div style="text-align:center"><div style="font-family:var(--fd);font-size:.8rem;font-weight:900;color:#fff;font-style:italic">GhettoPay</div><div style="font-size:.4rem;color:rgba(255,255,255,.4);font-family:var(--fm);margin-top:3px">PIN • 1234</div></div>
-            <div style="display:flex;gap:8px">
-              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#F0C040"></div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:100%">
-              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">1</div>
-              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">2</div>
-              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">3</div>
-              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">4</div>
-              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">5</div>
-              <div style="height:28px;border-radius:8px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff">6</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="rail" id="rail">
+    <figure class="card card-short">
+      <div class="phone"><img src="screens/accueil.webp" width="640" height="763" loading="lazy" decoding="async"
+        alt="Accueil : solde disponible, quatre actions — envoyer, recevoir, transfert, tontine — et carte du Coffre Forêt."/></div>
+      <figcaption><b>L&rsquo;accueil</b><span>Ton solde, tes quatre gestes, ton coffre. Rien d&rsquo;autre.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/envoyer.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Écran Envoyer : recherche par nom ou numéro, contacts récents, pavé numérique."/></div>
+      <figcaption><b>Envoyer</b><span>Par nom, num&eacute;ro, contact ou QR. Les frais s&rsquo;affichent avant de valider.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/recevoir.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Écran Recevoir : QR code personnel, boutons télécharger, copier le lien et partager."/></div>
+      <figcaption><b>Recevoir</b><span>Ton QR personnel. T&eacute;l&eacute;charge-le, partage-le, on te paie.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/coffre.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Le Coffre : jauge de progression, total épargné, date de déblocage et bouton d'ajout de fonds."/></div>
+      <figcaption><b>Le Coffre</b><span>&Eacute;pargne verrouill&eacute;e jusqu&rsquo;&agrave; la date que tu choisis.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/tontines.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Écran Tontines : carte d'une tontine avec membres, fréquence, montant par cycle et tour actuel."/></div>
+      <figcaption><b>Les tontines</b><span>Membres, cycles, tours. Le cahier, mais qui compte tout seul.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/tontine-nouvelle.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Formulaire de création de tontine : nom, montant par cycle, fréquence et ajout de membres."/></div>
+      <figcaption><b>Cr&eacute;er une tontine</b><span>Nom, montant, fr&eacute;quence, membres. Deux minutes.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/budget.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Écran Budget : bilan net du mois, revenus et dépenses, graphique des six derniers mois, répartition par catégorie."/></div>
+      <figcaption><b>Le budget</b><span>Bilan du mois, six mois d&rsquo;historique, d&eacute;penses par cat&eacute;gorie.</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="phone"><img src="screens/profil.webp" width="640" height="1387" loading="lazy" decoding="async"
+        alt="Écran Profil : niveau de compte, cashback cumulé, compteurs de transactions et d'invités, limites et vérification d'identité."/></div>
+      <figcaption><b>Le profil</b><span>Ton niveau, tes plafonds, tes invit&eacute;s, ta v&eacute;rification d&rsquo;identit&eacute;.</span></figcaption>
+    </figure>
+  </div>
+</section>
 
-      <!-- Phone 2 — Home (main, larger) -->
-      <div class="ph-big">
-        <div class="ph-big-inner">
-          <div class="ph-big-notch"></div>
-          <div class="app-hdr" style="padding:18px 10px 10px">
-            <div class="app-topbar" style="margin-bottom:8px">
-              <div><div class="app-greet" style="font-size:.38rem">Bonjour</div><div class="app-name" style="font-size:.6rem">Rostand M.</div></div>
-              <div class="app-av" style="width:22px;height:22px;font-size:.5rem">R</div>
-            </div>
-            <div class="app-bal" style="padding:8px 10px">
-              <div class="app-bal-lbl" style="font-size:.32rem">Solde disponible</div>
-              <div class="app-bal-amt" style="font-size:.82rem;margin:.08rem 0 .05rem">680 000</div>
-              <div class="app-bal-sub" style="font-size:.3rem">+ Coffre 50K</div>
-            </div>
-          </div>
-          <!-- Quick actions new layout -->
-          <div style="background:#fff;padding:6px 8px 0;border-bottom:1px solid rgba(0,0,0,.06)">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px">
-              <div style="background:linear-gradient(145deg,#D4A017,#F0C040);border-radius:8px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:3px">
-                <div style="width:22px;height:22px;border-radius:6px;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0A4A2E" stroke-width="2.2"><use href="#send"/></svg></div>
-                <div style="font-size:.44rem;font-weight:900;color:#0A4A2E;text-transform:uppercase">Envoyer</div>
-              </div>
-              <div style="background:linear-gradient(145deg,#0A4A2E,#0F5C38);border-radius:8px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:3px">
-                <div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><use href="#recv"/></svg></div>
-                <div style="font-size:.44rem;font-weight:900;color:#fff;text-transform:uppercase">Recevoir</div>
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding-bottom:7px;border-top:1px solid rgba(0,0,0,.05);padding-top:6px">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(0,0,0,.04);border-radius:7px;padding:4px 2px">
-                <div style="width:18px;height:18px;border-radius:5px;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><use href="#qric"/></svg></div>
-                <div style="font-size:.36rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Scanner</div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(0,0,0,.04);border-radius:7px;padding:4px 2px">
-                <div style="width:18px;height:18px;border-radius:5px;background:rgba(6,182,212,.12);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><use href="#wifi"/></svg></div>
-                <div style="font-size:.36rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Transfert</div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(0,0,0,.04);border-radius:7px;padding:4px 2px">
-                <div style="width:18px;height:18px;border-radius:5px;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div>
-                <div style="font-size:.36rem;font-weight:800;color:var(--txt2);text-transform:uppercase">Tontine</div>
-              </div>
-            </div>
-          </div>
-          <!-- Coffre + tx -->
-          <div style="margin:6px 8px 0;background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:9px;padding:7px 9px;display:flex;align-items:center;gap:7px">
-            <div style="width:22px;height:22px;border-radius:6px;background:rgba(212,160,23,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#F0C040" stroke-width="2"><use href="#lock"/></svg></div>
-            <div style="flex:1"><div style="font-size:.42rem;font-weight:800;color:#F0C040">Coffre Forêt</div><div style="font-size:.34rem;color:rgba(255,255,255,.42)">Taux garanti</div></div>
-            <div style="font-family:var(--fd);font-size:.56rem;font-weight:900;color:#F0C040">50K</div>
-          </div>
-          <div style="padding:6px 8px">
-            <div style="font-size:.36rem;font-weight:700;color:var(--txt3);text-transform:uppercase;margin-bottom:5px">Récent</div>
-            <div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05)">
-              <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
-              <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Amina N.</div></div>
-              <div style="font-size:.48rem;font-weight:800;color:#15803d">+25K</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;padding:4px 0">
-              <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
-              <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Market Mbolo</div></div>
-              <div style="font-size:.48rem;font-weight:800;color:#dc2626">-12K</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phone 3 — QR screen -->
-      <div class="ph-mini">
-        <div class="ph-mini-inner">
-          <div class="ph-mini-notch"></div>
-          <div style="height:100%;background:#0D0D0D;display:flex;flex-direction:column;align-items:center;padding:14px 10px 10px;gap:8px">
-            <div style="font-size:.5rem;font-weight:800;color:#fff">QR Code</div>
-            <div style="width:80px;height:80px;border-radius:12px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;position:relative;border:1px solid rgba(255,255,255,.08)">
-              <div style="position:absolute;top:5px;left:5px;width:14px;height:14px;border-top:2px solid #F0C040;border-left:2px solid #F0C040;border-radius:2px 0 0 0"></div>
-              <div style="position:absolute;top:5px;right:5px;width:14px;height:14px;border-top:2px solid #F0C040;border-right:2px solid #F0C040;border-radius:0 2px 0 0"></div>
-              <div style="position:absolute;bottom:5px;left:5px;width:14px;height:14px;border-bottom:2px solid #F0C040;border-left:2px solid #F0C040;border-radius:0 0 0 2px"></div>
-              <div style="position:absolute;bottom:5px;right:5px;width:14px;height:14px;border-bottom:2px solid #F0C040;border-right:2px solid #F0C040;border-radius:0 0 2px 0"></div>
-              <svg width="32" height="32" viewBox="0 0 80 80" style="opacity:.06"><rect x="8" y="8" width="22" height="22" fill="white" rx="2"/><rect x="50" y="8" width="22" height="22" fill="white" rx="2"/><rect x="8" y="50" width="22" height="22" fill="white" rx="2"/></svg>
-            </div>
-            <div style="text-align:center"><div style="font-size:.52rem;font-weight:800;color:#fff">Rostand M.</div><div style="font-size:.38rem;color:rgba(255,255,255,.35);font-family:var(--fm)">+241 06 12 34 56</div></div>
-            <div style="width:100%;background:rgba(255,255,255,.06);border-radius:8px;padding:6px 8px;text-align:center;border:1px solid rgba(212,160,23,.2)">
-              <div style="font-size:.4rem;color:rgba(255,255,255,.35);font-family:var(--fm)">Montant</div>
-              <div style="font-family:var(--fd);font-size:.7rem;font-weight:900;color:#F0C040">3 500 FCFA</div>
-            </div>
-            <div style="width:100%;padding:7px;background:linear-gradient(135deg,#D4A017,#F0C040);border-radius:8px;text-align:center;font-size:.48rem;font-weight:800;color:var(--forest)">🔒 Payer maintenant</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phone 4 — Coffre screen -->
-      <div class="ph-mini">
-        <div class="ph-mini-inner">
-          <div class="ph-mini-notch"></div>
-          <div style="height:100%;display:flex;flex-direction:column">
-            <div style="background:linear-gradient(155deg,#0A4A2E,#0F5C38);padding:14px 10px 10px;flex-shrink:0">
-              <div style="font-size:.52rem;font-weight:800;color:#F0C040;font-style:italic;margin-bottom:8px">Le Coffre</div>
-              <div style="font-size:.4rem;color:rgba(255,255,255,.42);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em">Total épargné</div>
-              <div style="font-family:var(--fd);font-size:.9rem;font-weight:900;color:#fff;margin:.1rem 0 .1rem">50 000 F</div>
-              <div style="display:inline-flex;align-items:center;gap:4px;padding:2px 7px;background:rgba(34,197,94,.18);border-radius:6px">
-                <div style="font-size:.36rem;color:#BBF7D0;font-family:var(--fm)">Rendement actif</div>
-              </div>
-            </div>
-            <div style="flex:1;padding:8px;display:flex;flex-direction:column;gap:6px;overflow:hidden">
-              <div style="background:#fff;border-radius:9px;border:1px solid rgba(0,0,0,.07);padding:8px">
-                <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
-                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(212,160,23,.18);border:1px solid rgba(212,160,23,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2"><use href="#target"/></svg></div>
-                  <div><div style="font-size:.44rem;font-weight:800;color:var(--ink)">Voyage France</div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Déc 2024</div></div>
-                  <div style="margin-left:auto;text-align:right"><div style="font-family:var(--fd);font-size:.52rem;font-weight:900;color:var(--txt)">180K</div><div style="font-size:.34rem;color:#15803d">Actif</div></div>
-                </div>
-                <div style="background:rgba(0,0,0,.07);border-radius:100px;height:4px;overflow:hidden"><div style="width:72%;height:100%;background:#D4A017;border-radius:100px"></div></div>
-                <div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">180K / 250K</span><span style="font-size:.34rem;color:#D4A017;font-weight:800">72%</span></div>
-              </div>
-              <div style="background:#fff;border-radius:9px;border:1px solid rgba(0,0,0,.07);padding:8px">
-                <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
-                  <div style="width:22px;height:22px;border-radius:6px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><use href="#shield"/></svg></div>
-                  <div><div style="font-size:.44rem;font-weight:800;color:var(--ink)">Fond urgence</div><div style="font-size:.36rem;color:var(--txt3);font-family:var(--fm)">Mars 2025</div></div>
-                  <div style="margin-left:auto;text-align:right"><div style="font-family:var(--fd);font-size:.52rem;font-weight:900;color:var(--txt)">65K</div><div style="font-size:.34rem;color:#15803d">Actif</div></div>
-                </div>
-                <div style="background:rgba(0,0,0,.07);border-radius:100px;height:4px;overflow:hidden"><div style="width:43%;height:100%;background:#16A34A;border-radius:100px"></div></div>
-                <div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">65K / 150K</span><span style="font-size:.34rem;color:#16A34A;font-weight:800">43%</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- ══ CE QUE ÇA FAIT ══════════════════════════════════════════════════ -->
+<section class="light" id="faire">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <div class="eyebrow">03 &mdash; Ce que &ccedil;a fait</div>
+      <h2 class="title">Un portefeuille,<br/><em>vraiment complet.</em></h2>
+      <p class="lede">Tout ce qui existe aujourd&rsquo;hui dans l&rsquo;application. Rien de plus.</p>
     </div>
 
-    <!-- Laptop large display -->
-    <div style="margin-top:3rem" class="rev d3">
-      <div class="laptop-demo">
-        <div class="ld-body">
-          <div class="ld-screen">
-            <!-- Dashboard complet sur laptop -->
-            <div style="display:flex;height:100%">
-              <!-- Sidebar large -->
-              <div style="width:60px;background:var(--forest);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:18px;flex-shrink:0">
-                <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(212,160,23,.4)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="2.5"><use href="#z"/></svg></div>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;flex:1">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2"><use href="#home"/></svg>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#chart"/></svg>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#lock"/></svg>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#users"/></svg>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#pay"/></svg>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"><use href="#bell"/></svg>
-                </div>
-              </div>
-              <!-- Main -->
-              <div style="flex:1;padding:16px;overflow:hidden;display:flex;flex-direction:column;gap:12px;background:var(--cream)">
-                <div style="display:flex;align-items:center;justify-content:space-between">
-                  <div>
-                    <div style="font-size:.48rem;color:var(--txt3);font-family:var(--fm);text-transform:uppercase;letter-spacing:.08em">Bonjour, Rostand 👋</div>
-                    <div style="font-size:.78rem;font-weight:800;color:var(--ink);margin-top:2px">Tableau de bord · Novembre 2024</div>
-                  </div>
-                  <div style="display:flex;gap:7px;align-items:center">
-                    <div style="width:26px;height:26px;border-radius:8px;background:var(--cream2);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.06)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="2"><use href="#bell"/></svg></div>
-                    <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#0F5C38);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:900;color:#fff;border:2px solid rgba(255,255,255,.4)">R</div>
-                  </div>
-                </div>
-                <!-- Cards -->
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-                  <div style="background:linear-gradient(135deg,#D4A017,#F0C040);border-radius:12px;padding:12px;position:relative;overflow:hidden;box-shadow:0 6px 20px rgba(212,160,23,.35)">
-                    <div style="font-size:.4rem;color:rgba(0,0,0,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Solde</div>
-                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#0A4A2E;margin-top:4px;letter-spacing:-.02em">680 000</div>
-                    <div style="font-size:.38rem;color:rgba(0,0,0,.4);font-family:var(--fm);margin-top:2px">FCFA disponible</div>
-                  </div>
-                  <div style="background:linear-gradient(135deg,#0A4A2E,#0F5C38);border-radius:12px;padding:12px">
-                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Coffre</div>
-                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#F0C040;margin-top:4px">50 000</div>
-                    <div style="font-size:.38rem;color:rgba(255,255,255,.38);font-family:var(--fm);margin-top:2px">Rendement actif</div>
-                  </div>
-                  <div style="background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:12px;padding:12px">
-                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Cashback</div>
-                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#fff;margin-top:4px">8 200</div>
-                    <div style="font-size:.38rem;color:rgba(255,255,255,.5);font-family:var(--fm);margin-top:2px">cumulé</div>
-                  </div>
-                  <div style="background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:12px;padding:12px">
-                    <div style="font-size:.4rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;font-family:var(--fm)">Tontines</div>
-                    <div style="font-family:var(--fd);font-size:.95rem;font-weight:900;color:#fff;margin-top:4px">3</div>
-                    <div style="font-size:.38rem;color:rgba(255,255,255,.5);font-family:var(--fm);margin-top:2px">actives ce mois</div>
-                  </div>
-                </div>
-                <!-- Bottom row -->
-                <div style="display:grid;grid-template-columns:2fr 1.2fr;gap:10px;flex:1">
-                  <!-- Chart -->
-                  <div style="background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--cream3);display:flex;flex-direction:column">
-                    <div style="font-size:.48rem;font-weight:700;color:var(--ink);margin-bottom:10px">Évolution des dépenses · Novembre</div>
-                    <div style="flex:1;display:flex;align-items:flex-end;gap:5px">
-                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:45px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.65"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S1</div></div>
-                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:30px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.5"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S2</div></div>
-                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:68px;background:linear-gradient(180deg,#D4A017,#F0C040);border-radius:4px"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S3</div></div>
-                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:38px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.6"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S4</div></div>
-                      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;height:55px;background:linear-gradient(180deg,#0A4A2E,#16A34A);border-radius:4px;opacity:.75"></div><div style="font-size:.34rem;color:var(--txt3);font-family:var(--fm)">S5</div></div>
-                    </div>
-                  </div>
-                  <!-- Recent -->
-                  <div style="background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--cream3);display:flex;flex-direction:column;gap:6px">
-                    <div style="font-size:.46rem;font-weight:700;color:var(--ink)">Activité récente</div>
-                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
-                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#d4a017,#0a4a2e);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#recv"/></svg></div>
-                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Amina Nzamba</div><div style="font-size:.38rem;color:var(--txt3)">Transfert · 2h</div></div>
-                      <div style="font-size:.46rem;font-weight:800;color:#15803d">+25K</div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
-                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#pay"/></svg></div>
-                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Market Mbolo</div><div style="font-size:.38rem;color:var(--txt3)">QR Pay · 4h</div></div>
-                      <div style="font-size:.46rem;font-weight:800;color:#dc2626">-12K</div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
-                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#smartphone"/></svg></div>
-                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Crédit tél.</div><div style="font-size:.38rem;color:var(--txt3)">Recharge · hier</div></div>
-                      <div style="font-size:.46rem;font-weight:800;color:#dc2626">-2K</div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0">
-                      <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#users"/></svg></div>
-                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Jean-Paul Ekang</div><div style="font-size:.38rem;color:var(--txt3)">Tontine · hier</div></div>
-                      <div style="font-size:.46rem;font-weight:800;color:#15803d">+50K</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ld-base"></div>
-        <div class="ld-foot"></div>
-      </div>
+    <div class="feats rev">
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-send"/></svg></div>
+        <h3>Transferts instantan&eacute;s</h3><p>Par nom, num&eacute;ro, contact ou QR code. Les frais s&rsquo;affichent avant que tu valides.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-qr"/></svg></div>
+        <h3>Payer par QR</h3><p>Scanne, confirme avec ton PIN, c&rsquo;est pay&eacute;. Au march&eacute;, en boutique, au maquis.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-link"/></svg></div>
+        <h3>Lien de paiement</h3><p>Ton QR et ton lien personnels. Envoie-les par WhatsApp ou SMS, ton solde est cr&eacute;dit&eacute; en direct.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-lock"/></svg></div>
+        <h3>Le Coffre For&ecirc;t</h3><p>Bloque ton &eacute;pargne jusqu&rsquo;&agrave; la date de ton choix. Objectif, progression, d&eacute;blocage &agrave; l&rsquo;&eacute;ch&eacute;ance.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-users"/></svg></div>
+        <h3>Tontines</h3><p>Hebdomadaire ou mensuelle. Rotation, tours et cotisations suivis automatiquement.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg></div>
+        <h3>Budget &amp; analyses</h3><p>Bilan net du mois, d&eacute;penses par cat&eacute;gorie, six derniers mois. Export CSV quand tu veux.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></div>
+        <h3>Factures &amp; recharges</h3><p>R&egrave;gle tes factures et recharge ton cr&eacute;dit depuis l&rsquo;app, sans file d&rsquo;attente.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-badge"/></svg></div>
+        <h3>Niveaux de compte</h3><p>Silver, Gold, Platinum. V&eacute;rifie ton identit&eacute; depuis l&rsquo;app et augmente tes plafonds.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gift"/></svg></div>
+        <h3>Cashback</h3><p>Ce que tes paiements te rapportent, cumul&eacute; et visible sur ton profil.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-userplus"/></svg></div>
+        <h3>Parrainage</h3><p>Invite ton quartier, ta famille, tes amis. Ton compteur d&rsquo;invit&eacute;s vit sur ton profil.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bell"/></svg></div>
+        <h3>Notifications</h3><p>Chaque mouvement sur ton compte t&rsquo;est notifi&eacute;, m&ecirc;me app ferm&eacute;e.</p></div>
+      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-shield"/></svg></div>
+        <h3>S&eacute;curit&eacute;</h3><p>Connexion par PIN, v&eacute;rification par code email, chiffrement bout-en-bout. Tes infos restent chez toi.</p></div>
     </div>
   </div>
 </section>
 
-<div class="div" style="background:rgba(255,255,255,.06)"></div>
+<!-- ══ LE COFFRE ═══════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap duo">
+    <div class="duo-txt rev">
+      <div class="eyebrow">04 &mdash; Le Coffre</div>
+      <h2 class="title">Mettre de c&ocirc;t&eacute;,<br/><em>pour de vrai.</em></h2>
+      <p class="lede">
+        Le probl&egrave;me de l&rsquo;&eacute;pargne, ce n&rsquo;est pas de commencer. C&rsquo;est d&rsquo;y toucher.
+        Le Coffre verrouille ce que tu y mets jusqu&rsquo;&agrave; la date que tu as fix&eacute;e toi-m&ecirc;me.
+      </p>
+      <ul class="pts">
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Tu choisis l&rsquo;objectif et la date de d&eacute;blocage</li>
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>La jauge te montre o&ugrave; tu en es, mois apr&egrave;s mois</li>
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Tu peux ajouter des fonds &agrave; tout moment, jamais en retirer avant l&rsquo;&eacute;ch&eacute;ance</li>
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Plusieurs coffres en parall&egrave;le, un par projet</li>
+      </ul>
+    </div>
+    <div class="phone rev d1"><img src="screens/coffre.webp" width="640" height="1387" loading="lazy" decoding="async"
+      alt="Le Coffre dans l'application : jauge à 50 %, total épargné, date de déblocage et calendrier des mois restants."/></div>
+  </div>
+</section>
 
-<!-- COFFRE -->
-<section id="coffre" class="coffre-bg">
-  <div class="inner">
-    <div class="coffre-grid">
-      <div class="coffre-card rev">
-        <div class="coffre-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.8"><use href="#lock"/></svg></div>
-        <h3>Le Coffre Forêt</h3>
-        <p>Ton épargne protégée qui grandit en silence — comme les arbres centenaires de la forêt équatoriale. Tu bloques, tu attends, tu récoltes.</p>
-        <div class="coffre-stats-row">
-          <div class="c-stat"><div class="c-stat-n">Objectif</div><div class="c-stat-l">Suivi en direct</div></div>
-          <div class="c-stat"><div class="c-stat-n">Verrou</div><div class="c-stat-l">Jusqu'à la date</div></div>
-          <div class="c-stat"><div class="c-stat-n">100%</div><div class="c-stat-l">Sécurisé</div></div>
-        </div>
-      </div>
-      <div class="rev d2">
-        <div class="eyebrow">03 — Le Coffre</div>
-        <h2 class="sec-title" style="margin-bottom:1.5rem">Épargne comme<br/><em>jamais avant</em></h2>
-        <div class="coffre-feats">
-          <div class="cf">
-            <div class="cf-ic" style="background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2"><use href="#target"/></svg></div>
-            <div><div class="cf-title">Objectif d'épargne</div><div class="cf-desc">Définis un objectif chiffré. GhettoPay suit ta progression automatiquement en temps réel.</div></div>
-          </div>
-          <div class="cf">
-            <div class="cf-ic" style="background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><use href="#clock"/></svg></div>
-            <div><div class="cf-title">Épargne programmée</div><div class="cf-desc">Automatise tes virements — semaine, mois, comme tu veux. C'est toi qui décides.</div></div>
-          </div>
-          <div class="cf">
-            <div class="cf-ic" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green2)" stroke-width="2"><use href="#trend"/></svg></div>
-            <div><div class="cf-title">Rendement garanti</div><div class="cf-desc">Ton épargne bloquée reste active et rapporte un rendement garanti jusqu'à l'échéance. L'argent qui travaille pour toi.</div></div>
-          </div>
-          <div class="cf">
-            <div class="cf-ic" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2"><use href="#shield"/></svg></div>
-            <div><div class="cf-title">Protection anti-impulsion</div><div class="cf-desc">Verrouillé jusqu'à la date de déblocage — impossible de retirer avant. La meilleure protection contre toi-même.</div></div>
-          </div>
-        </div>
-      </div>
+<!-- ══ LA TONTINE ══════════════════════════════════════════════════════ -->
+<section class="light">
+  <div class="wrap duo flip">
+    <div class="phone rev"><img src="screens/tontines.webp" width="640" height="1387" loading="lazy" decoding="async"
+      alt="Écran Tontines : carte d'une tontine « Amis » avec membres, fréquence hebdomadaire, montant par cycle et tour actuel."/></div>
+    <div class="duo-txt rev d1">
+      <div class="eyebrow">05 &mdash; La tontine</div>
+      <h2 class="title">Le cahier,<br/><em>en mieux.</em></h2>
+      <p class="lede">
+        La tontine marche depuis toujours. Ce qui ne marche pas, c&rsquo;est le cahier :
+        qui a cotis&eacute;, qui passe ce tour-ci, combien il reste. GhettoPay tient le
+        compte &agrave; la place du cahier.
+      </p>
+      <ul class="pts">
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Cr&eacute;e ta tontine ou rejoins celle de ton groupe</li>
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Hebdomadaire ou mensuelle, montant fix&eacute; par cycle</li>
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>L&rsquo;ordre de rotation est visible par tout le monde</li>
+        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Chacun voit qui a cotis&eacute; et &agrave; qui c&rsquo;est le tour</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<div class="div"></div>
-
-<!-- TONTINE -->
-<section id="tontine" class="tontine-bg">
-  <div class="inner">
-    <div class="tontine-grid">
-      <div class="rev">
-        <div class="eyebrow">04 — Tontine</div>
-        <h2 class="sec-title" style="margin-bottom:.8rem">La tradition,<br/><em>digitalisée</em></h2>
-        <p class="sec-sub" style="margin-bottom:2rem">La tontine est au cœur de la culture gabonaise. GhettoPay la modernise — suivi en temps réel, cotisations automatiques, aucun risque de perte.</p>
-        <div class="tontine-info">
-          <div class="ti"><div class="ti-ic" style="background:rgba(168,85,247,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><use href="#users"/></svg></div><div><div class="ti-title">Crée ta tontine en 30 secondes</div><div class="ti-desc">Définis le montant, la fréquence (hebdo ou mensuelle) et l'ordre de rotation. Ajoute tes membres par numéro ou depuis tes contacts.</div></div></div>
-          <div class="ti"><div class="ti-ic" style="background:rgba(34,197,94,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><use href="#chk"/></svg></div><div><div class="ti-title">Suivi automatique des tours</div><div class="ti-desc">GhettoPay affiche le tour actuel et notifie chaque membre. Plus de disputes, plus de confusion.</div></div></div>
-          <div class="ti"><div class="ti-ic" style="background:rgba(212,160,23,.1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><use href="#shield"/></svg></div><div><div class="ti-title">Argent sécurisé</div><div class="ti-desc">Chaque cotisation est tracée, chaque paiement confirmé. La confiance est automatique.</div></div></div>
-        </div>
-      </div>
-      <div class="rev d2" style="display:flex;flex-direction:column;gap:12px">
-        <!-- Tontine card -->
-        <div class="tontine-card">
-          <div class="tnt-head">
-            <div class="tnt-av" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);width:38px;height:38px;font-size:.85rem">F</div>
-            <div><div class="tnt-name" style="font-size:.78rem">Famille Moussavou</div><div class="tnt-members">8 membres · Mensuel</div></div>
-            <div class="tnt-val"><div class="tnt-n" style="font-size:.85rem">400 000</div><div class="tnt-c">FCFA/cycle</div></div>
-          </div>
-          <div style="background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:6px 10px;font-size:.64rem;font-weight:700;color:#86efac;margin-bottom:10px">🎉 C'est ton tour de recevoir ce mois !</div>
-          <div class="tnt-bar-bg"><div class="tnt-bar" style="width:62%"></div></div>
-          <div class="tnt-foot"><span>5 / 8 ont cotisé</span><span>Échéance : 15 déc.</span></div>
-          <div class="tnt-btn-d" style="font-size:.76rem">Cotiser maintenant</div>
-        </div>
-        <div class="tontine-card" style="background:linear-gradient(135deg,#0284c7,#38bdf8)">
-          <div class="tnt-head">
-            <div class="tnt-av" style="background:rgba(255,255,255,.2);width:38px;height:38px;font-size:.85rem">A</div>
-            <div><div class="tnt-name" style="font-size:.78rem">Amis Lycée Omar Bongo</div><div class="tnt-members">5 membres · Hebdomadaire</div></div>
-            <div class="tnt-val"><div class="tnt-n" style="font-size:.85rem">250 000</div><div class="tnt-c">FCFA/cycle</div></div>
-          </div>
-          <div class="tnt-bar-bg"><div class="tnt-bar" style="width:80%;background:rgba(255,255,255,.9)"></div></div>
-          <div class="tnt-foot"><span>4 / 5 ont cotisé</span><span>Échéance : 30 nov.</span></div>
-          <div class="tnt-btn-d" style="font-size:.76rem">Voir les détails</div>
-        </div>
-      </div>
+<!-- ══ COMPARER ════════════════════════════════════════════════════════ -->
+<section id="comparer">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <div class="eyebrow">06 &mdash; Comparer</div>
+      <h2 class="title">La v&eacute;rit&eacute;<br/><em>sans filtre.</em></h2>
+      <p class="lede">
+        Airtel Money et Moov Money sont les deux services les plus utilis&eacute;s au
+        Gabon. Voil&agrave;, point par point, ce que GhettoPay fait autrement.
+      </p>
     </div>
+
+    <div class="tbl-scroll rev">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Fonctionnalit&eacute;</th>
+            <th scope="col" class="us">GhettoPay</th>
+            <th scope="col">Airtel Money</th>
+            <th scope="col">Moov Money</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Frais de transfert<small>Entre comptes du service</small></td><td class="us">0,5&thinsp;%</td><td class="oth">Plus &eacute;lev&eacute;s</td><td class="oth">Plus &eacute;lev&eacute;s</td></tr>
+          <tr><td>Paiement par QR code<small>Scanner et payer</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
+          <tr><td>Coffre d&rsquo;&eacute;pargne bloqu&eacute;<small>Verrouill&eacute; jusqu&rsquo;&agrave; ta date</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
+          <tr><td>Tontine digitale<small>Cycles et rotation suivis</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
+          <tr><td>Budget &amp; analyses<small>Cat&eacute;gories, export CSV</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
+          <tr><td>Lien de paiement<small>Se faire payer &agrave; distance</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
+          <tr><td>Codes USSD<small>*127#&hellip;</small></td><td class="us">Jamais</td><td class="oth">Toujours</td><td class="oth">Toujours</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-note rev">
+      Airtel Money et Moov Money sont cit&eacute;s ici &agrave; titre de comparaison
+      concurrentielle. GhettoPay n&rsquo;est ni affili&eacute; &agrave; ces services, ni
+      partenaire de leurs op&eacute;rateurs.
+    </p>
   </div>
 </section>
 
-<div class="div"></div>
-
-<!-- COMPARE -->
-<section id="compare" class="cmp-bg">
-  <div class="inner">
+<!-- ══ APPEL FINAL ═════════════════════════════════════════════════════ -->
+<section class="final">
+  <div class="wrap">
     <div class="rev">
-      <div class="eyebrow">05 — Comparer</div>
-      <h2 class="sec-title">La vérité<br/><em>sans filtre</em></h2>
-      <p class="sec-sub">Airtel Money et Moov Money sont les deux services les plus utilisés au Gabon. Voilà, point par point, ce que GhettoPay fait autrement.</p>
-    </div>
-    <div class="ctable-wrap rev d2">
-      <div class="ctable">
-      <div class="chead">
-        <div class="ch-lbl">Fonctionnalité</div>
-        <div class="ch-us">GhettoPay</div>
-        <div class="ch-oth">Airtel Money</div>
-        <div class="ch-oth">Moov Money</div>
-      </div>
-      <div class="crow"><div class="crow-feat">Frais transfert P2P<small>Pour 10 000 FCFA</small></div><div class="cv us">50 F</div><div class="cv no">~300 F</div><div class="cv no">~300 F</div></div>
-      <div class="crow"><div class="crow-feat">Paiement QR Code<small>Scan & pay instantané</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Coffre épargne<small>Bloqué · rendement garanti</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Tontine digitale<small>Collecte communautaire</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Budget & analyses<small>Catégories automatiques</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">EbiLling · QR & lien<small>Reçois par QR ou lien partagé</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Codes USSD<small>*127#...</small></div><div class="cv us">Jamais</div><div class="cv no">Toujours</div><div class="cv no">Toujours</div></div>
-      <div class="crow"><div class="crow-feat">Cashback partenaires<small>Argent qui revient</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Design & expérience<small>Interface moderne</small></div><div class="cv us">Premium</div><div class="cv no">Basique</div><div class="cv no">Basique</div></div>
-    </div>
-<p class="ctable-hint">← Glisse pour voir tout le tableau →</p>
-<p class="ctable-note">Airtel Money et Moov Money sont cités ici à titre de comparaison concurrentielle. GhettoPay n'est ni affilié à ces services, ni partenaire de leurs opérateurs.</p>
-</div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- AMBASSADEUR -->
-<section class="amb-bg">
-  <div class="inner">
-    <div class="amb-card rev">
-      <div style="position:relative;z-index:1">
-        <div style="font-family:var(--fm);font-size:.66rem;color:var(--gold2);letter-spacing:.16em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:2px;background:var(--gold2);display:block"></span>06 — Programme</div>
-        <h3 class="amb-title">Deviens <span>Ambassadeur</span><br/>GhettoPay</h3>
-        <p class="amb-desc">Invite ton quartier, ta famille, tes amis à rejoindre GhettoPay. Suis tes invités depuis ton profil et grimpe les niveaux — Silver, Gold, Platinum.</p>
-        <div class="amb-steps">
-          <div class="as"><div class="as-n">1</div><div><div class="as-title">Partage ton invitation</div><div class="as-desc">Depuis « Parrainer un ami » sur ton profil</div></div></div>
-          <div class="as"><div class="as-n">2</div><div><div class="as-title">Ton ami rejoint GhettoPay</div><div class="as-desc">Il crée son compte avec son numéro et son email</div></div></div>
-          <div class="as"><div class="as-n">3</div><div><div class="as-title">Ton compteur grimpe</div><div class="as-desc">Chaque invité te rapproche du niveau supérieur</div></div></div>
-        </div>
-      </div>
-      <div class="amb-reward" style="position:relative;z-index:1">
-        <span class="amb-big" style="font-size:2.4rem">Silver<br/>Gold<br/>Platinum</span>
-        <p class="amb-sub">3 niveaux à débloquer<br/><br/>Plus tu participes,<br/>plus tes plafonds montent.</p>
-        <div class="amb-badge">Invités illimités</div>
+      <span class="badge"><i></i>100&thinsp;% gabonais &middot; Estuaire</span>
+      <h2 class="title">Pr&ecirc;t &agrave; ma&icirc;triser<br/><em>ton argent&nbsp;?</em></h2>
+      <p class="lede">
+        Ton num&eacute;ro, un code, ton PIN. Trois &eacute;crans et ton compte est ouvert.
+      </p>
+      <div class="hero-btns">
+        <a class="btn btn-gold" href="https://ghettopay.com/">
+          Ouvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+        </a>
       </div>
     </div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- CTA -->
-<section class="cta-bg">
-  <div class="cta-blob"></div>
-  <div class="cta-inner rev">
-    <div style="display:inline-flex;align-items:center;gap:.6rem;background:rgba(10,74,46,.08);border:1px solid rgba(10,74,46,.12);border-radius:100px;padding:.35rem .9rem .35rem .5rem;margin-bottom:1.5rem">
-      <div style="width:20px;height:20px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#z"/></svg></div>
-      <span style="font-size:.68rem;font-weight:700;color:var(--forest);letter-spacing:.04em;text-transform:uppercase">100% Gabonais · Estuaire</span>
-    </div>
-    <h2 class="cta-title">Prêt à maîtriser<br/><em>ton argent ?</em></h2>
-    <p class="cta-sub">Rejoins les Gabonais qui ont choisi la liberté financière. Inscription en 3 étapes avec ton numéro et ton email — pas de carte bancaire, juste un code et ton PIN.</p>
-    <div class="cta-btns">
-      <a href="https://ghettopay.com/" class="btn-pri" style="font-size:.95rem;padding:1rem 2.4rem">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="2.5"><use href="#ar"/></svg>Ouvrir l'Application
-      </a>
-    </div>
-    <div class="stores">
-      <a href="#" class="store">
-        <svg viewBox="0 0 24 24" width="17" height="17" style="stroke:var(--txt3);stroke-width:1.5;fill:none"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        <div class="store-lbl"><small>Télécharger sur</small>App Store</div>
-      </a>
-      <a href="#" class="store">
-        <svg viewBox="0 0 24 24" width="17" height="17" style="stroke:var(--txt3);stroke-width:1.5;fill:none"><path d="M3 20.5v-17l17.5 8.5z"/></svg>
-        <div class="store-lbl"><small>Disponible sur</small>Google Play</div>
-      </a>
-    </div>
-    <p class="legal">Chiffrement bout-en-bout · Made in Gabon · 0 frais cachés</p>
   </div>
 </section>
 
 <footer>
-  <div class="foot-inner">
-    <span class="foot-brand">GhettoPay</span>
-    <div class="foot-links">
-      <a href="#">À propos</a>
-      <a href="#">Conditions</a>
-      <a href="#">Confidentialité</a>
-      <a href="#">Contact</a>
-    </div>
-    <span class="foot-copy">© 2026 GhettoPay · Libreville, Gabon</span>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><img src="ghettopay-icon.svg" alt=""/>GhettoPay</a>
+    <nav>
+      <a href="https://ghettopay.com/">Application</a>
+      <a href="https://ghettopay.com/privacy.html">Confidentialit&eacute;</a>
+      <a href="#comparer">Comparer</a>
+    </nav>
+    <p>Libreville, Estuaire &middot; Gabon</p>
   </div>
 </footer>
 
 <script>
-/* Cursor */
-const cur=document.getElementById('cur'),curR=document.getElementById('curR');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-(function loop(){
-  rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
-  cur.style.transform=`translate(${mx-3.5}px,${my-3.5}px)`;
-  curR.style.transform=`translate(${rx-14}px,${ry-14}px)`;
-  requestAnimationFrame(loop);
+(function () {
+  'use strict';
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Apparitions au défilement. Sans IntersectionObserver — ou en mode
+     mouvement réduit — tout est visible d'emblée, la CSS s'en charge. */
+  if (!calm && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    document.querySelectorAll('.rev').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.rev').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* Rail d'écrans : on avance d'une carte, largeur mesurée sur la première
+     plutôt que codée en dur — elle dépend de la fenêtre (min(15.5rem,62vw)). */
+  var rail = document.getElementById('rail');
+  if (rail) {
+    var card = rail.querySelector('.card');
+    document.querySelectorAll('[data-rail]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var gap = parseFloat(getComputedStyle(rail).columnGap) || 24;
+        var step = (card ? card.getBoundingClientRect().width : 260) + gap;
+        rail.scrollBy({ left: step * Number(b.dataset.rail), behavior: calm ? 'auto' : 'smooth' });
+      });
+    });
+  }
+
+  /* La barre de navigation se densifie dès qu'on quitte le haut de page. */
+  var nav = document.querySelector('nav');
+  var onScroll = function () {
+    nav.style.background = window.scrollY > 40 ? 'rgba(4,20,10,.92)' : 'rgba(4,20,10,.72)';
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 })();
-document.querySelectorAll('a,button,.feat,.cf,.ti,.tontine-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('ha'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('ha'));
-});
-
-/* Nav scroll */
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>50));
-
-/* Reveal on scroll */
-const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:.08});
-document.querySelectorAll('.rev').forEach(e=>obs.observe(e));
-
-/* Device tabs (decorative) */
-document.querySelectorAll('.dtab').forEach(t=>t.addEventListener('click',function(){
-  document.querySelectorAll('.dtab').forEach(x=>x.classList.remove('on'));
-  this.classList.add('on');
-}));
-
-/* Mobile nav toggle */
-const navHam=document.getElementById('nav-ham'),navLinks=document.querySelector('.nav-links');
-navHam.addEventListener('click',()=>{
-  navLinks.classList.toggle('show');
-  navHam.classList.toggle('active');
-  document.body.style.overflow=navLinks.classList.contains('show')?'hidden':'';
-});
-document.addEventListener('click',e=>{
-  if(!nav.closest(e.target)&&!navLinks.contains(e.target)){
-    navLinks.classList.remove('show');
-    navHam.classList.remove('active');
-    document.body.style.overflow='';
-  }
-});
-window.addEventListener('resize',()=>{
-  if(window.innerWidth>700){
-    navLinks.classList.remove('show');
-    navHam.classList.remove('active');
-    document.body.style.overflow='';
-  }
-});
 </script>
 </body>
 </html>
