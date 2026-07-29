@@ -267,6 +267,9 @@ h2.sec-title .go{color:var(--gold)}
 .ctable{margin-top:3rem;border:1.5px solid var(--cream3);border-radius:22px;overflow:hidden;background:var(--white)}
 .ctable-wrap{margin-top:3rem}
 .ctable-hint{display:none;font-family:var('--fm');font-size:.55rem;color:var(--txt3)}
+/* Mention concurrentielle sous le tableau. Classe distincte de .ctable-hint,
+   qui est masquée hors mobile et flanquée de flèches ←→ en pseudo-éléments. */
+.ctable-note{max-width:46rem;margin:1.1rem auto 0;font-size:.74rem;line-height:1.6;color:var(--txt3);text-align:center}
 .chead{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;background:var(--forest);padding:.9rem 1.5rem}
 .ch-lbl{font-family:var(--fm);font-size:.62rem;font-weight:600;color:rgba(255,255,255,.48);text-transform:uppercase;letter-spacing:.07em}
 .ch-us{font-family:var(--fm);font-size:.62rem;font-weight:800;color:var(--gold2);text-align:center;letter-spacing:.04em;text-transform:uppercase}
@@ -647,7 +650,7 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
       </h1>
 
       <p class="hero-desc">
-        <strong>GhettoPay</strong> c'est ton portefeuille complet. Envoie et reçois par numéro ou <strong>QR code</strong>, épargne dans ton <strong>Coffre</strong>, lance une tontine et transfère vers <strong>Airtel ou Moov Money</strong> — tout dans une seule app. <strong>Sans codes USSD, sans frais cachés.</strong> 100% gabonais.
+        <strong>GhettoPay</strong> c'est ton portefeuille complet. Envoie et reçois par numéro ou <strong>QR code</strong>, épargne dans ton <strong>Coffre</strong>, lance une tontine et règle tes <strong>factures</strong> — tout dans une seule app. <strong>Sans codes USSD, sans frais cachés.</strong> 100% gabonais.
       </p>
 
       <div class="hero-btns">
@@ -661,7 +664,7 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
 
       <div class="hero-stats">
         <div class="stat"><div class="stat-val">0,5%</div><div class="stat-lbl">Frais P2P</div></div>
-        <div class="stat"><div class="stat-val">2%</div><div class="stat-lbl">Airtel · Moov</div></div>
+        <div class="stat"><div class="stat-val">24/7</div><div class="stat-lbl">Disponible</div></div>
         <div class="stat"><div class="stat-val">0</div><div class="stat-lbl">Frais cachés</div></div>
         <div class="stat"><div class="stat-val">100%</div><div class="stat-lbl">Gabonais</div></div>
       </div>
@@ -758,7 +761,7 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
                 </div>
                 <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:1px solid var(--cream2)">
                   <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#phone"/></svg></div>
-                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt)">Airtel</div><div style="font-size:.38rem;color:var(--txt3)">hier</div></div>
+                  <div style="flex:1;min-width:0"><div style="font-size:.42rem;font-weight:700;color:var(--txt)">Crédit</div><div style="font-size:.38rem;color:var(--txt3)">hier</div></div>
                   <div style="font-size:.44rem;font-weight:800;color:#dc2626">-5K</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:5px;padding:5px 0">
@@ -899,7 +902,7 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
               </div>
               <div style="display:flex;align-items:center;gap:8px;padding:7px 0">
                 <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#smartphone"/></svg></div>
-                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Airtel Money</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">Recharge · hier</div></div>
+                <div style="flex:1"><div style="font-size:.56rem;font-weight:700;color:var(--txt)">Crédit tél.</div><div style="font-size:.46rem;color:var(--txt3);font-family:var(--fm)">Recharge · hier</div></div>
                 <div style="font-size:.6rem;font-weight:800;color:#dc2626">-2 000</div>
               </div>
             </div>
@@ -943,14 +946,14 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
       </div></div>
       <div class="feat rev d1">
         <div class="feat-ic" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.18)"><svg style="stroke:#06b6d4" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#wifi"/></svg></div><div class="feat-content">
-        <h3>Transfert Mobile Money</h3>
-        <p>Envoie vers Airtel Money ou Moov Money — et reçois-en aussi, dans les deux sens. Instantané, plafond 500 000 FCFA.</p>
-        <span class="feat-pill" style="background:rgba(6,182,212,.1);color:#06b6d4;border:1px solid rgba(6,182,212,.18)">Airtel · Moov · 2%</span>
+        <h3>Factures &amp; abonnements</h3>
+        <p>Règle tes factures et tes abonnements depuis l'app, sans file d'attente ni déplacement. L'historique reste dans ton compte.</p>
+        <span class="feat-pill" style="background:rgba(6,182,212,.1);color:#06b6d4;border:1px solid rgba(6,182,212,.18)">Sans file d'attente</span>
       </div></div>
       <div class="feat rev d2">
         <div class="feat-ic" style="background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.16)"><svg style="stroke:#dc2626" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><use href="#smartphone"/></svg></div><div class="feat-content">
         <h3>Recharge crédit & data</h3>
-        <p>Airtel, Moov — recharge ton crédit et ton internet directement depuis l'app en quelques secondes.</p>
+        <p>Recharge ton crédit d'appel et ton forfait internet directement depuis l'app, en quelques secondes.</p>
         <span class="feat-pill" style="background:rgba(220,38,38,.08);color:#dc2626;border:1px solid rgba(220,38,38,.16)">Instantané</span>
       </div></div>
       <div class="feat rev d3">
@@ -1253,7 +1256,7 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
                     </div>
                     <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--cream2)">
                       <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#f59e0b);flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><use href="#smartphone"/></svg></div>
-                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Airtel Money</div><div style="font-size:.38rem;color:var(--txt3)">Recharge · hier</div></div>
+                      <div style="flex:1"><div style="font-size:.44rem;font-weight:700;color:var(--txt)">Crédit tél.</div><div style="font-size:.38rem;color:var(--txt3)">Recharge · hier</div></div>
                       <div style="font-size:.46rem;font-weight:800;color:#dc2626">-2K</div>
                     </div>
                     <div style="display:flex;align-items:center;gap:7px;padding:6px 0">
@@ -1368,7 +1371,7 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
     <div class="rev">
       <div class="eyebrow">05 — Comparer</div>
       <h2 class="sec-title">La vérité<br/><em>sans filtre</em></h2>
-      <p class="sec-sub">Voilà pourquoi les Gabonais choisissent GhettoPay plutôt que les autres services.</p>
+      <p class="sec-sub">Airtel Money et Moov Money sont les deux services les plus utilisés au Gabon. Voilà, point par point, ce que GhettoPay fait autrement.</p>
     </div>
     <div class="ctable-wrap rev d2">
       <div class="ctable">
@@ -1384,12 +1387,12 @@ footer{background:var(--ink);padding:2.2rem 5%;border-top:1px solid rgba(255,255
       <div class="crow"><div class="crow-feat">Tontine digitale<small>Collecte communautaire</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
       <div class="crow"><div class="crow-feat">Budget & analyses<small>Catégories automatiques</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
       <div class="crow"><div class="crow-feat">EbiLling · QR & lien<small>Reçois par QR ou lien partagé</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
-      <div class="crow"><div class="crow-feat">Interop. Airtel/Moov<small>Transferts cross-réseau</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
       <div class="crow"><div class="crow-feat">Codes USSD<small>*127#...</small></div><div class="cv us">Jamais</div><div class="cv no">Toujours</div><div class="cv no">Toujours</div></div>
       <div class="crow"><div class="crow-feat">Cashback partenaires<small>Argent qui revient</small></div><div class="cv yes"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><use href="#chk"/></svg>Oui</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div><div class="cv no"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cream3)" stroke-width="2.5"><use href="#xcross"/></svg>Non</div></div>
       <div class="crow"><div class="crow-feat">Design & expérience<small>Interface moderne</small></div><div class="cv us">Premium</div><div class="cv no">Basique</div><div class="cv no">Basique</div></div>
     </div>
 <p class="ctable-hint">← Glisse pour voir tout le tableau →</p>
+<p class="ctable-note">Airtel Money et Moov Money sont cités ici à titre de comparaison concurrentielle. GhettoPay n'est ni affilié à ces services, ni partenaire de leurs opérateurs.</p>
 </div>
   </div>
 </section>
