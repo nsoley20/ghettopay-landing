@@ -135,14 +135,18 @@ nav{position:fixed;inset:0 0 auto;z-index:60;backdrop-filter:blur(14px);
 /* ── Héros ───────────────────────────────────────────────────────────── */
 .hero{position:relative;padding:clamp(8rem,14vh,11rem) 0 clamp(3rem,7vw,6rem);
       overflow:hidden;
-      background:radial-gradient(120% 130% at 76% 6%,var(--forest2) 0%,
-                 var(--forest) 22%,var(--nuit2) 58%,var(--nuit) 100%)}
+      background:
+        radial-gradient(45rem 42rem at 78% 48%,rgba(35,126,75,.42),transparent 68%),
+        radial-gradient(32rem 28rem at 18% 14%,rgba(15,92,56,.52),transparent 72%),
+        linear-gradient(118deg,#04140A 0%,#062817 45%,#0A4A2E 100%)}
 /* Trame diagonale reprise de l'écran d'authentification de l'app */
-.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;
-  background:repeating-linear-gradient(-38deg,rgba(250,247,240,.03) 0 1px,transparent 1px 26px)}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.18;
+  background:
+    linear-gradient(115deg,transparent 0 35%,rgba(245,212,104,.12) 50%,transparent 66%),
+    repeating-linear-gradient(-38deg,rgba(250,247,240,.025) 0 1px,transparent 1px 34px)}
 /* Arcs de canopée */
 .canopy{position:absolute;border:1px solid rgba(240,192,64,.09);border-radius:50%;
-        pointer-events:none}
+        pointer-events:none;opacity:.42;filter:blur(.2px)}
 .hero-in{position:relative;z-index:2;display:grid;gap:clamp(2.5rem,6vw,4rem);
          grid-template-columns:minmax(0,1fr) minmax(0,26rem);align-items:center}
 @media(max-width:940px){.hero-in{grid-template-columns:1fr}}
@@ -379,7 +383,9 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 .nav-links a{transition:color .2s}
 .hero{isolation:isolate}
 .hero::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(ellipse at 78% 54%,rgba(240,192,64,.12),transparent 23rem)}
+  background:
+    radial-gradient(ellipse at 78% 54%,rgba(240,192,64,.16),transparent 22rem),
+    linear-gradient(90deg,rgba(4,20,10,.12),transparent 48%,rgba(4,20,10,.08))}
 .hero-phone .hero-device{transform:rotate(2deg);transition:transform .45s ease,box-shadow .45s ease}
 .hero-phone:hover .hero-device{transform:rotate(0) translateY(-8px);
   box-shadow:0 55px 90px -34px rgba(0,0,0,.95),0 0 0 1px rgba(245,212,104,.28)}
