@@ -184,7 +184,29 @@ nav{position:fixed;inset:0 0 auto;z-index:60;backdrop-filter:blur(14px);
 .phone::after{content:'';position:absolute;top:.9rem;left:50%;translate:-50% 0;
               width:26%;height:1.05rem;border-radius:100px;background:#080c09;
               box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-.hero-phone{position:relative;justify-self:center;width:min(100%,20.5rem)}
+.hero-device{width:min(100%,21.5rem);padding:.72rem;border-radius:3rem;
+  background:linear-gradient(125deg,#68736b 0%,#1d2922 9%,#080d0a 48%,#344139 100%);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.42),inset 0 -2px 3px rgba(0,0,0,.7),
+    0 3rem 5rem -2rem rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.17);
+  isolation:isolate}
+.hero-device::before{content:'';position:absolute;inset:.25rem;border-radius:2.8rem;
+  border:1px solid rgba(255,255,255,.16);pointer-events:none;z-index:3}
+.hero-device::after{content:'';position:absolute;top:4.8rem;right:-.28rem;width:.22rem;height:4.3rem;
+  border-radius:0 .2rem .2rem 0;background:linear-gradient(#303b34,#0b110e 45%,#303b34);
+  box-shadow:0 5.1rem 0 #1a241e;z-index:2}
+.hero-device .screen{position:relative;overflow:hidden;border-radius:2.35rem;
+  background:#101712;box-shadow:inset 0 0 0 1px rgba(255,255,255,.11),
+    inset 0 0 1.1rem rgba(0,0,0,.8)}
+.hero-device .screen::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,.2),transparent 18%,transparent 58%,rgba(255,255,255,.04));
+  mix-blend-mode:screen}
+.hero-device .screen img{border-radius:2.35rem}
+.hero-device .dynamic-island{position:absolute;top:1.3rem;left:50%;transform:translateX(-50%);
+  width:5.8rem;height:1.45rem;border-radius:1rem;background:#050806;z-index:4;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.08)}
+.hero-device .dynamic-island::after{content:'';position:absolute;right:.72rem;top:.45rem;
+  width:.42rem;height:.42rem;border-radius:50%;background:#172c20;box-shadow:inset 0 0 0 1px #294b35}
+.hero-phone{position:relative;justify-self:center;width:min(100%,22rem)}
 .hero-phone .halo{position:absolute;inset:-16%;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,rgba(245,212,104,.22),transparent 64%)}
 
@@ -358,8 +380,8 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 .hero{isolation:isolate}
 .hero::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse at 78% 54%,rgba(240,192,64,.12),transparent 23rem)}
-.hero-phone .phone{transform:rotate(2deg);transition:transform .45s ease,box-shadow .45s ease}
-.hero-phone:hover .phone{transform:rotate(0) translateY(-8px);
+.hero-phone .hero-device{transform:rotate(2deg);transition:transform .45s ease,box-shadow .45s ease}
+.hero-phone:hover .hero-device{transform:rotate(0) translateY(-8px);
   box-shadow:0 55px 90px -34px rgba(0,0,0,.95),0 0 0 1px rgba(245,212,104,.28)}
 .stats{box-shadow:0 1.5rem 3rem rgba(0,0,0,.12)}
 .hero-proof{display:flex;flex-wrap:wrap;gap:.6rem 1rem;margin-top:1.1rem;color:var(--onDark2);
@@ -502,9 +524,12 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 
     <div class="hero-phone rev in d2">
       <div class="halo"></div>
-      <div class="phone">
-        <img src="screens/bienvenue.webp" width="860" height="1864" fetchpriority="high"
-             alt="Écran d'accueil de GhettoPay : photo de forêt gabonaise, logo torche et boutons « Créer mon compte » et « J'ai déjà un compte »."/>
+      <div class="hero-device">
+        <div class="screen">
+          <div class="dynamic-island" aria-hidden="true"></div>
+          <img src="screens/bienvenue.webp" width="860" height="1864" fetchpriority="high"
+               alt="Écran d'accueil de GhettoPay : photo de forêt gabonaise, logo torche et boutons « Créer mon compte » et « J'ai déjà un compte »."/>
+        </div>
       </div>
     </div>
   </div>
