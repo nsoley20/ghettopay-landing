@@ -330,6 +330,66 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
 .ai-form{display:flex;gap:.4rem;padding:.7rem;border-top:1px solid var(--cream3)}
 .ai-form input{min-width:0;flex:1;border:1px solid var(--cream3);border-radius:.6rem;padding:.6rem;font:inherit}
 .ai-form button{border:0;border-radius:.6rem;padding:0 .75rem;background:var(--gold);color:var(--ink);font-weight:700;cursor:pointer}
+
+/* ── Modern polish ──────────────────────────────────────────────────── */
+body{background:
+  radial-gradient(circle at 8% 18%,rgba(26,107,64,.16),transparent 27rem),
+  radial-gradient(circle at 92% 52%,rgba(212,160,23,.08),transparent 24rem),
+  var(--nuit)}
+nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
+.nav-in{min-height:4.7rem}
+.brand{font-size:1.4rem}
+.brand img{box-shadow:0 0 0 .25rem rgba(240,192,64,.08),0 .6rem 1.5rem rgba(0,0,0,.22)}
+.nav-links a{transition:color .2s}
+.hero{isolation:isolate}
+.hero::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 78% 54%,rgba(240,192,64,.12),transparent 23rem)}
+.hero-phone .phone{transform:rotate(2deg);transition:transform .45s ease,box-shadow .45s ease}
+.hero-phone:hover .phone{transform:rotate(0) translateY(-8px);
+  box-shadow:0 55px 90px -34px rgba(0,0,0,.95),0 0 0 1px rgba(245,212,104,.28)}
+.stats{box-shadow:0 1.5rem 3rem rgba(0,0,0,.12)}
+.stat{transition:background .2s,transform .2s}
+.stat:hover{background:rgba(15,92,56,.55);transform:translateY(-2px)}
+.light{background:linear-gradient(180deg,var(--cream),#f4efe5)}
+.feat{position:relative}
+.feat::after{content:'';position:absolute;left:1.7rem;right:1.7rem;bottom:0;height:2px;
+  transform:scaleX(0);transform-origin:left;background:var(--gold);transition:transform .3s}
+.feat:hover::after{transform:scaleX(1)}
+.card .phone,.duo .phone,.step .phone{transition:transform .35s ease,box-shadow .35s ease}
+.card:hover .phone,.step:hover .phone,.duo .phone:hover{transform:translateY(-7px) rotate(-1deg);
+  box-shadow:0 35px 60px -28px rgba(0,0,0,.8),0 0 0 1px rgba(240,192,64,.22)}
+.ai-fab{display:flex;align-items:center;gap:.55rem;padding:.8rem 1.15rem;
+  background:linear-gradient(135deg,var(--gold3),var(--gold2));font-size:.75rem;
+  box-shadow:0 .8rem 2rem rgba(0,0,0,.28),0 0 0 .3rem rgba(240,192,64,.08);
+  transition:transform .2s,box-shadow .2s}
+.ai-fab::before{content:'✦';font-size:1rem}
+.ai-fab:hover{transform:translateY(-3px);box-shadow:0 1rem 2.5rem rgba(0,0,0,.35),0 0 0 .45rem rgba(240,192,64,.12)}
+.ai-panel{border-radius:1.25rem;background:rgba(250,247,240,.96);backdrop-filter:blur(18px);
+  box-shadow:0 1.5rem 5rem rgba(0,0,0,.42),0 0 0 1px rgba(255,255,255,.3)}
+.ai-head{padding:1rem 1.05rem;background:linear-gradient(135deg,var(--forest),var(--forest2))}
+.ai-head::before{content:'●';margin-right:.45rem;color:#59e58b;font-size:.65rem}
+.ai-msgs{height:19rem;padding:1.05rem;background:linear-gradient(180deg,#fffdf8,var(--cream))}
+.ai-msg{box-shadow:0 3px 12px rgba(11,31,19,.06)}
+.ai-msg.bot{border:1px solid rgba(10,74,46,.08)}
+.ai-msg.user{background:linear-gradient(135deg,var(--forest),var(--forest2))}
+.ai-form{padding:.8rem;background:#fffdf8}
+.ai-form input{background:#fff;border-color:#dcd4c5;outline:none}
+.ai-form input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,160,23,.12)}
+.ai-form button{padding:0 1rem;background:linear-gradient(135deg,var(--gold3),var(--gold2));
+  transition:transform .2s,box-shadow .2s}
+.ai-form button:hover{transform:translateY(-1px);box-shadow:0 .4rem 1rem rgba(212,160,23,.28)}
+.ai-quick{border:1px solid rgba(10,74,46,.16);border-radius:999px;padding:.35rem .58rem;
+  background:rgba(10,74,46,.05);color:var(--forest);font:500 .64rem var(--f);cursor:pointer;
+  transition:background .2s,border-color .2s}
+.ai-quick:hover{background:rgba(10,74,46,.12);border-color:rgba(10,74,46,.28)}
+@media(max-width:640px){
+  .nav-in{padding-block:.65rem}
+  nav .btn{padding:.58rem .85rem!important;font-size:.72rem!important}
+  .hero{padding-top:7.6rem}
+  .hero-phone{max-width:17rem}
+  .ai-fab{right:.85rem;bottom:.85rem}
+  .ai-panel{right:.85rem;bottom:4.45rem}
+}
 </style>
 </head>
 <body>
@@ -676,8 +736,13 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
 
 <button class="ai-fab" id="ai-fab" type="button" aria-expanded="false">Assistant GhettoPay</button>
 <section class="ai-panel" id="ai-panel" aria-label="Assistant GhettoPay">
-  <div class="ai-head"><span>Assistant GhettoPay</span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
+  <div class="ai-head"><span>Assistant GhettoPay<small style="display:block;opacity:.62;font-size:.62rem;font-weight:400;margin-top:.12rem">Réponse rapide · français</small></span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
   <div class="ai-msgs" id="ai-msgs" aria-live="polite"></div>
+  <div style="display:flex;gap:.35rem;flex-wrap:wrap;padding:0 1rem .65rem;background:var(--cream)">
+    <button type="button" class="ai-quick" data-q="Quels sont les frais ?">Frais</button>
+    <button type="button" class="ai-quick" data-q="C’est quoi le Coffre ?">Coffre</button>
+    <button type="button" class="ai-quick" data-q="Comment fonctionne une tontine ?">Tontine</button>
+  </div>
   <form class="ai-form" id="ai-form">
     <input id="ai-input" maxlength="500" autocomplete="off" placeholder="Une question sur GhettoPay…"/>
     <button type="submit">Envoyer</button>
@@ -748,6 +813,12 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
   }
   fab.addEventListener('click', function () { toggleAi(); });
   document.getElementById('ai-close').addEventListener('click', function () { toggleAi(false); });
+  document.querySelectorAll('.ai-quick').forEach(function (button) {
+    button.addEventListener('click', function () {
+      input.value = button.dataset.q || '';
+      document.getElementById('ai-form').requestSubmit();
+    });
+  });
   document.getElementById('ai-form').addEventListener('submit', async function (e) {
     e.preventDefault(); var text = input.value.trim(); if (!text) return;
     input.value = ''; addMsg('user', text); history.push({ role: 'user', content: text });
