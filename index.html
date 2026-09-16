@@ -162,6 +162,10 @@ nav{position:fixed;inset:0 0 auto;z-index:60;backdrop-filter:blur(14px);
          line-height:.98;font-size:clamp(2.9rem,7.4vw,5.4rem)}
 .hero h1 em{font-style:italic;font-weight:900}
 .hero h1 .g{color:var(--gold2)}
+.hero-note{display:flex;align-items:center;gap:.5rem;margin-top:1rem;color:var(--onDark2);
+  font-size:.78rem;font-weight:400}
+.hero-note::before{content:'';width:.45rem;height:.45rem;border-radius:50%;background:var(--gold2);
+  box-shadow:0 0 0 .25rem rgba(240,192,64,.12)}
 .hero-btns{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2.4rem}
 /* Sous 520 px les deux boutons ne tiennent plus côte à côte : plutôt que de
    les laisser s'empiler en escalier, on les met à la même largeur. */
@@ -276,8 +280,9 @@ section{padding:clamp(4.5rem,10vw,8rem) 0;position:relative}
        gap:1px;background:rgba(11,31,19,.1);border:1px solid rgba(11,31,19,.1);
        border-radius:1.2rem;overflow:hidden}
 .feat{background:var(--cream);padding:2rem 1.7rem 2.1rem;
-      transition:background-color .25s}
+      transition:background-color .25s,transform .3s ease,box-shadow .3s ease}
 .feat:hover{background:var(--cream2)}
+.feat:hover{transform:translateY(-4px);box-shadow:0 1rem 2rem rgba(11,31,19,.08);z-index:1}
 .feat .ic{width:2.6rem;height:2.6rem;border-radius:.85rem;display:grid;
           place-items:center;background:rgba(10,74,46,.09);
           border:1px solid rgba(10,74,46,.14);margin-bottom:1.15rem}
@@ -335,6 +340,8 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
 .foot{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;
       justify-content:space-between}
 .foot p{font-size:.82rem;color:var(--onDark2);font-weight:300}
+.foot p a{color:var(--gold2);transition:color .2s}
+.foot p a:hover{color:var(--cream)}
 .foot nav{position:static;background:none;border:0;backdrop-filter:none;
           display:flex;gap:1.4rem;font-size:.85rem;color:var(--onDark)}
 
@@ -437,9 +444,18 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
   nav .btn{padding:.58rem .85rem!important;font-size:.72rem!important}
   .hero{padding-top:7.6rem}
   .hero-phone{max-width:17rem}
+  .hero-in{gap:2rem}
+  .hero h1{font-size:clamp(2.65rem,14vw,4.1rem)}
+  section{padding-block:4rem}
+  .feat{padding:1.5rem 1.25rem 1.65rem}
+  .hero-note{font-size:.7rem}
   .ai-fab{right:.85rem;bottom:.85rem}
   .ai-panel{right:.85rem;bottom:4.45rem}
   .hero-proof{gap:.5rem .8rem}
+}
+@media(min-width:861px){
+  .feats .feat:nth-child(3n+2){transform:translateY(1.2rem)}
+  .feats .feat:nth-child(3n+2):hover{transform:translateY(.8rem)}
 }
 </style>
 </head>
@@ -481,7 +497,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
       <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
     <a class="btn btn-gold" href="https://ghettopay.com/" style="padding:.62rem 1.25rem;font-size:.87rem">
-      Ouvrir l&rsquo;app<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+      D&eacute;couvrir l&rsquo;app<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
     </a>
     <div class="mobile-nav" id="mobile-nav">
       <a href="#ouvrir">Ouvrir un compte</a>
@@ -500,7 +516,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 
   <div class="wrap hero-in">
     <div>
-      <span class="badge rev in"><i></i>Estuaire &middot; Gabon &middot; Bient&ocirc;t</span>
+      <span class="badge rev in"><i></i>Lancement prochain &middot; Estuaire &middot; Gabon</span>
       <h1 class="rev in">
         Ton argent,<br/>
         <em>libre comme</em><br/>
@@ -508,21 +524,22 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
       </h1>
       <p class="lede rev in d1">
         Envoie, re&ccedil;ois, &eacute;pargne, cotise. GhettoPay r&eacute;unit ton portefeuille,
-        ton coffre et tes tontines dans une seule application gabonaise &mdash;
-        sans code USSD, sans agence, sans dossier &agrave; monter.
+        ton coffre, ton budget et tes tontines dans une seule application gabonaise.
+        Une exp&eacute;rience simple, claire et pens&eacute;e pour ton quotidien.
       </p>
       <div class="hero-btns rev in d2">
         <a class="btn btn-gold" href="https://ghettopay.com/">
-          Ouvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+          D&eacute;couvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
         </a>
         <a class="btn btn-ghost" href="#ecrans">Voir les &eacute;crans</a>
       </div>
       <div class="stats rev in d3">
         <div class="stat"><b>1,5&thinsp;%</b><span>Frais P2P</span></div>
         <div class="stat"><b>3</b><span>&Eacute;tapes</span></div>
-        <div class="stat"><b>24/7</b><span>Disponible</span></div>
+        <div class="stat"><b>8+</b><span>Outils utiles</span></div>
         <div class="stat"><b>100&thinsp;%</b><span>Gabonais</span></div>
       </div>
+      <p class="hero-note rev in d3">Ouverture prochaine &middot; suis l&rsquo;aventure GhettoPay</p>
       <div class="hero-proof rev in d3">
         <span>Code email</span><span>PIN personnel</span><span>Frais affichés avant validation</span>
       </div>
@@ -781,7 +798,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
       </p>
       <div class="hero-btns">
         <a class="btn btn-gold" href="https://ghettopay.com/">
-          Ouvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+          D&eacute;couvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
         </a>
       </div>
     </div>
@@ -796,7 +813,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
       <a href="https://ghettopay.com/privacy.html">Confidentialit&eacute;</a>
       <a href="#comparer">Comparer</a>
     </nav>
-    <p>Libreville, Estuaire &middot; Gabon</p>
+    <p>Libreville, Estuaire &middot; Gabon &middot; <a href="mailto:ghettopaygab@gmail.com">ghettopaygab@gmail.com</a></p>
   </div>
 </footer>
 
