@@ -365,16 +365,17 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
   border:1px solid rgba(240,192,64,.45);border-radius:999px;padding:.8rem 1rem;
   background:var(--gold);color:var(--ink);font:600 .78rem var(--f);cursor:pointer;
   box-shadow:0 12px 32px rgba(0,0,0,.3)}
-.ai-panel{position:fixed;right:1.25rem;bottom:4.9rem;z-index:20;width:min(22rem,calc(100vw - 2rem));
-  display:none;overflow:hidden;border:1px solid rgba(240,192,64,.35);border-radius:1rem;
+.ai-panel{position:fixed;right:1.25rem;bottom:4.9rem;z-index:20;width:min(24rem,calc(100vw - 2rem));
+  height:min(34rem,calc(100dvh - 7rem));display:none;flex-direction:column;overflow:hidden;
+  border:1px solid rgba(240,192,64,.35);border-radius:1.25rem;
   background:var(--cream);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.ai-panel.on{display:block}.ai-head{display:flex;align-items:center;justify-content:space-between;
-  padding:.9rem 1rem;background:var(--forest);color:var(--cream);font-size:.8rem;font-weight:600}
+.ai-panel.on{display:flex}.ai-head{display:flex;align-items:center;justify-content:space-between;
+  flex:none;padding:.9rem 1rem;background:var(--forest);color:var(--cream);font-size:.8rem;font-weight:600}
 .ai-close{border:0;background:none;color:inherit;font-size:1.1rem;cursor:pointer}
-.ai-msgs{height:17rem;overflow:auto;padding:1rem;font-size:.78rem}
+.ai-msgs{flex:1;min-height:0;overflow:auto;padding:1rem;font-size:.78rem}
 .ai-msg{max-width:88%;margin:.45rem 0;padding:.6rem .7rem;border-radius:.8rem;line-height:1.45}
 .ai-msg.bot{background:var(--cream2)}.ai-msg.user{margin-left:auto;background:var(--forest);color:var(--cream)}
-.ai-form{display:flex;gap:.4rem;padding:.7rem;border-top:1px solid var(--cream3)}
+.ai-form{display:flex;flex:none;gap:.4rem;padding:.7rem;border-top:1px solid var(--cream3)}
 .ai-form input{min-width:0;flex:1;border:1px solid var(--cream3);border-radius:.6rem;padding:.6rem;font:inherit}
 .ai-form button{border:0;border-radius:.6rem;padding:0 .75rem;background:var(--gold);color:var(--ink);font-weight:700;cursor:pointer}
 
@@ -435,6 +436,8 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
   background:rgba(10,74,46,.05);color:var(--forest);font:500 .64rem var(--f);cursor:pointer;
   transition:background .2s,border-color .2s}
 .ai-quick:hover{background:rgba(10,74,46,.12);border-color:rgba(10,74,46,.28)}
+.ai-quicks{display:flex;flex:none;gap:.4rem;flex-wrap:wrap;padding:.7rem 1rem .65rem;
+  background:var(--cream);border-top:1px solid rgba(11,31,19,.05)}
 .ai-status{display:flex;align-items:center;gap:.4rem;margin-top:.35rem;color:var(--onDark2);
   font:500 .62rem var(--fm);letter-spacing:.04em}
 .ai-status::before{content:'';width:.42rem;height:.42rem;border-radius:50%;background:#59e58b;
@@ -450,8 +453,15 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
   .feat{padding:1.5rem 1.25rem 1.65rem}
   .hero-note{font-size:.7rem}
   .ai-fab{right:.85rem;bottom:.85rem}
-  .ai-panel{right:.85rem;bottom:4.45rem}
+  .ai-panel{right:.85rem;bottom:4.45rem;width:min(25rem,calc(100vw - 1.7rem));
+    height:min(31rem,calc(100dvh - 6.2rem));border-radius:1.15rem}
   .hero-proof{gap:.5rem .8rem}
+}
+@media(max-height:620px){
+  .ai-panel{height:calc(100dvh - 5.6rem)}
+  .ai-msgs{padding:.75rem}
+  .ai-quicks{padding:.5rem .75rem}
+  .ai-form{padding:.55rem .65rem}
 }
 @media(min-width:861px){
   .feats .feat:nth-child(3n+2){transform:translateY(1.2rem)}
@@ -821,7 +831,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 <section class="ai-panel" id="ai-panel" aria-label="Assistant GhettoPay">
   <div class="ai-head"><span>Assistant GhettoPay<small style="display:block;opacity:.62;font-size:.62rem;font-weight:400;margin-top:.12rem">Réponse rapide · français</small><span class="ai-status">En ligne</span></span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
   <div class="ai-msgs" id="ai-msgs" aria-live="polite"></div>
-  <div style="display:flex;gap:.35rem;flex-wrap:wrap;padding:0 1rem .65rem;background:var(--cream)">
+  <div class="ai-quicks">
     <button type="button" class="ai-quick" data-q="Quels sont les frais ?">Frais</button>
     <button type="button" class="ai-quick" data-q="C’est quoi le Coffre ?">Coffre</button>
     <button type="button" class="ai-quick" data-q="Comment fonctionne une tontine ?">Tontine</button>
