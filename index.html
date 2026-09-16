@@ -313,6 +313,23 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
   .btn:hover{transform:none}
   *{animation-duration:.001ms!important;transition-duration:.001ms!important}
 }
+
+.ai-fab{position:fixed;right:1.25rem;bottom:1.25rem;z-index:20;
+  border:1px solid rgba(240,192,64,.45);border-radius:999px;padding:.8rem 1rem;
+  background:var(--gold);color:var(--ink);font:600 .78rem var(--f);cursor:pointer;
+  box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.ai-panel{position:fixed;right:1.25rem;bottom:4.9rem;z-index:20;width:min(22rem,calc(100vw - 2rem));
+  display:none;overflow:hidden;border:1px solid rgba(240,192,64,.35);border-radius:1rem;
+  background:var(--cream);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.ai-panel.on{display:block}.ai-head{display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1rem;background:var(--forest);color:var(--cream);font-size:.8rem;font-weight:600}
+.ai-close{border:0;background:none;color:inherit;font-size:1.1rem;cursor:pointer}
+.ai-msgs{height:17rem;overflow:auto;padding:1rem;font-size:.78rem}
+.ai-msg{max-width:88%;margin:.45rem 0;padding:.6rem .7rem;border-radius:.8rem;line-height:1.45}
+.ai-msg.bot{background:var(--cream2)}.ai-msg.user{margin-left:auto;background:var(--forest);color:var(--cream)}
+.ai-form{display:flex;gap:.4rem;padding:.7rem;border-top:1px solid var(--cream3)}
+.ai-form input{min-width:0;flex:1;border:1px solid var(--cream3);border-radius:.6rem;padding:.6rem;font:inherit}
+.ai-form button{border:0;border-radius:.6rem;padding:0 .75rem;background:var(--gold);color:var(--ink);font-weight:700;cursor:pointer}
 </style>
 </head>
 <body>
@@ -657,6 +674,16 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
   </div>
 </footer>
 
+<button class="ai-fab" id="ai-fab" type="button" aria-expanded="false">Assistant GhettoPay</button>
+<section class="ai-panel" id="ai-panel" aria-label="Assistant GhettoPay">
+  <div class="ai-head"><span>Assistant GhettoPay</span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
+  <div class="ai-msgs" id="ai-msgs" aria-live="polite"></div>
+  <form class="ai-form" id="ai-form">
+    <input id="ai-input" maxlength="500" autocomplete="off" placeholder="Une question sur GhettoPay…"/>
+    <button type="submit">Envoyer</button>
+  </form>
+</section>
+
 <script>
 (function () {
   'use strict';
@@ -696,6 +723,51 @@ footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  var panel = document.getElementById('ai-panel');
+  var fab = document.getElementById('ai-fab');
+  var msgs = document.getElementById('ai-msgs');
+  var input = document.getElementById('ai-input');
+  var history = [];
+  var faq = [
+    [/frais|commission|co[uû]t/i, 'Les frais sont de 1,5 % sur les transferts, QR et factures, et 2 % sur les retraits Airtel ou Moov.'],
+    [/tontine/i, 'Une tontine permet de cotiser à tour de rôle entre proches. Chaque cycle verse la cagnotte à un membre.'],
+    [/coffre|[eé]pargne/i, 'Le Coffre met une partie de ton solde de côté pour un objectif d’épargne.'],
+    [/pin|code secret/i, 'Ne partage jamais ton PIN. Dans l’application, utilise « PIN oublié ? » pour le réinitialiser.'],
+    [/inscri|compte|connect/i, 'Télécharge ou ouvre l’application, puis inscris-toi avec ton email et ton PIN.']
+  ];
+  function addMsg(who, text) {
+    var el = document.createElement('div'); el.className = 'ai-msg ' + who;
+    el.textContent = text; msgs.appendChild(el); msgs.scrollTop = msgs.scrollHeight;
+  }
+  function toggleAi(open) {
+    var on = open == null ? !panel.classList.contains('on') : open;
+    panel.classList.toggle('on', on); fab.setAttribute('aria-expanded', String(on));
+    if (on && !msgs.childElementCount) addMsg('bot', 'Bonjour 👋 Je peux répondre à tes questions sur GhettoPay.');
+    if (on) input.focus();
+  }
+  fab.addEventListener('click', function () { toggleAi(); });
+  document.getElementById('ai-close').addEventListener('click', function () { toggleAi(false); });
+  document.getElementById('ai-form').addEventListener('submit', async function (e) {
+    e.preventDefault(); var text = input.value.trim(); if (!text) return;
+    input.value = ''; addMsg('user', text); history.push({ role: 'user', content: text });
+    var local = faq.find(function (x) { return x[0].test(text); });
+    if (local) { addMsg('bot', local[1]); history.push({ role: 'assistant', content: local[1] }); return; }
+    addMsg('bot', 'Je réfléchis…');
+    try {
+      var res = await fetch('https://qzazkxlamuylurhjquzu.supabase.co/functions/v1/support-ai', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history.slice(-8) })
+      });
+      var data = await res.json();
+      msgs.lastElementChild.remove();
+      var reply = data.reply || 'Je ne peux pas répondre pour le moment. Essaie une question sur les frais, le coffre ou les tontines.';
+      addMsg('bot', reply); history.push({ role: 'assistant', content: reply });
+    } catch (_) {
+      msgs.lastElementChild.remove();
+      addMsg('bot', 'L’assistant est momentanément indisponible. Réessaie dans un instant.');
+    }
+  });
 })();
 </script>
 </body>
