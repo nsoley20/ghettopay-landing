@@ -116,7 +116,21 @@ nav{position:fixed;inset:0 0 auto;z-index:60;backdrop-filter:blur(14px);
                     background:var(--gold2);transition:right .3s}
 .nav-links a:hover{color:var(--cream)}
 .nav-links a:hover::after{right:0}
-@media(max-width:900px){.nav-links{display:none}}
+.nav-toggle{display:none;border:1px solid rgba(250,247,240,.2);background:rgba(250,247,240,.06);
+  color:var(--cream);width:2.55rem;height:2.55rem;border-radius:.75rem;cursor:pointer}
+.nav-toggle svg{width:1.1rem;height:1.1rem}
+.mobile-nav{display:none}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-toggle{display:grid;place-items:center;margin-left:auto}
+  .nav-in>.btn{margin-left:0}
+  .mobile-nav{position:absolute;top:calc(100% + .5rem);left:var(--pad);right:var(--pad);
+    padding:.5rem;border:1px solid rgba(250,247,240,.14);border-radius:1rem;
+    background:rgba(4,20,10,.96);box-shadow:0 1rem 3rem rgba(0,0,0,.3)}
+  .mobile-nav.on{display:grid}
+  .mobile-nav a{padding:.8rem 1rem;border-radius:.65rem;color:var(--onDark);font-size:.86rem}
+  .mobile-nav a:hover{background:rgba(250,247,240,.08);color:var(--cream)}
+}
 
 /* ── Héros ───────────────────────────────────────────────────────────── */
 .hero{position:relative;padding:clamp(8rem,14vh,11rem) 0 clamp(3rem,7vw,6rem);
@@ -348,6 +362,10 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 .hero-phone:hover .phone{transform:rotate(0) translateY(-8px);
   box-shadow:0 55px 90px -34px rgba(0,0,0,.95),0 0 0 1px rgba(245,212,104,.28)}
 .stats{box-shadow:0 1.5rem 3rem rgba(0,0,0,.12)}
+.hero-proof{display:flex;flex-wrap:wrap;gap:.6rem 1rem;margin-top:1.1rem;color:var(--onDark2);
+  font-family:var(--fm);font-size:.64rem;letter-spacing:.04em}
+.hero-proof span{display:inline-flex;align-items:center;gap:.35rem}
+.hero-proof span::before{content:'✓';color:var(--gold2);font-weight:700}
 .stat{transition:background .2s,transform .2s}
 .stat:hover{background:rgba(15,92,56,.55);transform:translateY(-2px)}
 .light{background:linear-gradient(180deg,var(--cream),#f4efe5)}
@@ -382,6 +400,10 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
   background:rgba(10,74,46,.05);color:var(--forest);font:500 .64rem var(--f);cursor:pointer;
   transition:background .2s,border-color .2s}
 .ai-quick:hover{background:rgba(10,74,46,.12);border-color:rgba(10,74,46,.28)}
+.ai-status{display:flex;align-items:center;gap:.4rem;margin-top:.35rem;color:var(--onDark2);
+  font:500 .62rem var(--fm);letter-spacing:.04em}
+.ai-status::before{content:'';width:.42rem;height:.42rem;border-radius:50%;background:#59e58b;
+  box-shadow:0 0 0 3px rgba(89,229,139,.12)}
 @media(max-width:640px){
   .nav-in{padding-block:.65rem}
   nav .btn{padding:.58rem .85rem!important;font-size:.72rem!important}
@@ -389,6 +411,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
   .hero-phone{max-width:17rem}
   .ai-fab{right:.85rem;bottom:.85rem}
   .ai-panel{right:.85rem;bottom:4.45rem}
+  .hero-proof{gap:.5rem .8rem}
 }
 </style>
 </head>
@@ -426,9 +449,18 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
       <a href="#faire">Ce que ça fait</a>
       <a href="#comparer">Comparer</a>
     </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
     <a class="btn btn-gold" href="https://ghettopay.com/" style="padding:.62rem 1.25rem;font-size:.87rem">
       Ouvrir l&rsquo;app<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
     </a>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#ouvrir">Ouvrir un compte</a>
+      <a href="#ecrans">Les écrans</a>
+      <a href="#faire">Ce que ça fait</a>
+      <a href="#comparer">Comparer</a>
+    </div>
   </div>
 </nav>
 
@@ -458,10 +490,13 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
         <a class="btn btn-ghost" href="#ecrans">Voir les &eacute;crans</a>
       </div>
       <div class="stats rev in d3">
-        <div class="stat"><b>0,5&thinsp;%</b><span>Frais P2P</span></div>
+        <div class="stat"><b>1,5&thinsp;%</b><span>Frais P2P</span></div>
         <div class="stat"><b>3</b><span>&Eacute;tapes</span></div>
         <div class="stat"><b>24/7</b><span>Disponible</span></div>
         <div class="stat"><b>100&thinsp;%</b><span>Gabonais</span></div>
+      </div>
+      <div class="hero-proof rev in d3">
+        <span>Code email</span><span>PIN personnel</span><span>Frais affichés avant validation</span>
       </div>
     </div>
 
@@ -686,7 +721,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
           </tr>
         </thead>
         <tbody>
-          <tr><td>Frais de transfert<small>Entre comptes du service</small></td><td class="us">0,5&thinsp;%</td><td class="oth">Plus &eacute;lev&eacute;s</td><td class="oth">Plus &eacute;lev&eacute;s</td></tr>
+          <tr><td>Frais de transfert<small>Entre comptes du service</small></td><td class="us">1,5&thinsp;%</td><td class="oth">Plus &eacute;lev&eacute;s</td><td class="oth">Plus &eacute;lev&eacute;s</td></tr>
           <tr><td>Paiement par QR code<small>Scanner et payer</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
           <tr><td>Coffre d&rsquo;&eacute;pargne bloqu&eacute;<small>Verrouill&eacute; jusqu&rsquo;&agrave; ta date</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
           <tr><td>Tontine digitale<small>Cycles et rotation suivis</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
@@ -736,7 +771,7 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
 
 <button class="ai-fab" id="ai-fab" type="button" aria-expanded="false">Assistant GhettoPay</button>
 <section class="ai-panel" id="ai-panel" aria-label="Assistant GhettoPay">
-  <div class="ai-head"><span>Assistant GhettoPay<small style="display:block;opacity:.62;font-size:.62rem;font-weight:400;margin-top:.12rem">Réponse rapide · français</small></span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
+  <div class="ai-head"><span>Assistant GhettoPay<small style="display:block;opacity:.62;font-size:.62rem;font-weight:400;margin-top:.12rem">Réponse rapide · français</small><span class="ai-status">En ligne</span></span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
   <div class="ai-msgs" id="ai-msgs" aria-live="polite"></div>
   <div style="display:flex;gap:.35rem;flex-wrap:wrap;padding:0 1rem .65rem;background:var(--cream)">
     <button type="button" class="ai-quick" data-q="Quels sont les frais ?">Frais</button>
@@ -788,6 +823,24 @@ nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  var navToggle = document.getElementById('nav-toggle');
+  var mobileNav = document.getElementById('mobile-nav');
+  function closeMobileNav() {
+    mobileNav.classList.remove('on');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+  navToggle.addEventListener('click', function () {
+    var open = !mobileNav.classList.contains('on');
+    mobileNav.classList.toggle('on', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  mobileNav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', closeMobileNav);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMobileNav();
+  });
 
   var panel = document.getElementById('ai-panel');
   var fab = document.getElementById('ai-fab');
