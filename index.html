@@ -2,963 +2,384 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>GhettoPay — Ton argent, libre comme la forêt</title>
-<meta name="description" content="Portefeuille, coffre d'épargne et tontines dans une seule application gabonaise. Envoie et reçois par numéro ou QR code, sans code USSD et sans agence."/>
-<meta name="theme-color" content="#04140A"/>
-<link rel="icon" href="ghettopay-icon.svg"/>
-<meta property="og:title" content="GhettoPay — Ton argent, libre comme la forêt"/>
-<meta property="og:description" content="Portefeuille, coffre et tontines dans une seule application gabonaise."/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>GhettoPay — Portefeuille mobile en FCFA, au Gabon</title>
+<meta name="description" content="GhettoPay est un portefeuille mobile gabonais : recharge depuis Airtel Money ou Moov Money, envoie par numéro ou QR code, épargne dans un coffre, organise tes tontines."/>
+<meta name="theme-color" content="#F5F6F1"/>
+<link rel="icon" href="screens/icon-192.png"/>
+<link rel="apple-touch-icon" href="screens/icon-192.png"/>
+<meta property="og:title" content="GhettoPay — Portefeuille mobile en FCFA"/>
+<meta property="og:description" content="Envoie, reçois, épargne et cotise en FCFA. Airtel Money et Moov Money, depuis Libreville."/>
 <meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.ghettopay.com/landing/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600;1,800;1,900&family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
 <style>
-/* ═══════════════════════════════════════════════════════════════════════
-   GhettoPay — landing
-   Le système visuel est celui de l'application : fond forêt profonde,
-   or comme unique accent lumineux, crème pour les surfaces claires, et
-   un serif italique en titrage. Les captures de la page sont les écrans
-   réels de ghettopay.com, sans retouche.
-   ═══════════════════════════════════════════════════════════════════ */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
+/* ─────────────────────────────────────────────────────────────────────
+   GhettoPay — site de présentation
+   Papier vert-gris, encre forêt, or réservé aux actions. Bricolage
+   Grotesque en titrage, DM Sans en texte, DM Mono pour les montants.
+   Élément signature : les frais présentés comme un reçu Mobile Money.
+   Les captures sont les écrans réels de l'application.
+   ───────────────────────────────────────────────────────────────────── */
 :root{
-  /* Fonds — du plus profond au plus clair */
-  --nuit:    #04140A;
-  --nuit2:   #071E10;
-  --forest:  #0A4A2E;
-  --forest2: #0F5C38;
-  --forest3: #1A6B40;
-  /* Or — l'unique accent */
-  --gold:    #D4A017;
-  --gold2:   #F0C040;
-  --gold3:   #F5D468;
-  /* Crème — surfaces claires et texte sur fond sombre */
-  --cream:   #FAF7F0;
-  --cream2:  #F2EDE3;
-  --cream3:  #E4DDCD;
-  /* Textes. Les gris tirent tous vers le vert : un gris neutre sonne
-     faux à côté de la forêt. */
-  --ink:     #0B1F13;
-  --ink2:    #38493D;
-  --ink3:    #6F7E72;
-  --onDark:  rgba(250,247,240,.72);
-  --onDark2: rgba(250,247,240,.48);
-
-  --f:  'Sora',system-ui,sans-serif;
-  --fd: 'Playfair Display',Georgia,serif;
-  --fm: 'DM Mono',ui-monospace,monospace;
-
-  --pad: clamp(1.25rem,5vw,4.5rem);
-  --max: 78rem;
+  --paper:#F5F6F1; --paper2:#ECEFE8; --card:#FFFFFF;
+  --ink:#0E1A14; --ink2:#46554B; --ink3:#6E7B72;
+  --line:#DCE2DA; --forest:#0A4A2E; --forest2:#0E5A39; --leaf:#1F6B45;
+  --gold:#E3A814; --gold-ink:#3A2A00;
+  --receipt:#FFFDF6; --receipt-ink:#1A1A14;
+  --fd:'Bricolage Grotesque','DM Sans',system-ui,sans-serif;
+  --fb:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --fm:'DM Mono',ui-monospace,'SF Mono',Consolas,monospace;
+  --w:1120px; --g:clamp(1rem,4vw,2rem);
+  color-scheme:light;
 }
-
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0C120F; --paper2:#131B16; --card:#161F1A;
+    --ink:#E8EEE9; --ink2:#AAB7AE; --ink3:#7F8D84;
+    --line:#26322B; --forest:#0F3A26; --forest2:#13472F; --leaf:#7FCB9C;
+    --gold:#F0BC35; --gold-ink:#241A00;
+    --receipt:#F3F0E4; --receipt-ink:#1A1A14;
+    color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--f);background:var(--nuit);color:var(--cream);
-     line-height:1.6;overflow-x:hidden;font-weight:400;
-     -webkit-font-smoothing:antialiased}
-/* height:auto est indispensable : les <img> portent un attribut height pour
-   réserver la place et éviter le décalage de mise en page. Sans lui, cette
-   hauteur intrinsèque tient bon et les captures s'étirent. */
-img{max-width:100%;height:auto;display:block}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2.5px solid var(--gold2);outline-offset:3px;border-radius:6px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--fb);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--w);margin:0 auto;padding-inline:var(--g)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+/* Boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.7rem 1.3rem;border-radius:999px;border:1px solid transparent;font:600 1rem/1 var(--fb);text-decoration:none;cursor:pointer;transition:transform .15s, filter .15s, border-color .15s}
+.btn svg{width:18px;height:18px}
+.btn-gold{background:var(--gold);color:var(--gold-ink)}
+.btn-gold:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn-line{border-color:var(--line);color:var(--ink);background:transparent}
+.btn-line:hover{border-color:var(--ink3)}
 
-/* ── Titrage ─────────────────────────────────────────────────────────── */
-.eyebrow{font-family:var(--fm);font-size:.7rem;letter-spacing:.18em;
-         text-transform:uppercase;color:var(--gold2);display:flex;
-         align-items:center;gap:.7rem;margin-bottom:1.4rem}
-.eyebrow::before{content:'';width:1.9rem;height:1px;background:var(--gold);flex:none}
-.title{font-family:var(--fd);font-weight:800;line-height:1.02;
-       letter-spacing:-.022em;text-wrap:balance;
-       font-size:clamp(2.3rem,5.4vw,4.1rem)}
-.title em{font-style:italic;font-weight:900;color:var(--gold2)}
-.lede{font-size:clamp(1rem,1.5vw,1.12rem);color:var(--onDark);
-      max-width:34rem;margin-top:1.4rem;font-weight:300}
+/* En-tête */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.top.scrolled{border-bottom-color:var(--line)}
+.top .wrap{display:flex;align-items:center;gap:1.5rem;height:64px}
+.brand{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;font:800 1.15rem/1 var(--fd);letter-spacing:-.02em}
+.brand .wm{display:block;height:30px;width:auto}
+footer .brand .wm{height:26px}
+.nav{display:flex;gap:1.6rem;margin-left:auto;font-size:.95rem}
+.nav a{text-decoration:none;color:var(--ink2)}
+.nav a:hover{color:var(--ink)}
+.top .btn{min-height:42px;padding:.55rem 1.05rem;font-size:.92rem}
+@media (max-width:760px){.nav{display:none}.top .btn{margin-left:auto}}
 
-/* Bandes claires : on repasse tous les tons en mode clair d'un coup. */
-.light{background:var(--cream);color:var(--ink)}
-.light .lede{color:var(--ink2)}
-.light .eyebrow{color:var(--gold)}
-.light .title em{color:var(--forest)}
-
-/* ── Boutons ─────────────────────────────────────────────────────────── */
-.btn{display:inline-flex;align-items:center;gap:.6rem;font-weight:600;
-     font-size:.95rem;padding:1rem 1.9rem;border-radius:100px;
-     border:1px solid transparent;transition:transform .22s,box-shadow .22s,
-     background-color .22s,border-color .22s;will-change:transform}
-.btn svg{width:1.05em;height:1.05em;flex:none}
-.btn-gold{background:linear-gradient(140deg,var(--gold3),var(--gold2) 52%,var(--gold));
-          color:#241a00;box-shadow:0 14px 30px -14px rgba(212,160,23,.85)}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 20px 38px -14px rgba(212,160,23,.95)}
-.btn-ghost{border-color:rgba(250,247,240,.26);color:var(--cream)}
-.btn-ghost:hover{border-color:var(--gold2);color:var(--gold2)}
-.light .btn-ghost{border-color:rgba(11,31,19,.2);color:var(--ink)}
-.light .btn-ghost:hover{border-color:var(--forest);color:var(--forest)}
-
-/* ── Navigation ──────────────────────────────────────────────────────── */
-nav{position:fixed;inset:0 0 auto;z-index:60;backdrop-filter:blur(14px);
-    background:rgba(4,20,10,.72);border-bottom:1px solid rgba(250,247,240,.09);
-    transition:background-color .3s}
-.nav-in{max-width:var(--max);margin:0 auto;padding:.85rem var(--pad);
-        display:flex;align-items:center;gap:1.6rem}
-.brand{display:flex;align-items:center;gap:.65rem;font-family:var(--fd);
-       font-style:italic;font-weight:800;font-size:1.28rem;letter-spacing:-.015em}
-.brand img{width:2.1rem;height:2.1rem;border-radius:.6rem;
-           background:linear-gradient(140deg,var(--gold3),var(--gold));padding:.32rem}
-.nav-links{display:flex;gap:1.7rem;margin-left:auto;font-size:.9rem;
-           color:var(--onDark);font-weight:500}
-.nav-links a{position:relative;padding-block:.2rem}
-.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
-                    background:var(--gold2);transition:right .3s}
-.nav-links a:hover{color:var(--cream)}
-.nav-links a:hover::after{right:0}
-.nav-toggle{display:none;border:1px solid rgba(250,247,240,.2);background:rgba(250,247,240,.06);
-  color:var(--cream);width:2.55rem;height:2.55rem;border-radius:.75rem;cursor:pointer}
-.nav-toggle svg{width:1.1rem;height:1.1rem}
-.mobile-nav{display:none}
-@media(max-width:900px){
-  .nav-links{display:none}
-  .nav-toggle{display:grid;place-items:center;margin-left:auto}
-  .nav-in>.btn{margin-left:0}
-  .mobile-nav{position:absolute;top:calc(100% + .5rem);left:var(--pad);right:var(--pad);
-    padding:.5rem;border:1px solid rgba(250,247,240,.14);border-radius:1rem;
-    background:rgba(4,20,10,.96);box-shadow:0 1rem 3rem rgba(0,0,0,.3)}
-  .mobile-nav.on{display:grid}
-  .mobile-nav a{padding:.8rem 1rem;border-radius:.65rem;color:var(--onDark);font-size:.86rem}
-  .mobile-nav a:hover{background:rgba(250,247,240,.08);color:var(--cream)}
+/* Héros */
+.hero{padding-block:clamp(2.5rem,7vw,5.5rem) clamp(3rem,7vw,6rem)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:.55rem;margin:0 0 1.4rem;font:500 .8rem/1 var(--fm);color:var(--ink2);letter-spacing:.02em}
+.kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--leaf)}
+h1{font:800 clamp(2.6rem,7.4vw,5.4rem)/.98 var(--fd);letter-spacing:-.04em;margin:0 0 1.4rem;text-wrap:balance}
+h1 .soft{color:var(--leaf)}
+.lede{font-size:clamp(1.05rem,2.2vw,1.22rem);color:var(--ink2);max-width:46ch;margin:0 0 2rem}
+.ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2.2rem}
+.ops{display:flex;align-items:center;gap:1rem;font-size:.88rem;color:var(--ink3)}
+.ops img{height:26px;width:auto;border-radius:6px}
+.phone{position:relative;width:min(100%,330px);margin-inline:auto;aspect-ratio:640/1385;border-radius:46px;padding:10px;background:#0B110D;box-shadow:0 40px 80px -40px rgba(10,40,25,.45),0 0 0 1px rgba(255,255,255,.06) inset}
+.phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:37px;background:#0A4A2E}
+.hero .phone{transform:rotate(2deg)}
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero .phone{width:min(78%,300px);transform:none}
 }
 
-/* ── Héros ───────────────────────────────────────────────────────────── */
-.hero{position:relative;padding:clamp(8rem,14vh,11rem) 0 clamp(3rem,7vw,6rem);
-      overflow:hidden;
-      background:
-        radial-gradient(45rem 42rem at 78% 48%,rgba(35,126,75,.42),transparent 68%),
-        radial-gradient(32rem 28rem at 18% 14%,rgba(15,92,56,.52),transparent 72%),
-        linear-gradient(118deg,#04140A 0%,#062817 45%,#0A4A2E 100%)}
-/* Trame diagonale reprise de l'écran d'authentification de l'app */
-.hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.18;
-  background:
-    linear-gradient(115deg,transparent 0 35%,rgba(245,212,104,.12) 50%,transparent 66%),
-    repeating-linear-gradient(-38deg,rgba(250,247,240,.025) 0 1px,transparent 1px 34px)}
-/* Arcs de canopée */
-.canopy{position:absolute;border:1px solid rgba(240,192,64,.09);border-radius:50%;
-        pointer-events:none;opacity:.42;filter:blur(.2px)}
-.hero-in{position:relative;z-index:2;display:grid;gap:clamp(2.5rem,6vw,4rem);
-         grid-template-columns:minmax(0,1fr) minmax(0,26rem);align-items:center}
-@media(max-width:940px){.hero-in{grid-template-columns:1fr}}
+/* Titres de section */
+.sec{padding-block:clamp(3.5rem,8vw,6.5rem)}
+.sec-head{max-width:640px;margin-bottom:clamp(2rem,5vw,3.2rem)}
+h2{font:800 clamp(2rem,4.6vw,3.2rem)/1.02 var(--fd);letter-spacing:-.035em;margin:0 0 1rem;text-wrap:balance}
+.sec-head p{color:var(--ink2);margin:0;font-size:1.08rem;max-width:52ch}
 
-.badge{display:inline-flex;align-items:center;gap:.6rem;padding:.42rem 1rem .42rem .5rem;
-       border-radius:100px;border:1px solid rgba(240,192,64,.32);
-       background:rgba(240,192,64,.07);margin-bottom:1.7rem;
-       font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;
-       text-transform:uppercase;color:var(--gold3)}
-.badge i{width:.5rem;height:.5rem;border-radius:50%;background:var(--gold2);
-         box-shadow:0 0 0 4px rgba(240,192,64,.18);flex:none;font-style:normal}
-.hero h1{font-family:var(--fd);font-weight:800;letter-spacing:-.03em;
-         line-height:.98;font-size:clamp(2.9rem,7.4vw,5.4rem)}
-.hero h1 em{font-style:italic;font-weight:900}
-.hero h1 .g{color:var(--gold2)}
-.hero-note{display:flex;align-items:center;gap:.5rem;margin-top:1rem;color:var(--onDark2);
-  font-size:.78rem;font-weight:400}
-.hero-note::before{content:'';width:.45rem;height:.45rem;border-radius:50%;background:var(--gold2);
-  box-shadow:0 0 0 .25rem rgba(240,192,64,.12)}
-.hero-btns{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2.4rem}
-/* Sous 520 px les deux boutons ne tiennent plus côte à côte : plutôt que de
-   les laisser s'empiler en escalier, on les met à la même largeur. */
-@media(max-width:520px){.hero-btns .btn{width:100%;justify-content:center}}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:3rem;
-       background:rgba(250,247,240,.13);border:1px solid rgba(250,247,240,.13);
-       border-radius:1rem;overflow:hidden;max-width:34rem}
-.stat{background:var(--nuit);padding:1.05rem .8rem;text-align:center}
-.stat b{display:block;font-family:var(--fd);font-weight:800;font-size:1.55rem;
-        color:var(--gold2);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.stat span{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;
-           text-transform:uppercase;color:var(--onDark2)}
-@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}}
-
-/* ── Téléphone ───────────────────────────────────────────────────────── */
-.phone{position:relative;border-radius:2.4rem;padding:.55rem;
-       background:linear-gradient(155deg,#26312a,#0b120e 55%,#20292300);
-       background-color:#121814;
-       box-shadow:0 44px 80px -34px rgba(0,0,0,.85),
-                  0 0 0 1px rgba(250,247,240,.09),
-                  inset 0 1px 0 rgba(250,247,240,.14)}
-.phone img{border-radius:1.95rem;width:100%}
-.phone::after{content:'';position:absolute;top:.9rem;left:50%;translate:-50% 0;
-              width:26%;height:1.05rem;border-radius:100px;background:#080c09;
-              box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-.hero-device{width:min(100%,21.5rem);padding:.72rem;border-radius:3rem;
-  background:linear-gradient(125deg,#68736b 0%,#1d2922 9%,#080d0a 48%,#344139 100%);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.42),inset 0 -2px 3px rgba(0,0,0,.7),
-    0 3rem 5rem -2rem rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.17);
-  isolation:isolate}
-.hero-device::before{content:'';position:absolute;inset:.25rem;border-radius:2.8rem;
-  border:1px solid rgba(255,255,255,.16);pointer-events:none;z-index:3}
-.hero-device::after{content:'';position:absolute;top:4.8rem;right:-.28rem;width:.22rem;height:4.3rem;
-  border-radius:0 .2rem .2rem 0;background:linear-gradient(#303b34,#0b110e 45%,#303b34);
-  box-shadow:0 5.1rem 0 #1a241e;z-index:2}
-.hero-device .screen{position:relative;overflow:hidden;border-radius:2.35rem;
-  background:#101712;box-shadow:inset 0 0 0 1px rgba(255,255,255,.11),
-    inset 0 0 1.1rem rgba(0,0,0,.8)}
-.hero-device .screen::after{content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(112deg,rgba(255,255,255,.2),transparent 18%,transparent 58%,rgba(255,255,255,.04));
-  mix-blend-mode:screen}
-.hero-device .screen img{border-radius:2.35rem}
-.hero-device .dynamic-island{position:absolute;top:1.3rem;left:50%;transform:translateX(-50%);
-  width:5.8rem;height:1.45rem;border-radius:1rem;background:#050806;z-index:4;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.08)}
-.hero-device .dynamic-island::after{content:'';position:absolute;right:.72rem;top:.45rem;
-  width:.42rem;height:.42rem;border-radius:50%;background:#172c20;box-shadow:inset 0 0 0 1px #294b35}
-.hero-phone{position:relative;justify-self:center;width:min(100%,22rem)}
-.hero-phone .halo{position:absolute;inset:-16%;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,rgba(245,212,104,.22),transparent 64%)}
-
-/* ── Sections ────────────────────────────────────────────────────────── */
-section{padding:clamp(4.5rem,10vw,8rem) 0;position:relative}
-/* La barre de navigation est fixe : sans cette marge, un lien d'ancre pose le
-   titre de section juste dessous, à moitié caché. */
-[id]{scroll-margin-top:5.5rem}
-.sec-head{max-width:44rem;margin-bottom:clamp(2.6rem,5vw,4rem)}
-
-/* ── Le parcours d'inscription : trois écrans réels ──────────────────── */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,3rem)}
-@media(max-width:860px){.steps{grid-template-columns:1fr;max-width:22rem;margin-inline:auto}}
-.step-num{font-family:var(--fm);font-size:.72rem;letter-spacing:.16em;
-          color:var(--gold);margin-bottom:.9rem}
-.step h3{font-family:var(--fd);font-style:italic;font-weight:800;font-size:1.5rem;
-         letter-spacing:-.015em;margin:1.6rem 0 .5rem;color:var(--forest)}
-.step p{font-size:.95rem;color:var(--ink2);font-weight:300}
-.step .phone{background-color:#0d1410}
-
-/* ── Le rail d'écrans ────────────────────────────────────────────────── */
-.rail-head{display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;
-           justify-content:space-between}
-.rail-nav{display:flex;gap:.6rem}
-.rail-nav button{width:2.9rem;height:2.9rem;border-radius:50%;cursor:pointer;
-                 background:transparent;border:1px solid rgba(250,247,240,.24);
-                 color:var(--cream);display:grid;place-items:center;
-                 transition:background-color .2s,border-color .2s,color .2s}
-.rail-nav button:hover{background:var(--gold2);border-color:var(--gold2);color:#241a00}
-.rail-nav svg{width:1.1rem;height:1.1rem}
-/* Le rail déborde volontairement de la grille, mais sa première carte doit
-   s'aligner sur la colonne de texte : d'où la gouttière calculée plutôt que
-   le simple --pad. Sous 78rem, max() retombe sur --pad. */
-.rail{--gut:max(var(--pad),calc((100% - var(--max)) / 2 + var(--pad)));
-      display:flex;gap:clamp(1rem,2.4vw,1.9rem);overflow-x:auto;
-      scroll-snap-type:x mandatory;scrollbar-width:none;
-      padding:2.6rem var(--gut) 1rem;scroll-padding-inline:var(--gut)}
-.rail::-webkit-scrollbar{display:none}
-.card{flex:0 0 auto;width:min(15.5rem,62vw);scroll-snap-align:center}
-/* Toutes les vignettes du rail tiennent le même gabarit, sinon l'accueil —
-   recadré pour écarter les lignes d'opérateurs — casserait l'alignement des
-   légendes. contain + fond crème : l'écran se pose en haut du cadre. */
-.card .phone{aspect-ratio:640/1387}
-.card .phone img{height:100%;object-fit:contain;object-position:top center;
-                 background:var(--cream)}
-/* Voile bas : dit que l'écran continue hors cadre plutôt que de s'arrêter net. */
-.card .phone::before{content:'';position:absolute;left:.55rem;right:.55rem;bottom:.55rem;
-  height:15%;z-index:2;pointer-events:none;border-radius:0 0 1.95rem 1.95rem;
-  background:linear-gradient(180deg,rgba(4,20,10,0),rgba(4,20,10,.5))}
-/* L'accueil est le seul écran recadré : le vide crème qu'il laisse en bas du
-   cadre a besoin d'un voile plus profond pour se lire comme un fondu voulu. */
-.card-short .phone::before{height:44%;
-  background:linear-gradient(180deg,rgba(4,20,10,0),rgba(4,20,10,.78) 76%)}
-.card figcaption{margin-top:1.1rem}
-.card b{display:block;font-family:var(--fd);font-style:italic;font-weight:800;
-        font-size:1.15rem;margin-bottom:.2rem}
-.card span{font-size:.84rem;color:var(--onDark2);font-weight:300;line-height:1.5}
-.rail-hint{font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;
-           text-transform:uppercase;color:var(--onDark2);margin-top:.6rem}
-
-/* ── Grille de fonctionnalités ───────────────────────────────────────── */
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(16.5rem,1fr));
-       gap:1px;background:rgba(11,31,19,.1);border:1px solid rgba(11,31,19,.1);
-       border-radius:1.2rem;overflow:hidden}
-.feat{background:var(--cream);padding:2rem 1.7rem 2.1rem;
-      transition:background-color .25s,transform .3s ease,box-shadow .3s ease}
-.feat:hover{background:var(--cream2)}
-.feat:hover{transform:translateY(-4px);box-shadow:0 1rem 2rem rgba(11,31,19,.08);z-index:1}
-.feat .ic{width:2.6rem;height:2.6rem;border-radius:.85rem;display:grid;
-          place-items:center;background:rgba(10,74,46,.09);
-          border:1px solid rgba(10,74,46,.14);margin-bottom:1.15rem}
-.feat .ic svg{width:1.15rem;height:1.15rem;stroke:var(--forest)}
-.feat h3{font-size:1.02rem;font-weight:600;margin-bottom:.45rem;color:var(--ink)}
-.feat p{font-size:.9rem;color:var(--ink2);font-weight:300}
-
-/* ── Duo texte + écran ───────────────────────────────────────────────── */
-.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,20rem);
-     gap:clamp(2.5rem,6vw,5rem);align-items:center}
-.duo.flip{grid-template-columns:minmax(0,20rem) minmax(0,1fr)}
-.duo.flip .duo-txt{order:2}
-@media(max-width:860px){
-  .duo,.duo.flip{grid-template-columns:1fr}
-  .duo.flip .duo-txt{order:0}
-  .duo .phone{max-width:20rem;margin-inline:auto}
+/* Fonctionnalités : la liste pilote l'écran du téléphone */
+.feat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.tabs{display:flex;flex-direction:column;gap:.35rem;margin:0;padding:0;list-style:none}
+.tab{display:grid;grid-template-columns:2.4rem 1fr;gap:.2rem 1rem;align-items:start;width:100%;text-align:left;padding:1rem 1.1rem;border-radius:18px;border:1px solid transparent;background:transparent;color:var(--ink);font:inherit;cursor:pointer;transition:background .2s,border-color .2s}
+.tab:hover{background:var(--paper2)}
+.tab[aria-selected="true"]{background:var(--card);border-color:var(--line);box-shadow:0 10px 30px -22px rgba(10,40,25,.35)}
+.tab .ic{grid-row:span 2;width:2.4rem;height:2.4rem;border-radius:12px;display:grid;place-items:center;background:var(--paper2);color:var(--forest)}
+.tab[aria-selected="true"] .ic{background:var(--forest);color:#fff}
+@media (prefers-color-scheme:dark){.tab .ic{color:var(--leaf)}.tab[aria-selected="true"] .ic{color:var(--ink)}}
+.tab .ic svg{width:20px;height:20px}
+.tab b{font:700 1.12rem/1.3 var(--fd);letter-spacing:-.01em}
+.tab span{color:var(--ink2);font-size:.97rem}
+.feat .phone img{transition:opacity .25s ease}
+.feat .phone img.swap{opacity:0}
+@media (max-width:860px){
+  .feat{grid-template-columns:1fr}
+  .feat .phone{order:-1;width:min(72%,280px)}
+  .tabs{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;gap:.6rem;padding-bottom:.4rem;margin-inline:calc(var(--g)*-1);padding-inline:var(--g)}
+  .tabs li{flex:0 0 min(78%,300px);scroll-snap-align:start}
+  .tab{height:100%;border-color:var(--line);background:var(--card)}
 }
-.pts{list-style:none;margin-top:1.9rem;display:grid;gap:.95rem}
-.pts li{display:flex;gap:.75rem;align-items:flex-start;font-size:.96rem;font-weight:300}
-.pts svg{width:1.15rem;height:1.15rem;flex:none;margin-top:.28rem;stroke:var(--gold2)}
-.light .pts svg{stroke:var(--forest)}
-.light .pts li{color:var(--ink2)}
-
-/* ── Tableau comparatif ──────────────────────────────────────────────── */
-.tbl-scroll{overflow-x:auto;border-radius:1.1rem;
-            border:1px solid rgba(250,247,240,.13)}
-table{width:100%;min-width:40rem;border-collapse:collapse;font-size:.92rem}
-thead th{background:rgba(10,74,46,.55);padding:1rem 1.1rem;text-align:center;
-         font-family:var(--fm);font-size:.68rem;letter-spacing:.11em;
-         text-transform:uppercase;font-weight:500;color:var(--onDark)}
-thead th:first-child{text-align:left}
-thead th.us{color:var(--gold2)}
-tbody td{padding:.95rem 1.1rem;text-align:center;
-         border-top:1px solid rgba(250,247,240,.09)}
-tbody td:first-child{text-align:left;font-weight:500}
-tbody td small{display:block;font-weight:300;font-size:.76rem;color:var(--onDark2);
-               margin-top:.12rem}
-td.us{color:var(--gold2);font-weight:600}
-td.oth{color:var(--onDark2)}
-tbody tr:hover{background:rgba(250,247,240,.035)}
-.tbl-note{margin-top:1.2rem;font-size:.82rem;color:var(--onDark2);
-          max-width:46rem;font-weight:300}
-
-/* ── Appel final ─────────────────────────────────────────────────────── */
-.final{text-align:center;
-       background:radial-gradient(90% 130% at 50% 0%,var(--forest2) 0%,
-                  var(--forest) 26%,var(--nuit2) 70%,var(--nuit) 100%)}
-.final .title{margin-inline:auto}
-.final .lede{margin-inline:auto;text-align:center}
-.final .hero-btns{justify-content:center}
-
-/* ── Pied de page ────────────────────────────────────────────────────── */
-footer{border-top:1px solid rgba(250,247,240,.1);padding:3rem 0 3.5rem;
-       background:var(--nuit)}
-.foot{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;
-      justify-content:space-between}
-.foot p{font-size:.82rem;color:var(--onDark2);font-weight:300}
-.foot p a{color:var(--gold2);transition:color .2s}
-.foot p a:hover{color:var(--cream)}
-.foot nav{position:static;background:none;border:0;backdrop-filter:none;
-          display:flex;gap:1.4rem;font-size:.85rem;color:var(--onDark)}
-
-/* ── Apparitions au défilement ───────────────────────────────────────── */
-.rev{opacity:0;transform:translateY(26px);
-     transition:opacity .7s cubic-bezier(.2,.7,.3,1),
-                transform .7s cubic-bezier(.2,.7,.3,1)}
-.rev.in{opacity:1;transform:none}
-.rev.d1{transition-delay:.09s}
-.rev.d2{transition-delay:.18s}
-.rev.d3{transition-delay:.27s}
-
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .rev{opacity:1;transform:none;transition:none}
-  .btn:hover{transform:none}
-  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+@media (min-width:600px) and (max-width:860px){
+  .tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible;margin-inline:0;padding-inline:0}
+  .tabs li{flex:none}
 }
 
-.ai-fab{position:fixed;right:1.25rem;bottom:1.25rem;z-index:20;
-  border:1px solid rgba(240,192,64,.45);border-radius:999px;padding:.8rem 1rem;
-  background:var(--gold);color:var(--ink);font:600 .78rem var(--f);cursor:pointer;
-  box-shadow:0 12px 32px rgba(0,0,0,.3)}
-.ai-panel{position:fixed;right:1.25rem;bottom:4.9rem;z-index:20;width:min(24rem,calc(100vw - 2rem));
-  height:min(34rem,calc(100dvh - 7rem));display:none;flex-direction:column;overflow:hidden;
-  border:1px solid rgba(240,192,64,.35);border-radius:1.25rem;
-  background:var(--cream);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.ai-panel.on{display:flex}.ai-head{display:flex;align-items:center;justify-content:space-between;
-  flex:none;padding:.9rem 1rem;background:var(--forest);color:var(--cream);font-size:.8rem;font-weight:600}
-.ai-close{border:0;background:none;color:inherit;font-size:1.1rem;cursor:pointer}
-.ai-msgs{flex:1;min-height:0;overflow:auto;padding:1rem;font-size:.78rem}
-.ai-msg{max-width:88%;margin:.45rem 0;padding:.6rem .7rem;border-radius:.8rem;line-height:1.45}
-.ai-msg.bot{background:var(--cream2)}.ai-msg.user{margin-left:auto;background:var(--forest);color:var(--cream)}
-.ai-form{display:flex;flex:none;gap:.4rem;padding:.7rem;border-top:1px solid var(--cream3)}
-.ai-form input{min-width:0;flex:1;border:1px solid var(--cream3);border-radius:.6rem;padding:.6rem;font:inherit}
-.ai-form button{border:0;border-radius:.6rem;padding:0 .75rem;background:var(--gold);color:var(--ink);font-weight:700;cursor:pointer}
+/* Frais : le reçu */
+.fees{background:var(--forest);color:#EAF2EC}
+.fees .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.fees h2{color:#fff}
+.fees .sec-head p{color:#B9CFC1}
+.fees ul{list-style:none;padding:0;margin:1.6rem 0 0;display:grid;gap:.7rem;color:#CFE0D5}
+.fees li{display:flex;gap:.6rem}
+.fees li::before{content:"";flex:none;width:6px;height:6px;margin-top:.62em;border-radius:50%;background:var(--gold)}
+.receipt{position:relative;max-width:440px;width:100%;justify-self:center;background:var(--receipt);color:var(--receipt-ink);padding:2rem 1.6rem 1.8rem;font:400 .95rem/1.5 var(--fm);transform:rotate(-1.2deg);box-shadow:0 30px 60px -30px rgba(0,0,0,.55);
+  --hole:radial-gradient(circle at 8px 0,transparent 7px,#000 7.5px);
+  -webkit-mask:var(--hole) top/16px 51% repeat-x,radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) bottom/16px 51% repeat-x;
+          mask:var(--hole) top/16px 51% repeat-x,radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) bottom/16px 51% repeat-x}
+.receipt .rh{text-align:center;margin-bottom:1.2rem}
+.receipt .rh b{display:block;font:500 1.05rem/1.2 var(--fm);letter-spacing:.12em}
+.receipt .rh small{color:#6B6B5E;font-size:.78rem;letter-spacing:.04em}
+.receipt dl{margin:0;display:grid;gap:.55rem}
+.receipt .ln{display:flex;align-items:baseline;gap:.4rem}
+.receipt dt{flex:0 1 auto}
+.receipt .ln::after{content:"";order:1;flex:1;border-bottom:1.5px dotted #B8B49F;transform:translateY(-.25em)}
+.receipt dd{order:2;margin:0;font-weight:500;white-space:nowrap}
+.receipt .cut{margin:1.2rem 0 .9rem;border-top:1.5px dashed #B8B49F}
+.receipt .ft{font-size:.8rem;color:#55554A;text-align:center}
+@media (max-width:860px){.fees .wrap{grid-template-columns:1fr}.receipt{transform:none}}
+@media (max-width:400px){.receipt{font-size:.84rem;padding-inline:1.1rem}}
 
-/* ── Modern polish ──────────────────────────────────────────────────── */
-body{background:
-  radial-gradient(circle at 8% 18%,rgba(26,107,64,.16),transparent 27rem),
-  radial-gradient(circle at 92% 52%,rgba(212,160,23,.08),transparent 24rem),
-  var(--nuit)}
-nav{box-shadow:0 1rem 3rem rgba(0,0,0,.12)}
-.nav-in{min-height:4.7rem}
-.brand{font-size:1.4rem}
-.brand img{box-shadow:0 0 0 .25rem rgba(240,192,64,.08),0 .6rem 1.5rem rgba(0,0,0,.22)}
-.nav-links a{transition:color .2s}
-.hero{isolation:isolate}
-.hero::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(ellipse at 78% 54%,rgba(240,192,64,.16),transparent 22rem),
-    linear-gradient(90deg,rgba(4,20,10,.12),transparent 48%,rgba(4,20,10,.08))}
-.hero-phone .hero-device{transform:rotate(2deg);transition:transform .45s ease,box-shadow .45s ease}
-.hero-phone:hover .hero-device{transform:rotate(0) translateY(-8px);
-  box-shadow:0 55px 90px -34px rgba(0,0,0,.95),0 0 0 1px rgba(245,212,104,.28)}
-.stats{box-shadow:0 1.5rem 3rem rgba(0,0,0,.12)}
-.hero-proof{display:flex;flex-wrap:wrap;gap:.6rem 1rem;margin-top:1.1rem;color:var(--onDark2);
-  font-family:var(--fm);font-size:.64rem;letter-spacing:.04em}
-.hero-proof span{display:inline-flex;align-items:center;gap:.35rem}
-.hero-proof span::before{content:'✓';color:var(--gold2);font-weight:700}
-.stat{transition:background .2s,transform .2s}
-.stat:hover{background:rgba(15,92,56,.55);transform:translateY(-2px)}
-.light{background:linear-gradient(180deg,var(--cream),#f4efe5)}
-.feat{position:relative}
-.feat::after{content:'';position:absolute;left:1.7rem;right:1.7rem;bottom:0;height:2px;
-  transform:scaleX(0);transform-origin:left;background:var(--gold);transition:transform .3s}
-.feat:hover::after{transform:scaleX(1)}
-.card .phone,.duo .phone,.step .phone{transition:transform .35s ease,box-shadow .35s ease}
-.card:hover .phone,.step:hover .phone,.duo .phone:hover{transform:translateY(-7px) rotate(-1deg);
-  box-shadow:0 35px 60px -28px rgba(0,0,0,.8),0 0 0 1px rgba(240,192,64,.22)}
-.ai-fab{display:flex;align-items:center;gap:.55rem;padding:.8rem 1.15rem;
-  background:linear-gradient(135deg,var(--gold3),var(--gold2));font-size:.75rem;
-  box-shadow:0 .8rem 2rem rgba(0,0,0,.28),0 0 0 .3rem rgba(240,192,64,.08);
-  transition:transform .2s,box-shadow .2s}
-.ai-fab::before{content:'✦';font-size:1rem}
-.ai-fab:hover{transform:translateY(-3px);box-shadow:0 1rem 2.5rem rgba(0,0,0,.35),0 0 0 .45rem rgba(240,192,64,.12)}
-.ai-panel{border-radius:1.25rem;background:rgba(250,247,240,.96);backdrop-filter:blur(18px);
-  box-shadow:0 1.5rem 5rem rgba(0,0,0,.42),0 0 0 1px rgba(255,255,255,.3)}
-.ai-head{padding:1rem 1.05rem;background:linear-gradient(135deg,var(--forest),var(--forest2))}
-.ai-head::before{content:'●';margin-right:.45rem;color:#59e58b;font-size:.65rem}
-.ai-msgs{height:19rem;padding:1.05rem;background:linear-gradient(180deg,#fffdf8,var(--cream))}
-.ai-msg{box-shadow:0 3px 12px rgba(11,31,19,.06)}
-.ai-msg.bot{border:1px solid rgba(10,74,46,.08)}
-.ai-msg.user{background:linear-gradient(135deg,var(--forest),var(--forest2))}
-.ai-form{padding:.8rem;background:#fffdf8}
-.ai-form input{background:#fff;border-color:#dcd4c5;outline:none}
-.ai-form input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,160,23,.12)}
-.ai-form button{padding:0 1rem;background:linear-gradient(135deg,var(--gold3),var(--gold2));
-  transition:transform .2s,box-shadow .2s}
-.ai-form button:hover{transform:translateY(-1px);box-shadow:0 .4rem 1rem rgba(212,160,23,.28)}
-.ai-quick{border:1px solid rgba(10,74,46,.16);border-radius:999px;padding:.35rem .58rem;
-  background:rgba(10,74,46,.05);color:var(--forest);font:500 .64rem var(--f);cursor:pointer;
-  transition:background .2s,border-color .2s}
-.ai-quick:hover{background:rgba(10,74,46,.12);border-color:rgba(10,74,46,.28)}
-.ai-quicks{display:flex;flex:none;gap:.4rem;flex-wrap:wrap;padding:.7rem 1rem .65rem;
-  background:var(--cream);border-top:1px solid rgba(11,31,19,.05)}
-.ai-status{display:flex;align-items:center;gap:.4rem;margin-top:.35rem;color:var(--onDark2);
-  font:500 .62rem var(--fm);letter-spacing:.04em}
-.ai-status::before{content:'';width:.42rem;height:.42rem;border-radius:50%;background:#59e58b;
-  box-shadow:0 0 0 3px rgba(89,229,139,.12)}
-@media(max-width:640px){
-  .nav-in{padding-block:.65rem}
-  nav .btn{padding:.58rem .85rem!important;font-size:.72rem!important}
-  .hero{padding-top:7.6rem}
-  .hero-phone{max-width:17rem}
-  .hero-in{gap:2rem}
-  .hero h1{font-size:clamp(2.65rem,14vw,4.1rem)}
-  section{padding-block:4rem}
-  .feat{padding:1.5rem 1.25rem 1.65rem}
-  .hero-note{font-size:.7rem}
-  .ai-fab{right:.85rem;bottom:.85rem}
-  .ai-panel{right:.85rem;bottom:4.45rem;width:min(25rem,calc(100vw - 1.7rem));
-    height:min(31rem,calc(100dvh - 6.2rem));border-radius:1.15rem}
-  .hero-proof{gap:.5rem .8rem}
-}
-@media(max-height:620px){
-  .ai-panel{height:calc(100dvh - 5.6rem)}
-  .ai-msgs{padding:.75rem}
-  .ai-quicks{padding:.5rem .75rem}
-  .ai-form{padding:.55rem .65rem}
-}
-@media(min-width:861px){
-  .feats .feat:nth-child(3n+2){transform:translateY(1.2rem)}
-  .feats .feat:nth-child(3n+2):hover{transform:translateY(.8rem)}
-}
+/* Sécurité */
+.safe{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.safe div{padding:1.5rem;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.safe h3{font:700 1.2rem/1.25 var(--fd);letter-spacing:-.01em;margin:0 0 .5rem}
+.safe p{margin:0;color:var(--ink2);font-size:.98rem}
+.safe-more{margin-top:1.5rem;color:var(--ink2)}
+.safe-more a{color:var(--forest);font-weight:600;text-underline-offset:3px}
+@media (prefers-color-scheme:dark){.safe-more a{color:var(--leaf)}}
+@media (max-width:860px){.safe{grid-template-columns:1fr}}
+
+/* Questions */
+.faq{max-width:780px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.2rem 0;cursor:pointer;list-style:none;font:700 1.12rem/1.35 var(--fd);letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font:400 1.6rem/1 var(--fb);color:var(--ink3);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 1.3rem;color:var(--ink2);max-width:62ch}
+.faq a{color:var(--forest);font-weight:600}
+@media (prefers-color-scheme:dark){.faq a{color:var(--leaf)}}
+
+/* Fin de page */
+.end{padding-block:clamp(3.5rem,8vw,6rem);text-align:center}
+.end h2{margin-inline:auto;max-width:16ch}
+.end p{color:var(--ink2);margin:0 auto 1.8rem;max-width:44ch}
+.end .ctas{justify-content:center;margin:0}
+footer{border-top:1px solid var(--line);padding-block:2.2rem calc(2.2rem + env(safe-area-inset-bottom,0px));font-size:.92rem;color:var(--ink3)}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:2rem}
+footer h4{margin:0 0 .7rem;font:500 .78rem/1 var(--fm);letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+footer a{color:var(--ink2);text-decoration:none}
+footer a:hover{color:var(--ink);text-decoration:underline}
+footer .about p{margin:.8rem 0 0;max-width:34ch}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr 1fr}footer .about{grid-column:1/-1}}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}.hero .phone,.receipt{transform:none}}
 </style>
 </head>
 <body>
 
-<!-- Jeu d'icônes : traits seuls, 24×24, pour rester net à toute taille.
-     <symbol viewBox> et non <g> : un <use> de groupe hérite du système de
-     coordonnées de l'hôte, donc un tracé de 24 unités dans un svg de 18 px
-     se retrouve rogné. Le symbole, lui, porte son propre cadrage. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></symbol>
-  <symbol id="i-qr" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM19 19h2v2h-2z"/></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></symbol>
-  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></symbol>
-  <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.2 8 11 4.6-1.8 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></symbol>
-  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
-  <symbol id="i-userplus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
-  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
-  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
-</svg>
-
-<nav>
-  <div class="nav-in">
-    <a class="brand" href="#top"><img src="ghettopay-icon.svg" alt=""/>GhettoPay</a>
-    <div class="nav-links">
-      <a href="#ouvrir">Ouvrir un compte</a>
-      <a href="#ecrans">Les écrans</a>
-      <a href="#faire">Ce que ça fait</a>
-      <a href="#comparer">Comparer</a>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="GhettoPay, haut de page"><picture><source media="(prefers-color-scheme: dark)" srcset="screens/ghettopay-wordmark.png"/><img class="wm" src="screens/ghettopay-wordmark-dark.png" alt="GhettoPay" width="412" height="111"/></picture></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#fonctions">L'application</a>
+      <a href="#frais">Frais</a>
+      <a href="#securite">Sécurité</a>
       <a href="https://www.ghettopay.com/support.html">Support</a>
-    </div>
-    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
-      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
-    <a class="btn btn-gold" href="https://ghettopay.com/" style="padding:.62rem 1.25rem;font-size:.87rem">
-      D&eacute;couvrir l&rsquo;app<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
-    </a>
-    <div class="mobile-nav" id="mobile-nav">
-      <a href="#ouvrir">Ouvrir un compte</a>
-      <a href="#ecrans">Les écrans</a>
-      <a href="#faire">Ce que ça fait</a>
-      <a href="#comparer">Comparer</a>
-      <a href="https://www.ghettopay.com/support.html">Support</a>
-    </div>
-  </div>
-</nav>
-
-<!-- ══ HÉROS ═══════════════════════════════════════════════════════════ -->
-<header class="hero" id="top">
-  <div class="canopy" style="width:44rem;height:44rem;right:-9rem;top:-13rem"></div>
-  <div class="canopy" style="width:66rem;height:66rem;right:-17rem;top:-21rem"></div>
-  <div class="canopy" style="width:90rem;height:90rem;right:-26rem;top:-30rem"></div>
-
-  <div class="wrap hero-in">
-    <div>
-      <span class="badge rev in"><i></i>Lancement prochain &middot; Estuaire &middot; Gabon</span>
-      <h1 class="rev in">
-        Ton argent,<br/>
-        <em>libre comme</em><br/>
-        <span class="g">la for&ecirc;t.</span>
-      </h1>
-      <p class="lede rev in d1">
-        Envoie, re&ccedil;ois, &eacute;pargne, cotise. GhettoPay r&eacute;unit ton portefeuille,
-        ton coffre, ton budget et tes tontines dans une seule application gabonaise.
-        Une exp&eacute;rience simple, claire et pens&eacute;e pour ton quotidien.
-      </p>
-      <div class="hero-btns rev in d2">
-        <a class="btn btn-gold" href="https://ghettopay.com/">
-          D&eacute;couvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
-        </a>
-        <a class="btn btn-ghost" href="#ecrans">Voir les &eacute;crans</a>
-      </div>
-      <div class="stats rev in d3">
-        <div class="stat"><b>1,5&thinsp;%</b><span>Frais P2P</span></div>
-        <div class="stat"><b>3</b><span>&Eacute;tapes</span></div>
-        <div class="stat"><b>8+</b><span>Outils utiles</span></div>
-        <div class="stat"><b>100&thinsp;%</b><span>Gabonais</span></div>
-      </div>
-      <p class="hero-note rev in d3">Ouverture prochaine &middot; suis l&rsquo;aventure GhettoPay</p>
-      <div class="hero-proof rev in d3">
-        <span>Code email</span><span>PIN personnel</span><span>Frais affichés avant validation</span>
-      </div>
-    </div>
-
-    <div class="hero-phone rev in d2">
-      <div class="halo"></div>
-      <div class="hero-device">
-        <div class="screen">
-          <div class="dynamic-island" aria-hidden="true"></div>
-          <img src="screens/bienvenue.webp" width="860" height="1864" fetchpriority="high"
-               alt="Écran d'accueil de GhettoPay : photo de forêt gabonaise, logo torche et boutons « Créer mon compte » et « J'ai déjà un compte »."/>
-        </div>
-      </div>
-    </div>
+    </nav>
+    <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir l'app</a>
   </div>
 </header>
 
-<!-- ══ OUVRIR UN COMPTE ════════════════════════════════════════════════ -->
-<section class="light" id="ouvrir">
+<main>
+<section class="hero">
   <div class="wrap">
-    <div class="sec-head rev">
-      <div class="eyebrow">01 &mdash; Ouvrir un compte</div>
-      <h2 class="title">Trois &eacute;crans,<br/><em>et c&rsquo;est ouvert.</em></h2>
-      <p class="lede">
-        Pas de dossier, pas de photocopie, pas de d&eacute;placement. Ton num&eacute;ro,
-        un code re&ccedil;u par email, ton code PIN. Les trois &eacute;crans ci-dessous
-        sont ceux de l&rsquo;application, tels qu&rsquo;ils s&rsquo;affichent.
-      </p>
+    <div>
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Conçu à Libreville, pour le Gabon</p>
+      <h1>Envoie, épargne et cotise <span class="soft">en&nbsp;FCFA.</span></h1>
+      <p class="lede">GhettoPay est un portefeuille mobile. Tu le recharges depuis Airtel Money ou Moov Money, tu envoies par numéro ou QR code, et tu retires sur ton numéro quand tu veux.</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir mon compte
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-line" href="#fonctions">Voir l'application</a>
+      </div>
+      <div class="ops"><span>Fonctionne avec</span><img src="screens/airtel-money.png" alt="Airtel Money"/><img src="screens/moov-money.png" alt="Moov Money"/></div>
     </div>
+    <div class="phone"><img src="screens/accueil-app.jpg" alt="Écran d'accueil de GhettoPay : solde disponible, coffre et activité récente" width="640" height="1385" fetchpriority="high"/></div>
+  </div>
+</section>
 
-    <div class="steps">
-      <div class="step rev">
-        <div class="phone"><img src="screens/inscription.webp" width="640" height="1387" loading="lazy" decoding="async"
-          alt="Étape 1 sur 3 : « Ton numéro, ton passeport », champ indicatif Gabon +241 et champ email."/></div>
-        <div class="step-num">&Eacute;TAPE 1</div>
-        <h3>Ton num&eacute;ro, ton passeport</h3>
-        <p>Un num&eacute;ro mobile, une adresse email. C&rsquo;est tout ce qu&rsquo;on demande pour commencer.</p>
-      </div>
-      <div class="step rev d1">
-        <div class="phone"><img src="screens/code.webp" width="640" height="1387" loading="lazy" decoding="async"
-          alt="Étape 2 sur 3 : « Le code est en route », six cases de saisie et compte à rebours de renvoi."/></div>
-        <div class="step-num">&Eacute;TAPE 2</div>
-        <h3>Le code est en route</h3>
-        <p>Six chiffres arrivent dans ta bo&icirc;te mail. Tu les saisis, on v&eacute;rifie que c&rsquo;est bien toi.</p>
-      </div>
-      <div class="step rev d2">
-        <div class="phone"><img src="screens/pin.webp" width="640" height="1387" loading="lazy" decoding="async"
-          alt="Écran de saisie du code PIN sur fond de forêt, avec pavé numérique."/></div>
-        <div class="step-num">&Eacute;TAPE 3</div>
-        <h3>Ton PIN, ta cl&eacute;</h3>
-        <p>Quatre chiffres que toi seul connais. Ils ouvrent l&rsquo;app &agrave; chaque fois, sans mot de passe.</p>
-      </div>
+<section class="sec" id="fonctions" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Tout ton argent, au même endroit.</h2>
+      <p>Choisis une fonction pour voir l'écran tel qu'il est dans l'application.</p>
+    </div>
+    <div class="feat">
+      <ul class="tabs" role="tablist" aria-label="Fonctions de GhettoPay">
+        <li><button class="tab" role="tab" aria-selected="true" aria-controls="feat-phone" data-img="screens/envoyer.webp" data-alt="Écran d'envoi d'argent">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+          <b>Envoyer</b><span>Par numéro ou QR code. L'argent arrive tout de suite chez l'autre utilisateur.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/recevoir.webp" data-alt="Écran pour recevoir de l'argent avec son QR code">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span>
+          <b>Recevoir</b><span>Montre ton QR code ou donne ton numéro. Recevoir ne coûte rien.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/coffre.webp" data-alt="Écran du coffre d'épargne">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <b>Coffre</b><span>Bloque une somme jusqu'à la date que tu choisis. Elle ne bouge plus d'ici là.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/tontines.webp" data-alt="Écran des tontines">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5A6.5 6.5 0 0 1 21.5 20"/></svg></span>
+          <b>Tontine</b><span>Fixe le montant et le rythme. Chacun voit qui a cotisé et à qui c'est le tour.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/budget.webp" data-alt="Écran du budget mensuel">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+          <b>Budget</b><span>Tes dépenses du mois, rangées par catégorie.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/pin.webp" data-alt="Écran de saisie du code PIN">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <b>Code PIN</b><span>Chaque paiement et chaque retrait passe par ton code, vérifié par nos serveurs.</span></button></li>
+      </ul>
+      <div class="phone" id="feat-phone" role="tabpanel"><img id="feat-img" src="screens/envoyer.webp" alt="Écran d'envoi d'argent" width="640" height="1387" loading="lazy"/></div>
     </div>
   </div>
 </section>
 
-<!-- ══ LES ÉCRANS ══════════════════════════════════════════════════════ -->
-<section id="ecrans">
+<section class="sec fees" id="frais">
   <div class="wrap">
-    <div class="rail-head rev">
+    <div>
       <div class="sec-head" style="margin-bottom:0">
-        <div class="eyebrow">02 &mdash; L&rsquo;application</div>
-        <h2 class="title">L&rsquo;app telle quelle.<br/><em>Aucune retouche.</em></h2>
-        <p class="lede">
-          Ce ne sont pas des maquettes. Chaque image de ce rail est une capture
-          de ghettopay.com, prise sur un t&eacute;l&eacute;phone.
-        </p>
+        <h2>Les frais, avant de payer.</h2>
+        <p>Pas de frais cachés ni d'abonnement. Le montant exact s'affiche à l'écran avant que tu valides avec ton PIN.</p>
       </div>
-      <div>
-        <div class="rail-nav">
-          <button type="button" data-rail="-1" aria-label="Écran précédent"><svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-left"/></svg></button>
-          <button type="button" data-rail="1" aria-label="Écran suivant"><svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-right"/></svg></button>
-        </div>
-        <p class="rail-hint">Glisse &middot; 8 &eacute;crans</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="rail" id="rail">
-    <figure class="card card-short">
-      <div class="phone"><img src="screens/accueil.webp" width="640" height="763" loading="lazy" decoding="async"
-        alt="Accueil : solde disponible, quatre actions — envoyer, recevoir, transfert, tontine — et carte du Coffre Forêt."/></div>
-      <figcaption><b>L&rsquo;accueil</b><span>Ton solde, tes quatre gestes, ton coffre. Rien d&rsquo;autre.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/envoyer.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Écran Envoyer : recherche par nom ou numéro, contacts récents, pavé numérique."/></div>
-      <figcaption><b>Envoyer</b><span>Par nom, num&eacute;ro, contact ou QR. Les frais s&rsquo;affichent avant de valider.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/recevoir.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Écran Recevoir : QR code personnel, boutons télécharger, copier le lien et partager."/></div>
-      <figcaption><b>Recevoir</b><span>Ton QR personnel. T&eacute;l&eacute;charge-le, partage-le, on te paie.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/coffre.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Le Coffre : jauge de progression, total épargné, date de déblocage et bouton d'ajout de fonds."/></div>
-      <figcaption><b>Le Coffre</b><span>&Eacute;pargne verrouill&eacute;e jusqu&rsquo;&agrave; la date que tu choisis.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/tontines.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Écran Tontines : carte d'une tontine avec membres, fréquence, montant par cycle et tour actuel."/></div>
-      <figcaption><b>Les tontines</b><span>Membres, cycles, tours. Le cahier, mais qui compte tout seul.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/tontine-nouvelle.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Formulaire de création de tontine : nom, montant par cycle, fréquence et ajout de membres."/></div>
-      <figcaption><b>Cr&eacute;er une tontine</b><span>Nom, montant, fr&eacute;quence, membres. Deux minutes.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/budget.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Écran Budget : bilan net du mois, revenus et dépenses, graphique des six derniers mois, répartition par catégorie."/></div>
-      <figcaption><b>Le budget</b><span>Bilan du mois, six mois d&rsquo;historique, d&eacute;penses par cat&eacute;gorie.</span></figcaption>
-    </figure>
-    <figure class="card">
-      <div class="phone"><img src="screens/profil.webp" width="640" height="1387" loading="lazy" decoding="async"
-        alt="Écran Profil : niveau de compte, cashback cumulé, compteurs de transactions et d'invités, limites et vérification d'identité."/></div>
-      <figcaption><b>Le profil</b><span>Ton niveau, tes plafonds, tes invit&eacute;s, ta v&eacute;rification d&rsquo;identit&eacute;.</span></figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ══ CE QUE ÇA FAIT ══════════════════════════════════════════════════ -->
-<section class="light" id="faire">
-  <div class="wrap">
-    <div class="sec-head rev">
-      <div class="eyebrow">03 &mdash; Ce que &ccedil;a fait</div>
-      <h2 class="title">Un portefeuille,<br/><em>vraiment complet.</em></h2>
-      <p class="lede">Tout ce qui existe aujourd&rsquo;hui dans l&rsquo;application. Rien de plus.</p>
-    </div>
-
-    <div class="feats rev">
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-send"/></svg></div>
-        <h3>Transferts instantan&eacute;s</h3><p>Par nom, num&eacute;ro, contact ou QR code. Les frais s&rsquo;affichent avant que tu valides.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-qr"/></svg></div>
-        <h3>Payer par QR</h3><p>Scanne, confirme avec ton PIN, c&rsquo;est pay&eacute;. Au march&eacute;, en boutique, au maquis.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-link"/></svg></div>
-        <h3>Lien de paiement</h3><p>Ton QR et ton lien personnels. Envoie-les par WhatsApp ou SMS, ton solde est cr&eacute;dit&eacute; en direct.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-lock"/></svg></div>
-        <h3>Le Coffre For&ecirc;t</h3><p>Bloque ton &eacute;pargne jusqu&rsquo;&agrave; la date de ton choix. Objectif, progression, d&eacute;blocage &agrave; l&rsquo;&eacute;ch&eacute;ance.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-users"/></svg></div>
-        <h3>Tontines</h3><p>Hebdomadaire ou mensuelle. Rotation, tours et cotisations suivis automatiquement.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg></div>
-        <h3>Budget &amp; analyses</h3><p>Bilan net du mois, d&eacute;penses par cat&eacute;gorie, six derniers mois. Export CSV quand tu veux.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></div>
-        <h3>Factures &amp; recharges</h3><p>R&egrave;gle tes factures et recharge ton cr&eacute;dit depuis l&rsquo;app, sans file d&rsquo;attente.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-badge"/></svg></div>
-        <h3>Niveaux de compte</h3><p>Silver, Gold, Platinum. V&eacute;rifie ton identit&eacute; depuis l&rsquo;app et augmente tes plafonds.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gift"/></svg></div>
-        <h3>Cashback</h3><p>Ce que tes paiements te rapportent, cumul&eacute; et visible sur ton profil.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-userplus"/></svg></div>
-        <h3>Parrainage</h3><p>Invite ton quartier, ta famille, tes amis. Ton compteur d&rsquo;invit&eacute;s vit sur ton profil.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bell"/></svg></div>
-        <h3>Notifications</h3><p>Chaque mouvement sur ton compte t&rsquo;est notifi&eacute;, m&ecirc;me app ferm&eacute;e.</p></div>
-      <div class="feat"><div class="ic"><svg fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-shield"/></svg></div>
-        <h3>S&eacute;curit&eacute;</h3><p>Connexion par PIN, v&eacute;rification par code email, chiffrement bout-en-bout. Tes infos restent chez toi.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ LE COFFRE ═══════════════════════════════════════════════════════ -->
-<section>
-  <div class="wrap duo">
-    <div class="duo-txt rev">
-      <div class="eyebrow">04 &mdash; Le Coffre</div>
-      <h2 class="title">Mettre de c&ocirc;t&eacute;,<br/><em>pour de vrai.</em></h2>
-      <p class="lede">
-        Le probl&egrave;me de l&rsquo;&eacute;pargne, ce n&rsquo;est pas de commencer. C&rsquo;est d&rsquo;y toucher.
-        Le Coffre verrouille ce que tu y mets jusqu&rsquo;&agrave; la date que tu as fix&eacute;e toi-m&ecirc;me.
-      </p>
-      <ul class="pts">
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Tu choisis l&rsquo;objectif et la date de d&eacute;blocage</li>
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>La jauge te montre o&ugrave; tu en es, mois apr&egrave;s mois</li>
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Tu peux ajouter des fonds &agrave; tout moment, jamais en retirer avant l&rsquo;&eacute;ch&eacute;ance</li>
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Plusieurs coffres en parall&egrave;le, un par projet</li>
+      <ul>
+        <li>Pas de code USSD à retenir, pas d'agence à trouver.</li>
+        <li>Les taux peuvent évoluer : l'application affiche toujours ceux en vigueur.</li>
       </ul>
     </div>
-    <div class="phone rev d1"><img src="screens/coffre.webp" width="640" height="1387" loading="lazy" decoding="async"
-      alt="Le Coffre dans l'application : jauge à 50 %, total épargné, date de déblocage et calendrier des mois restants."/></div>
-  </div>
-</section>
-
-<!-- ══ LA TONTINE ══════════════════════════════════════════════════════ -->
-<section class="light">
-  <div class="wrap duo flip">
-    <div class="phone rev"><img src="screens/tontines.webp" width="640" height="1387" loading="lazy" decoding="async"
-      alt="Écran Tontines : carte d'une tontine « Amis » avec membres, fréquence hebdomadaire, montant par cycle et tour actuel."/></div>
-    <div class="duo-txt rev d1">
-      <div class="eyebrow">05 &mdash; La tontine</div>
-      <h2 class="title">Le cahier,<br/><em>en mieux.</em></h2>
-      <p class="lede">
-        La tontine marche depuis toujours. Ce qui ne marche pas, c&rsquo;est le cahier :
-        qui a cotis&eacute;, qui passe ce tour-ci, combien il reste. GhettoPay tient le
-        compte &agrave; la place du cahier.
-      </p>
-      <ul class="pts">
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Cr&eacute;e ta tontine ou rejoins celle de ton groupe</li>
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Hebdomadaire ou mensuelle, montant fix&eacute; par cycle</li>
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>L&rsquo;ordre de rotation est visible par tout le monde</li>
-        <li><svg fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Chacun voit qui a cotis&eacute; et &agrave; qui c&rsquo;est le tour</li>
-      </ul>
+    <div class="receipt" role="group" aria-label="Tarifs GhettoPay">
+      <div class="rh"><b>GHETTOPAY</b><small>TARIFS EN VIGUEUR · FCFA</small></div>
+      <dl>
+        <div class="ln"><dt>Recevoir de l'argent</dt><dd>0 F</dd></div>
+        <div class="ln"><dt>Payer un commerçant (QR)</dt><dd>0 F</dd></div>
+        <div class="ln"><dt>Envoyer à un utilisateur</dt><dd>1,5 %</dd></div>
+        <div class="ln"><dt>Retirer vers Airtel / Moov</dt><dd>2 %</dd></div>
+        <div class="ln"><dt>Recharger depuis Airtel / Moov</dt><dd>2,5 %</dd></div>
+        <div class="ln"><dt>Casser un coffre avant la date</dt><dd>2 %</dd></div>
+      </dl>
+      <div class="cut" aria-hidden="true"></div>
+      <p class="ft">Recharge : frais de l'opérateur, déduits du montant crédité.</p>
     </div>
   </div>
 </section>
 
-<!-- ══ COMPARER ════════════════════════════════════════════════════════ -->
-<section id="comparer">
+<section class="sec" id="securite">
   <div class="wrap">
-    <div class="sec-head rev">
-      <div class="eyebrow">06 &mdash; Comparer</div>
-      <h2 class="title">La v&eacute;rit&eacute;<br/><em>sans filtre.</em></h2>
-      <p class="lede">
-        Airtel Money et Moov Money sont les deux services les plus utilis&eacute;s au
-        Gabon. Voil&agrave;, point par point, ce que GhettoPay fait autrement.
-      </p>
+    <div class="sec-head">
+      <h2>Ton compte reste à toi.</h2>
+      <p>GhettoPay garde ton argent et tes données sous clé. Voici comment.</p>
     </div>
-
-    <div class="tbl-scroll rev">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Fonctionnalit&eacute;</th>
-            <th scope="col" class="us">GhettoPay</th>
-            <th scope="col">Airtel Money</th>
-            <th scope="col">Moov Money</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Frais de transfert<small>Entre comptes du service</small></td><td class="us">1,5&thinsp;%</td><td class="oth">Plus &eacute;lev&eacute;s</td><td class="oth">Plus &eacute;lev&eacute;s</td></tr>
-          <tr><td>Paiement par QR code<small>Scanner et payer</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
-          <tr><td>Coffre d&rsquo;&eacute;pargne bloqu&eacute;<small>Verrouill&eacute; jusqu&rsquo;&agrave; ta date</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
-          <tr><td>Tontine digitale<small>Cycles et rotation suivis</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
-          <tr><td>Budget &amp; analyses<small>Cat&eacute;gories, export CSV</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
-          <tr><td>Lien de paiement<small>Se faire payer &agrave; distance</small></td><td class="us">Oui</td><td class="oth">Non</td><td class="oth">Non</td></tr>
-          <tr><td>Codes USSD<small>*127#&hellip;</small></td><td class="us">Jamais</td><td class="oth">Toujours</td><td class="oth">Toujours</td></tr>
-        </tbody>
-      </table>
+    <div class="safe">
+      <div><h3>Ton PIN, et personne d'autre</h3><p>Chaque paiement est confirmé par ton code PIN. Il est stocké sous forme chiffrée : même l'équipe ne peut pas le lire.</p></div>
+      <div><h3>Tu ne vois que ton compte</h3><p>Ton solde et tes opérations ne sont visibles que par toi. Les autres utilisateurs voient seulement ton nom quand vous échangez de l'argent.</p></div>
+      <div><h3>Ni publicité, ni revente</h3><p>Nous ne vendons pas tes données et l'application ne lit pas ta position. Tu peux supprimer ton compte quand tu veux.</p></div>
     </div>
-    <p class="tbl-note rev">
-      Airtel Money et Moov Money sont cit&eacute;s ici &agrave; titre de comparaison
-      concurrentielle. GhettoPay n&rsquo;est ni affili&eacute; &agrave; ces services, ni
-      partenaire de leurs op&eacute;rateurs.
-    </p>
+    <p class="safe-more">Tout le détail dans notre <a href="https://www.ghettopay.com/privacy.html">politique de confidentialité</a>.</p>
   </div>
 </section>
 
-<!-- ══ APPEL FINAL ═════════════════════════════════════════════════════ -->
-<section class="final">
+<section class="sec" id="questions" style="padding-top:0">
   <div class="wrap">
-    <div class="rev">
-      <span class="badge"><i></i>100&thinsp;% gabonais &middot; Estuaire</span>
-      <h2 class="title">Pr&ecirc;t &agrave; ma&icirc;triser<br/><em>ton argent&nbsp;?</em></h2>
-      <p class="lede">
-        Ton num&eacute;ro, un code, ton PIN. Trois &eacute;crans et ton compte est ouvert.
-      </p>
-      <div class="hero-btns">
-        <a class="btn btn-gold" href="https://ghettopay.com/">
-          D&eacute;couvrir l&rsquo;application<svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
-        </a>
-      </div>
+    <div class="sec-head"><h2>Questions fréquentes</h2></div>
+    <div class="faq">
+      <details><summary>Qui peut ouvrir un compte&nbsp;?</summary><p>Toute personne de 18 ans et plus avec un numéro de téléphone au Gabon. L'inscription se fait dans l'application avec ton numéro, ton e-mail et un code PIN.</p></details>
+      <details><summary>Comment mettre de l'argent sur GhettoPay&nbsp;?</summary><p>Depuis l'écran Transfert, recharge ton portefeuille avec Airtel Money ou Moov Money. Tu valides le paiement sur ton téléphone, et le montant arrive sur ton solde.</p></details>
+      <details><summary>Comment récupérer mon argent&nbsp;?</summary><p>Toujours depuis Transfert : choisis un retrait vers ton numéro Airtel Money ou Moov Money. Les frais s'affichent avant de valider.</p></details>
+      <details><summary>Faut-il installer quelque chose&nbsp;?</summary><p>Non. GhettoPay s'ouvre dans le navigateur de ton téléphone sur <a href="https://www.ghettopay.com/">ghettopay.com</a>, et tu peux l'ajouter à ton écran d'accueil comme une application.</p></details>
+      <details><summary>Une opération n'est pas arrivée, que faire&nbsp;?</summary><p>Va sur la page <a href="https://www.ghettopay.com/support.html">Support</a>, pose ta question à l'assistant ou écris directement à l'équipe avec la référence de l'opération. Tu reçois un numéro de suivi.</p></details>
+      <details><summary>Comment supprimer mon compte&nbsp;?</summary><p>Retire ton solde, puis écris à contact@ghettopay.com depuis l'adresse e-mail de ton compte. La démarche complète est dans la <a href="https://www.ghettopay.com/privacy.html#suppression-compte">politique de confidentialité</a>.</p></details>
     </div>
   </div>
 </section>
+
+<section class="end">
+  <div class="wrap">
+    <h2>Ouvre ton compte en deux minutes.</h2>
+    <p>Ton numéro, ton e-mail, un code PIN. Rien d'autre à préparer.</p>
+    <div class="ctas">
+      <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir mon compte</a>
+      <a class="btn btn-line" href="https://www.ghettopay.com/support.html">Poser une question</a>
+    </div>
+  </div>
+</section>
+</main>
 
 <footer>
-  <div class="wrap foot">
-    <a class="brand" href="#top"><img src="ghettopay-icon.svg" alt=""/>GhettoPay</a>
-    <nav>
-      <a href="https://ghettopay.com/">Application</a>
-      <a href="https://www.ghettopay.com/support.html">Support</a>
-      <a href="https://www.ghettopay.com/terms.html">Conditions d&rsquo;utilisation</a>
-      <a href="https://www.ghettopay.com/privacy.html">Confidentialit&eacute;</a>
-      <a href="#comparer">Comparer</a>
-    </nav>
-    <p>Libreville, Estuaire &middot; Gabon &middot; <a href="mailto:contact@ghettopay.com">contact@ghettopay.com</a></p>
+  <div class="wrap">
+    <div class="about">
+      <a class="brand" href="#" aria-label="GhettoPay, haut de page"><picture><source media="(prefers-color-scheme: dark)" srcset="screens/ghettopay-wordmark.png"/><img class="wm" src="screens/ghettopay-wordmark-dark.png" alt="GhettoPay" width="412" height="111"/></picture></a>
+      <p>Portefeuille mobile en FCFA. Libreville, Gabon.</p>
+    </div>
+    <div>
+      <h4>Aide</h4>
+      <ul>
+        <li><a href="https://www.ghettopay.com/support.html">Support</a></li>
+        <li><a href="mailto:contact@ghettopay.com">contact@ghettopay.com</a></li>
+        <li><a href="https://www.ghettopay.com/">Ouvrir l'application</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="https://www.ghettopay.com/terms.html">Conditions d'utilisation</a></li>
+        <li><a href="https://www.ghettopay.com/privacy.html">Confidentialité</a></li>
+        <li><a href="https://www.ghettopay.com/privacy.html#suppression-compte">Supprimer mon compte</a></li>
+      </ul>
+    </div>
   </div>
+  <div class="wrap" style="margin-top:2rem;font-size:.84rem">© 2026 GhettoPay</div>
 </footer>
-
-<button class="ai-fab" id="ai-fab" type="button" aria-expanded="false">Assistant GhettoPay</button>
-<section class="ai-panel" id="ai-panel" aria-label="Assistant GhettoPay">
-  <div class="ai-head"><span>Assistant GhettoPay<small style="display:block;opacity:.62;font-size:.62rem;font-weight:400;margin-top:.12rem">Réponse rapide · français</small><span class="ai-status">En ligne</span></span><button class="ai-close" id="ai-close" type="button" aria-label="Fermer">×</button></div>
-  <div class="ai-msgs" id="ai-msgs" aria-live="polite"></div>
-  <div class="ai-quicks">
-    <button type="button" class="ai-quick" data-q="Quels sont les frais ?">Frais</button>
-    <button type="button" class="ai-quick" data-q="C’est quoi le Coffre ?">Coffre</button>
-    <button type="button" class="ai-quick" data-q="Comment fonctionne une tontine ?">Tontine</button>
-  </div>
-  <form class="ai-form" id="ai-form">
-    <input id="ai-input" maxlength="500" autocomplete="off" placeholder="Une question sur GhettoPay…"/>
-    <button type="submit">Envoyer</button>
-  </form>
-</section>
 
 <script>
 (function () {
-  'use strict';
+  var top = document.getElementById('top');
+  var onScroll = function () { top.classList.toggle('scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Les onglets changent l'écran du téléphone. Flèches gauche/droite et
+  // haut/bas pour passer d'un onglet à l'autre au clavier.
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var img = document.getElementById('feat-img');
   var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Apparitions au défilement. Sans IntersectionObserver — ou en mode
-     mouvement réduit — tout est visible d'emblée, la CSS s'en charge. */
-  if (!calm && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-    document.querySelectorAll('.rev').forEach(function (el) { io.observe(el); });
-  } else {
-    document.querySelectorAll('.rev').forEach(function (el) { el.classList.add('in'); });
+  tabs.forEach(function (t) { var p = new Image(); p.src = t.dataset.img; });
+  function select(t, focus) {
+    tabs.forEach(function (x) { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; });
+    if (focus) t.focus();
+    if (img.getAttribute('src') === t.dataset.img) return;
+    var go = function () { img.src = t.dataset.img; img.alt = t.dataset.alt; img.classList.remove('swap'); };
+    if (calm) return go();
+    img.classList.add('swap'); setTimeout(go, 180);
   }
-
-  /* Rail d'écrans : on avance d'une carte, largeur mesurée sur la première
-     plutôt que codée en dur — elle dépend de la fenêtre (min(15.5rem,62vw)). */
-  var rail = document.getElementById('rail');
-  if (rail) {
-    var card = rail.querySelector('.card');
-    document.querySelectorAll('[data-rail]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var gap = parseFloat(getComputedStyle(rail).columnGap) || 24;
-        var step = (card ? card.getBoundingClientRect().width : 260) + gap;
-        rail.scrollBy({ left: step * Number(b.dataset.rail), behavior: calm ? 'auto' : 'smooth' });
-      });
+  tabs.forEach(function (t, i) {
+    t.tabIndex = i === 0 ? 0 : -1;
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('keydown', function (e) {
+      var d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (!d) return; e.preventDefault();
+      select(tabs[(i + d + tabs.length) % tabs.length], true);
     });
-  }
-
-  /* La barre de navigation se densifie dès qu'on quitte le haut de page. */
-  var nav = document.querySelector('nav');
-  var onScroll = function () {
-    nav.style.background = window.scrollY > 40 ? 'rgba(4,20,10,.92)' : 'rgba(4,20,10,.72)';
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  var navToggle = document.getElementById('nav-toggle');
-  var mobileNav = document.getElementById('mobile-nav');
-  function closeMobileNav() {
-    mobileNav.classList.remove('on');
-    navToggle.setAttribute('aria-expanded', 'false');
-  }
-  navToggle.addEventListener('click', function () {
-    var open = !mobileNav.classList.contains('on');
-    mobileNav.classList.toggle('on', open);
-    navToggle.setAttribute('aria-expanded', String(open));
-  });
-  mobileNav.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', closeMobileNav);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeMobileNav();
-  });
-
-  var panel = document.getElementById('ai-panel');
-  var fab = document.getElementById('ai-fab');
-  var msgs = document.getElementById('ai-msgs');
-  var input = document.getElementById('ai-input');
-  var history = [];
-  var faq = [
-    [/frais|commission|co[uû]t/i, 'Les frais sont de 1,5 % sur les transferts, QR et factures, et 2 % sur les retraits Airtel ou Moov.'],
-    [/tontine/i, 'Une tontine permet de cotiser à tour de rôle entre proches. Chaque cycle verse la cagnotte à un membre.'],
-    [/coffre|[eé]pargne/i, 'Le Coffre met une partie de ton solde de côté pour un objectif d’épargne.'],
-    [/pin|code secret/i, 'Ne partage jamais ton PIN. Dans l’application, utilise « PIN oublié ? » pour le réinitialiser.'],
-    [/inscri|compte|connect/i, 'Télécharge ou ouvre l’application, puis inscris-toi avec ton email et ton PIN.']
-  ];
-  function addMsg(who, text) {
-    var el = document.createElement('div'); el.className = 'ai-msg ' + who;
-    el.textContent = text; msgs.appendChild(el); msgs.scrollTop = msgs.scrollHeight;
-  }
-  function toggleAi(open) {
-    var on = open == null ? !panel.classList.contains('on') : open;
-    panel.classList.toggle('on', on); fab.setAttribute('aria-expanded', String(on));
-    if (on && !msgs.childElementCount) addMsg('bot', 'Bonjour 👋 Je peux répondre à tes questions sur GhettoPay.');
-    if (on) input.focus();
-  }
-  fab.addEventListener('click', function () { toggleAi(); });
-  document.getElementById('ai-close').addEventListener('click', function () { toggleAi(false); });
-  document.querySelectorAll('.ai-quick').forEach(function (button) {
-    button.addEventListener('click', function () {
-      input.value = button.dataset.q || '';
-      document.getElementById('ai-form').requestSubmit();
-    });
-  });
-  document.getElementById('ai-form').addEventListener('submit', async function (e) {
-    e.preventDefault(); var text = input.value.trim(); if (!text) return;
-    input.value = ''; addMsg('user', text); history.push({ role: 'user', content: text });
-    var local = faq.find(function (x) { return x[0].test(text); });
-    if (local) { addMsg('bot', local[1]); history.push({ role: 'assistant', content: local[1] }); return; }
-    addMsg('bot', 'Je réfléchis…');
-    try {
-      var res = await fetch('https://qzazkxlamuylurhjquzu.supabase.co/functions/v1/support-ai', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history.slice(-8) })
-      });
-      var data = await res.json();
-      msgs.lastElementChild.remove();
-      var reply = data.reply || 'Je ne peux pas répondre pour le moment. Essaie une question sur les frais, le coffre ou les tontines.';
-      addMsg('bot', reply); history.push({ role: 'assistant', content: reply });
-    } catch (_) {
-      msgs.lastElementChild.remove();
-      addMsg('bot', 'L’assistant est momentanément indisponible. Réessaie dans un instant.');
-    }
   });
 })();
-</script>
-<!-- Vercel Speed Insights : mesure les Core Web Vitals sans framework. -->
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
