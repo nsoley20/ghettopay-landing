@@ -4,12 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>GhettoPay — Portefeuille mobile en FCFA, au Gabon</title>
-<meta name="description" content="GhettoPay est un portefeuille mobile gabonais : recharge depuis Airtel Money ou Moov Money, envoie par numéro ou QR code, épargne dans un coffre, organise tes tontines."/>
+<meta name="description" content="GhettoPay est un portefeuille mobile gabonais : recharge depuis Airtel Money ou Moov Money, envoie par numéro ou QR code, épargne dans un coffre, organise tes tontines, encaisse en tant que commerçant."/>
 <meta name="theme-color" content="#F5F6F1"/>
 <link rel="icon" href="screens/icon-192.png"/>
 <link rel="apple-touch-icon" href="screens/icon-192.png"/>
 <meta property="og:title" content="GhettoPay — Portefeuille mobile en FCFA"/>
-<meta property="og:description" content="Envoie, reçois, épargne et cotise en FCFA. Airtel Money et Moov Money, depuis Libreville."/>
+<meta property="og:description" content="Envoie, reçois, épargne, cotise et encaisse en FCFA. Airtel Money et Moov Money, depuis Libreville."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://www.ghettopay.com/landing/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -17,210 +17,266 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
 <style>
 /* ─────────────────────────────────────────────────────────────────────
-   GhettoPay — site de présentation
+   GhettoPay — site de présentation. Pensé d'abord pour le téléphone.
    Papier vert-gris, encre forêt, or réservé aux actions. Bricolage
    Grotesque en titrage, DM Sans en texte, DM Mono pour les montants.
-   Élément signature : les frais présentés comme un reçu Mobile Money.
-   Les captures sont les écrans réels de l'application.
+   Signature : les frais en reçu Mobile Money, et un calculateur qui
+   montre ce qui est débité et ce qui est crédité.
    ───────────────────────────────────────────────────────────────────── */
 :root{
   --paper:#F5F6F1; --paper2:#ECEFE8; --card:#FFFFFF;
   --ink:#0E1A14; --ink2:#46554B; --ink3:#6E7B72;
-  --line:#DCE2DA; --forest:#0A4A2E; --forest2:#0E5A39; --leaf:#1F6B45;
+  --line:#DCE2DA; --forest:#0A4A2E; --leaf:#1F6B45;
   --gold:#E3A814; --gold-ink:#3A2A00;
   --receipt:#FFFDF6; --receipt-ink:#1A1A14;
+  --out:#B42318; --in:#1F7A45;
   --fd:'Bricolage Grotesque','DM Sans',system-ui,sans-serif;
   --fb:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --fm:'DM Mono',ui-monospace,'SF Mono',Consolas,monospace;
-  --w:1120px; --g:clamp(1rem,4vw,2rem);
+  --w:1120px; --g:clamp(1rem,5vw,2rem); --top:60px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --paper:#0C120F; --paper2:#131B16; --card:#161F1A;
+    --paper:#0C120F; --paper2:#131B16; --card:#172019;
     --ink:#E8EEE9; --ink2:#AAB7AE; --ink3:#7F8D84;
-    --line:#26322B; --forest:#0F3A26; --forest2:#13472F; --leaf:#7FCB9C;
+    --line:#26322B; --forest:#0F3A26; --leaf:#7FCB9C;
     --gold:#F0BC35; --gold-ink:#241A00;
     --receipt:#F3F0E4; --receipt-ink:#1A1A14;
+    --out:#FF9C8F; --in:#86E3AC;
     color-scheme:dark;
   }
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--fb);-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top) + 8px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.6 var(--fb);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
 img{max-width:100%;display:block}
 a{color:inherit}
+button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
 .wrap{max-width:var(--w);margin:0 auto;padding-inline:var(--g)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
 
 /* Boutons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.7rem 1.3rem;border-radius:999px;border:1px solid transparent;font:600 1rem/1 var(--fb);text-decoration:none;cursor:pointer;transition:transform .15s, filter .15s, border-color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.7rem 1.3rem;border-radius:999px;border:1px solid transparent;font:600 1rem/1 var(--fb);text-decoration:none;cursor:pointer;transition:transform .15s,filter .15s,border-color .15s;white-space:nowrap}
 .btn svg{width:18px;height:18px}
 .btn-gold{background:var(--gold);color:var(--gold-ink)}
 .btn-gold:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .btn-line{border-color:var(--line);color:var(--ink);background:transparent}
 .btn-line:hover{border-color:var(--ink3)}
 
-/* En-tête */
-.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+/* ── En-tête ── */
+.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
 .top.scrolled{border-bottom-color:var(--line)}
-.top .wrap{display:flex;align-items:center;gap:1.5rem;height:64px}
-.brand{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;font:800 1.15rem/1 var(--fd);letter-spacing:-.02em}
-.brand .wm{display:block;height:30px;width:auto}
-footer .brand .wm{height:26px}
-.nav{display:flex;gap:1.6rem;margin-left:auto;font-size:.95rem}
+.top .wrap{display:flex;align-items:center;gap:1rem;height:var(--top)}
+.brand{display:inline-flex;text-decoration:none}
+.wm{display:block;height:26px;width:auto}
+.nav{display:flex;gap:1.5rem;margin-left:auto;font-size:.95rem}
 .nav a{text-decoration:none;color:var(--ink2)}
 .nav a:hover{color:var(--ink)}
-.top .btn{min-height:42px;padding:.55rem 1.05rem;font-size:.92rem}
-@media (max-width:760px){.nav{display:none}.top .btn{margin-left:auto}}
-
-/* Héros */
-.hero{padding-block:clamp(2.5rem,7vw,5.5rem) clamp(3rem,7vw,6rem)}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(2rem,6vw,5rem);align-items:center}
-.kicker{display:inline-flex;align-items:center;gap:.55rem;margin:0 0 1.4rem;font:500 .8rem/1 var(--fm);color:var(--ink2);letter-spacing:.02em}
-.kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--leaf)}
-h1{font:800 clamp(2.6rem,7.4vw,5.4rem)/.98 var(--fd);letter-spacing:-.04em;margin:0 0 1.4rem;text-wrap:balance}
-h1 .soft{color:var(--leaf)}
-.lede{font-size:clamp(1.05rem,2.2vw,1.22rem);color:var(--ink2);max-width:46ch;margin:0 0 2rem}
-.ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2.2rem}
-.ops{display:flex;align-items:center;gap:1rem;font-size:.88rem;color:var(--ink3)}
-.ops img{height:26px;width:auto;border-radius:6px}
-.phone{position:relative;width:min(100%,330px);margin-inline:auto;aspect-ratio:640/1385;border-radius:clamp(22px,7vw,46px);padding:clamp(5px,1.5vw,10px);background:#0B110D;box-shadow:0 40px 80px -40px rgba(10,40,25,.45),0 0 0 1px rgba(255,255,255,.06) inset}
-.phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:clamp(17px,5.6vw,37px);background:#0A4A2E}
-.hero .phone{transform:rotate(2deg)}
+.top .btn{min-height:40px;padding:.5rem 1rem;font-size:.9rem}
+.burger{display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--card);place-items:center;cursor:pointer}
+.burger svg{width:20px;height:20px}
 @media (max-width:860px){
-  .hero .wrap{grid-template-columns:1fr}
-  .hero .phone{width:min(78%,300px);transform:none}
+  .nav{display:none}
+  .top .btn{margin-left:auto}
+  .burger{display:grid}
 }
 
-/* Titres de section */
-.sec{padding-block:clamp(3.5rem,8vw,6.5rem)}
-.sec-head{max-width:640px;margin-bottom:clamp(2rem,5vw,3.2rem)}
-h2{font:800 clamp(2rem,4.6vw,3.2rem)/1.02 var(--fd);letter-spacing:-.035em;margin:0 0 1rem;text-wrap:balance}
-.sec-head p{color:var(--ink2);margin:0;font-size:1.08rem;max-width:52ch}
+/* Menu téléphone */
+.menu{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:var(--paper);padding:0 var(--g) calc(1.5rem + env(safe-area-inset-bottom,0px));transform:translateY(-100%);visibility:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s}
+.menu.on{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.menu-top{display:flex;align-items:center;justify-content:space-between;height:var(--top)}
+.menu nav{display:flex;flex-direction:column;margin-top:1rem}
+.menu nav a{display:flex;align-items:center;justify-content:space-between;padding:1.05rem 0;border-bottom:1px solid var(--line);text-decoration:none;font:700 1.5rem/1.1 var(--fd);letter-spacing:-.02em}
+.menu nav a span{font:400 .9rem/1 var(--fb);color:var(--ink3)}
+.menu .btn{width:100%;margin-top:auto}
+.menu-legal{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin-top:1rem;font-size:.88rem}
+.menu-legal a{color:var(--ink2)}
 
-/* Fonctionnalités : la liste pilote l'écran du téléphone */
+/* Téléphone (cadre) */
+.phone{position:relative;width:var(--pw,300px);max-width:100%;margin-inline:auto;aspect-ratio:640/1385;border-radius:calc(var(--pw,300px) * .14);padding:calc(var(--pw,300px) * .03);background:#0B110D;box-shadow:0 30px 60px -32px rgba(10,40,25,.5),0 0 0 1px rgba(255,255,255,.06) inset}
+.phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:calc(var(--pw,300px) * .115);background:#0A4A2E}
+
+/* ── Héros ── */
+.hero{padding-block:clamp(1.8rem,6vw,5rem) clamp(2.5rem,7vw,5.5rem)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(1.5rem,6vw,5rem);align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:.55rem;margin:0 0 1rem;font:500 .78rem/1 var(--fm);color:var(--ink2);letter-spacing:.02em}
+.kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--leaf)}
+h1{font:800 clamp(2.4rem,8.2vw,5.2rem)/.98 var(--fd);letter-spacing:-.04em;margin:0 0 1.1rem;text-wrap:balance}
+h1 .soft{color:var(--leaf)}
+.lede{font-size:clamp(1.02rem,2.6vw,1.2rem);color:var(--ink2);max-width:46ch;margin:0 0 1.6rem}
+.ctas{display:flex;flex-wrap:wrap;gap:.65rem;margin-bottom:1.6rem}
+.ops{display:flex;align-items:center;gap:.8rem;font-size:.86rem;color:var(--ink3)}
+.ops img{height:24px;width:auto;border-radius:6px}
+.hero .phone{--pw:320px;transform:rotate(2deg)}
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero .phone{--pw:min(62vw,250px);transform:none}
+  .ctas .btn{flex:1 1 auto}
+}
+
+/* ── Titres de section ── */
+.sec{padding-block:clamp(3rem,8vw,6rem)}
+.sec-head{max-width:640px;margin-bottom:clamp(1.5rem,5vw,3rem)}
+h2{font:800 clamp(1.9rem,6.4vw,3.1rem)/1.03 var(--fd);letter-spacing:-.035em;margin:0 0 .8rem;text-wrap:balance}
+.sec-head p{color:var(--ink2);margin:0;font-size:1.05rem;max-width:52ch}
+
+/* ── Fonctions : les onglets pilotent l'écran du téléphone ── */
 .feat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:clamp(2rem,6vw,5rem);align-items:center}
 .tabs{display:flex;flex-direction:column;gap:.35rem;margin:0;padding:0;list-style:none}
-.tab{display:grid;grid-template-columns:2.4rem 1fr;gap:.2rem 1rem;align-items:start;width:100%;text-align:left;padding:1rem 1.1rem;border-radius:18px;border:1px solid transparent;background:transparent;color:var(--ink);font:inherit;cursor:pointer;transition:background .2s,border-color .2s}
+.tab{display:grid;grid-template-columns:2.4rem 1fr;gap:.15rem .9rem;align-items:center;width:100%;text-align:left;padding:.9rem 1rem;border-radius:16px;border:1px solid transparent;background:transparent;cursor:pointer;transition:background .2s,border-color .2s}
 .tab:hover{background:var(--paper2)}
 .tab[aria-selected="true"]{background:var(--card);border-color:var(--line);box-shadow:0 10px 30px -22px rgba(10,40,25,.35)}
 .tab .ic{grid-row:span 2;width:2.4rem;height:2.4rem;border-radius:12px;display:grid;place-items:center;background:var(--paper2);color:var(--forest)}
 .tab[aria-selected="true"] .ic{background:var(--forest);color:#fff}
 @media (prefers-color-scheme:dark){.tab .ic{color:var(--leaf)}.tab[aria-selected="true"] .ic{color:var(--ink)}}
 .tab .ic svg{width:20px;height:20px}
-.tab b{font:700 1.12rem/1.3 var(--fd);letter-spacing:-.01em}
-.tab span{color:var(--ink2);font-size:.97rem}
-.feat .phone img{transition:opacity .25s ease}
+.tab b{font:700 1.08rem/1.25 var(--fd);letter-spacing:-.01em}
+.tab .d{color:var(--ink2);font-size:.95rem;line-height:1.45}
+.feat-desc{display:none}
+.feat .phone{--pw:320px}
+.feat .phone img{transition:opacity .22s ease}
 .feat .phone img.swap{opacity:0}
 @media (max-width:860px){
-  .feat{grid-template-columns:1fr}
-  .feat .phone{order:-1;width:min(72%,280px)}
-  .tabs{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;gap:.6rem;padding-bottom:.4rem;margin-inline:calc(var(--g)*-1);padding-inline:var(--g)}
-  .tabs li{flex:0 0 min(78%,300px);scroll-snap-align:start}
-  .tab{height:100%;border-color:var(--line);background:var(--card)}
-}
-@media (min-width:600px) and (max-width:860px){
-  .tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible;margin-inline:0;padding-inline:0}
-  .tabs li{flex:none}
+  .feat{grid-template-columns:1fr;gap:1rem}
+  .tabs{flex-direction:row;gap:.45rem;overflow-x:auto;scroll-snap-type:x proximity;margin-inline:calc(var(--g) * -1);padding:0 var(--g) .35rem;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs li{flex:none;scroll-snap-align:start}
+  .tab{display:inline-flex;align-items:center;gap:.5rem;width:auto;padding:.5rem .9rem .5rem .5rem;border-radius:999px;border-color:var(--line);background:var(--card);box-shadow:none}
+  .tab .ic{width:2rem;height:2rem;border-radius:50%}
+  .tab .ic svg{width:17px;height:17px}
+  .tab b{font:600 .92rem/1 var(--fb);white-space:nowrap}
+  .tab .d{display:none}
+  .tab[aria-selected="true"]{background:var(--forest);border-color:var(--forest);color:#fff;box-shadow:none}
+  .tab[aria-selected="true"] .ic{background:rgba(255,255,255,.16);color:#fff}
+  .feat-desc{display:block;min-height:3.2em;margin:.2rem 0 .4rem;color:var(--ink2);font-size:.98rem;text-align:center}
+  .feat .phone{--pw:min(58vw,240px)}
 }
 
-/* Frais : le reçu */
+/* ── Commerçants ── */
+.merchant{background:var(--paper2)}
+.merchant .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"head duo" "body duo";gap:0 clamp(2rem,6vw,5rem);align-items:start}
+.m-head{grid-area:head;align-self:end}
+.m-body{grid-area:body}
+.duo{grid-area:duo;align-self:center;display:grid;grid-template-columns:1fr 1fr;gap:clamp(.7rem,3vw,1.4rem);align-items:start}
+.duo .phone{--pw:100%;width:100%;border-radius:clamp(18px,4.2vw,40px);padding:clamp(4px,1vw,9px)}
+.duo .phone img{border-radius:clamp(14px,3.5vw,32px)}
+.duo .phone:last-child{margin-top:clamp(1.2rem,5vw,3rem)}
+.m-lede{color:var(--ink2);font-size:1.05rem;margin:0 0 1.3rem;max-width:48ch}
+.m-list{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;gap:.75rem}
+.m-list li{display:grid;grid-template-columns:2.2rem 1fr;gap:.75rem;align-items:start;color:var(--ink2);font-size:.98rem;line-height:1.5}
+.m-list .ic{width:2.2rem;height:2.2rem;border-radius:11px;display:grid;place-items:center;background:var(--card);color:var(--forest);border:1px solid var(--line)}
+@media (prefers-color-scheme:dark){.m-list .ic{color:var(--leaf)}}
+.m-list .ic svg{width:18px;height:18px}
+.m-list b{display:block;color:var(--ink);font-weight:600}
+.m-ticket{margin:0 0 1.4rem;padding:1rem 1.1rem;border-radius:14px;background:var(--card);border:1px dashed var(--ink3);font:400 .9rem/1.4 var(--fm);color:var(--ink2);max-width:380px}
+.m-ticket p{margin:0 0 .55rem;font-size:.74rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
+.m-ticket div{display:flex;justify-content:space-between;gap:1rem;padding:.2rem 0}
+.m-ticket b{color:var(--ink);font-weight:500;white-space:nowrap}
+.m-ticket .tot{margin-top:.35rem;padding-top:.5rem;border-top:1px dashed var(--line)}
+.m-ticket .tot b{color:var(--in)}
+@media (max-width:860px){
+  .merchant .wrap{grid-template-columns:1fr;grid-template-areas:"head" "duo" "body";gap:1.4rem}
+  .duo{width:min(100%,400px);margin-inline:auto}
+  .m-ticket{max-width:none}
+  .m-body .btn{width:100%}
+}
+
+/* ── Frais ── */
 .fees{background:var(--forest);color:#EAF2EC}
-.fees-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
 .fees h2{color:#fff}
 .fees .sec-head p{color:#B9CFC1}
-.fees ul{list-style:none;padding:0;margin:1.6rem 0 0;display:grid;gap:.7rem;color:#CFE0D5}
-.fees li{display:flex;gap:.6rem}
-.fees li::before{content:"";flex:none;width:6px;height:6px;margin-top:.62em;border-radius:50%;background:var(--gold)}
-.receipt{position:relative;max-width:440px;width:100%;justify-self:center;background:var(--receipt);color:var(--receipt-ink);padding:2rem 1.6rem 1.8rem;font:400 .95rem/1.5 var(--fm);transform:rotate(-1.2deg);box-shadow:0 30px 60px -30px rgba(0,0,0,.55);
-  --hole:radial-gradient(circle at 8px 0,transparent 7px,#000 7.5px);
-  -webkit-mask:var(--hole) top/16px 51% repeat-x,radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) bottom/16px 51% repeat-x;
-          mask:var(--hole) top/16px 51% repeat-x,radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) bottom/16px 51% repeat-x}
-.receipt .rh{text-align:center;margin-bottom:1.2rem}
-.receipt .rh b{display:block;font:500 1.05rem/1.2 var(--fm);letter-spacing:.12em}
-.receipt .rh small{color:#6B6B5E;font-size:.78rem;letter-spacing:.04em}
-.receipt dl{margin:0;display:grid;gap:.55rem}
+.fees-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1.5rem,6vw,5rem);align-items:center}
+.fees ul.pts{list-style:none;padding:0;margin:1.3rem 0 0;display:grid;gap:.6rem;color:#CFE0D5}
+.fees ul.pts li{display:flex;gap:.6rem}
+.fees ul.pts li::before{content:"";flex:none;width:6px;height:6px;margin-top:.62em;border-radius:50%;background:var(--gold)}
+.receipt{position:relative;max-width:420px;width:100%;justify-self:center;background:var(--receipt);color:var(--receipt-ink);padding:1.8rem 1.4rem 1.6rem;font:400 .92rem/1.5 var(--fm);transform:rotate(-1.2deg);box-shadow:0 30px 60px -30px rgba(0,0,0,.55);
+  -webkit-mask:radial-gradient(circle at 8px 0,transparent 7px,#000 7.5px) top/16px 51% repeat-x,radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) bottom/16px 51% repeat-x;
+          mask:radial-gradient(circle at 8px 0,transparent 7px,#000 7.5px) top/16px 51% repeat-x,radial-gradient(circle at 8px 100%,transparent 7px,#000 7.5px) bottom/16px 51% repeat-x}
+.receipt .rh{text-align:center;margin-bottom:1.1rem}
+.receipt .rh b{display:block;font:500 1.02rem/1.2 var(--fm);letter-spacing:.12em}
+.receipt .rh small{color:#6B6B5E;font-size:.76rem;letter-spacing:.04em}
+.receipt dl{margin:0;display:grid;gap:.5rem}
 .receipt .ln{display:flex;align-items:baseline;gap:.4rem}
 .receipt dt{flex:0 1 auto}
-.receipt .ln::after{content:"";order:1;flex:1;border-bottom:1.5px dotted #B8B49F;transform:translateY(-.25em)}
+.receipt .ln::after{content:"";order:1;flex:1;min-width:1rem;border-bottom:1.5px dotted #B8B49F;transform:translateY(-.25em)}
 .receipt dd{order:2;margin:0;font-weight:500;white-space:nowrap}
-.receipt .cut{margin:1.2rem 0 .9rem;border-top:1.5px dashed #B8B49F}
-.receipt .ft{font-size:.8rem;color:#55554A;text-align:center}
+.receipt .cut{margin:1.1rem 0 .8rem;border-top:1.5px dashed #B8B49F}
+.receipt .ft{margin:0;font-size:.78rem;color:#55554A;text-align:center}
 @media (max-width:860px){.fees-top{grid-template-columns:1fr}.receipt{transform:none}}
-@media (max-width:400px){.receipt{font-size:.84rem;padding-inline:1.1rem}}
+@media (max-width:380px){.receipt{font-size:.8rem;padding-inline:1rem}}
 
+/* Calculateur */
+.calc{margin-top:clamp(2.5rem,7vw,4rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;align-items:stretch}
+.calc h3{grid-column:1/-1;margin:0 0 .2rem;font:800 clamp(1.35rem,4.6vw,1.8rem)/1.15 var(--fd);letter-spacing:-.02em;color:#fff}
+.calc .sub{grid-column:1/-1;margin:0 0 .6rem;color:#B9CFC1}
+.c-in,.c-out{padding:1.2rem;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13)}
+.c-lbl{display:block;margin:0 0 .55rem;font:500 .74rem/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:#9DB9A7}
+.ops-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin:0 0 1.1rem;padding:0;border:0;min-width:0}
+.calc > *{min-width:0}
+.ops-grid input{position:absolute;opacity:0;pointer-events:none}
+.ops-grid label{display:flex;align-items:center;gap:.5rem;min-height:46px;padding:.55rem .7rem;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.12);font-size:.9rem;line-height:1.2;cursor:pointer;color:#DDE9E1}
+.ops-grid label svg{flex:none;width:18px;height:18px;color:var(--gold)}
+.ops-grid input:checked + label{background:var(--gold);border-color:var(--gold);color:var(--gold-ink);font-weight:600}
+.ops-grid input:checked + label svg{color:var(--gold-ink)}
+.ops-grid input:focus-visible + label{outline:2px solid #fff;outline-offset:2px}
+.amt{display:flex;align-items:center;gap:.5rem;padding:.25rem .3rem .25rem 1rem;border-radius:14px;background:#fff;color:var(--receipt-ink)}
+.amt input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:500 1.5rem/1.2 var(--fm);padding:.55rem 0;color:var(--receipt-ink)}
+.amt span{font:500 .95rem/1 var(--fm);color:#6B6B5E;padding-right:.7rem}
+.amt:focus-within{box-shadow:0 0 0 3px rgba(240,188,53,.55)}
+.presets{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.presets button{min-height:36px;padding:.35rem .8rem;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#DDE9E1;font:500 .82rem/1 var(--fm);cursor:pointer}
+.presets button:hover{border-color:var(--gold);color:#fff}
+.c-out{display:flex;flex-direction:column;background:var(--receipt);color:var(--receipt-ink);border-color:transparent}
+.c-out .c-lbl{color:#6B6B5E}
+.c-rows{display:grid;gap:.15rem;margin:0}
+.c-row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.65rem 0;border-bottom:1px dashed #D7D2BE}
+.c-row:last-child{border-bottom:0}
+.c-row dt{font-size:.95rem;color:#3F3F35}
+.c-row dd{margin:0;font:500 1.15rem/1.2 var(--fm);white-space:nowrap}
+.c-row.out dd{color:#B42318}
+.c-row.in dd{color:#1F7A45}
+.c-row.fee dd{color:#8A6400}
+.c-note{margin:.8rem 0 0;padding-top:.8rem;border-top:1.5px solid #E7E2CF;font-size:.88rem;line-height:1.5;color:#55554A}
+@media (max-width:860px){.calc{grid-template-columns:1fr}}
+@media (max-width:360px){.ops-grid{grid-template-columns:1fr}}
 
-/* Commerçants */
-.merchant{background:var(--paper2)}
-.merchant .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
-.m-lede{color:var(--ink2);font-size:1.08rem;margin:0 0 1.4rem;max-width:48ch}
-.m-list{list-style:none;margin:0 0 1.6rem;padding:0;display:grid;gap:.85rem}
-.m-list li{position:relative;padding-left:1.5rem;color:var(--ink2)}
-.m-list li::before{content:"";position:absolute;left:0;top:.55em;width:.65rem;height:.65rem;border-radius:3px;background:var(--gold)}
-.m-list b{color:var(--ink)}
-.m-ticket{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;align-items:baseline;margin:0 0 1.6rem;padding:.9rem 1.1rem;border-radius:14px;border:1px dashed var(--ink3);font:400 .88rem/1.4 var(--fm);color:var(--ink2)}
-.m-ticket span:first-child{flex-basis:100%;color:var(--ink3);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
-.m-ticket b{color:var(--ink);font-weight:500}
-.m-ticket .tot b{color:var(--leaf)}
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,3vw,1.6rem);align-items:start}
-.duo .phone{width:100%}
-.duo .phone:last-child{margin-top:clamp(1.5rem,6vw,3.5rem)}
-@media (max-width:860px){.merchant .wrap{grid-template-columns:1fr}.duo{max-width:480px;margin-inline:auto;width:100%}}
-
-/* Frais : exemples */
-.ex-title{margin:clamp(3rem,7vw,4.5rem) 0 1.2rem;font:800 clamp(1.4rem,3.4vw,1.9rem)/1.15 var(--fd);letter-spacing:-.02em;color:#fff}
-.ex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.ex{display:flex;flex-direction:column;padding:1.25rem 1.25rem 1.1rem;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
-.ex h3{margin:0 0 .9rem;font:700 1.08rem/1.3 var(--fd);color:#fff}
-.ex dl{margin:0;display:grid;gap:.5rem}
-.ex dl > div{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
-.ex dt{color:#C9DBCF;font-size:.93rem}
-.ex dd{margin:0;font:500 1rem/1.2 var(--fm);white-space:nowrap;color:#fff}
-.ex dd.out{color:#FFC2B8}
-.ex dd.in{color:#9BF0BE}
-.ex .fee{padding-top:.5rem;margin-top:.15rem;border-top:1px dashed rgba(255,255,255,.18)}
-.ex .fee dt,.ex .fee dd{color:#F3D27A}
-.ex p{margin:.9rem 0 0;color:#B9CFC1;font-size:.88rem;line-height:1.5}
-@media (max-width:1000px){.ex-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.ex-grid{grid-template-columns:1fr}.ex{padding:1.1rem}}
-
-/* Sécurité */
+/* ── Sécurité ── */
 .safe{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.safe div{padding:1.5rem;border-radius:20px;background:var(--card);border:1px solid var(--line)}
-.safe h3{font:700 1.2rem/1.25 var(--fd);letter-spacing:-.01em;margin:0 0 .5rem}
-.safe p{margin:0;color:var(--ink2);font-size:.98rem}
-.safe-more{margin-top:1.5rem;color:var(--ink2)}
-.safe-more a{color:var(--forest);font-weight:600;text-underline-offset:3px}
-@media (prefers-color-scheme:dark){.safe-more a{color:var(--leaf)}}
-@media (max-width:860px){.safe{grid-template-columns:1fr}}
+.safe div{padding:1.4rem;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.safe h3{font:700 1.15rem/1.25 var(--fd);letter-spacing:-.01em;margin:0 0 .45rem}
+.safe p{margin:0;color:var(--ink2);font-size:.97rem}
+.safe-more{margin-top:1.3rem;color:var(--ink2)}
+.safe-more a,.faq a{color:var(--forest);font-weight:600;text-underline-offset:3px}
+@media (prefers-color-scheme:dark){.safe-more a,.faq a{color:var(--leaf)}}
+@media (max-width:860px){.safe{grid-template-columns:1fr;gap:.7rem}.safe div{padding:1.15rem 1.2rem}}
 
-/* Questions */
+/* ── Questions ── */
 .faq{max-width:780px}
 .faq details{border-top:1px solid var(--line)}
 .faq details:last-child{border-bottom:1px solid var(--line)}
-.faq summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.2rem 0;cursor:pointer;list-style:none;font:700 1.12rem/1.35 var(--fd);letter-spacing:-.01em}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 0;cursor:pointer;list-style:none;font:700 1.08rem/1.35 var(--fd);letter-spacing:-.01em}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";flex:none;font:400 1.6rem/1 var(--fb);color:var(--ink3);transition:transform .2s}
 .faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{margin:0 0 1.3rem;color:var(--ink2);max-width:62ch}
-.faq a{color:var(--forest);font-weight:600}
-@media (prefers-color-scheme:dark){.faq a{color:var(--leaf)}}
+.faq details p{margin:0 0 1.2rem;color:var(--ink2);max-width:62ch}
 
-/* Fin de page */
-.end{padding-block:clamp(3.5rem,8vw,6rem);text-align:center}
+/* ── Fin ── */
+.end{padding-block:clamp(3rem,8vw,5.5rem);text-align:center}
 .end h2{margin-inline:auto;max-width:16ch}
-.end p{color:var(--ink2);margin:0 auto 1.8rem;max-width:44ch}
+.end p{color:var(--ink2);margin:0 auto 1.6rem;max-width:44ch}
 .end .ctas{justify-content:center;margin:0}
 footer{border-top:1px solid var(--line);padding-block:2.2rem calc(2.2rem + env(safe-area-inset-bottom,0px));font-size:.92rem;color:var(--ink3)}
-footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:2rem}
-footer h4{margin:0 0 .7rem;font:500 .78rem/1 var(--fm);letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:1.8rem}
+footer h4{margin:0 0 .7rem;font:500 .76rem/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
 footer a{color:var(--ink2);text-decoration:none}
 footer a:hover{color:var(--ink);text-decoration:underline}
 footer .about p{margin:.8rem 0 0;max-width:34ch}
-@media (max-width:760px){footer .wrap{grid-template-columns:1fr 1fr}footer .about{grid-column:1/-1}}
+footer .copy{margin-top:2rem;font-size:.84rem}
+@media (max-width:640px){footer .wrap{grid-template-columns:1fr 1fr}footer .about{grid-column:1/-1}}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}.hero .phone,.receipt{transform:none}}
 </style>
@@ -235,11 +291,33 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
       <a href="#marchand">Commerçants</a>
       <a href="#frais">Frais</a>
       <a href="#securite">Sécurité</a>
-      <a href="https://www.ghettopay.com/support.html">Support</a>
+      <a href="https://www.ghettopay.com/support">Support</a>
     </nav>
     <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir l'app</a>
+    <button class="burger" type="button" id="burger" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 </header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-top">
+    <picture><source media="(prefers-color-scheme: dark)" srcset="screens/ghettopay-wordmark.png"/><img class="wm" src="screens/ghettopay-wordmark-dark.png" alt="GhettoPay" width="412" height="111"/></picture>
+    <button class="burger" type="button" id="menu-close" aria-label="Fermer le menu" style="display:grid">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Sections">
+    <a href="#fonctions">L'application <span>6 fonctions</span></a>
+    <a href="#marchand">Commerçants <span>Encaisser par QR</span></a>
+    <a href="#frais">Frais <span>Calculateur</span></a>
+    <a href="#securite">Sécurité <span>Ton PIN, tes données</span></a>
+    <a href="#questions">Questions <span>FAQ</span></a>
+    <a href="https://www.ghettopay.com/support">Support <span>Assistant et équipe</span></a>
+  </nav>
+  <div class="menu-legal"><a href="https://www.ghettopay.com/conditions">Conditions</a><a href="https://www.ghettopay.com/confidentialite">Confidentialité</a><a href="mailto:contact@ghettopay.com">contact@ghettopay.com</a></div>
+  <a class="btn btn-gold" href="https://www.ghettopay.com/" style="margin-top:1.5rem">Ouvrir l'application</a>
+</div>
 
 <main>
 <section class="hero">
@@ -263,57 +341,62 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
   <div class="wrap">
     <div class="sec-head">
       <h2>Tout ton argent, au même endroit.</h2>
-      <p>Choisis une fonction pour voir l'écran tel qu'il est dans l'application.</p>
+      <p>Touche une fonction pour voir l'écran tel qu'il est dans l'application.</p>
     </div>
     <div class="feat">
       <ul class="tabs" role="tablist" aria-label="Fonctions de GhettoPay">
-        <li><button class="tab" role="tab" aria-selected="true" aria-controls="feat-phone" data-img="screens/envoyer.webp" data-alt="Écran d'envoi d'argent">
+        <li><button class="tab" role="tab" aria-selected="true" aria-controls="feat-phone" data-img="screens/envoyer.webp" data-alt="Écran d'envoi : montant, frais et total débité">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
-          <b>Envoyer</b><span>Par numéro ou QR code. L'argent arrive tout de suite chez l'autre utilisateur.</span></button></li>
-        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/recevoir.webp" data-alt="Écran pour recevoir de l'argent avec son QR code">
+          <b>Envoyer</b><span class="d">Par numéro ou QR code. L'argent arrive tout de suite chez l'autre utilisateur.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/recevoir.webp" data-alt="Écran Recevoir avec le QR code personnel">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span>
-          <b>Recevoir</b><span>Montre ton QR code ou donne ton numéro. Recevoir ne coûte rien.</span></button></li>
+          <b>Recevoir</b><span class="d">Montre ton QR code ou donne ton numéro. Recevoir ne coûte rien.</span></button></li>
         <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/transfert.webp" data-alt="Écran de transfert entre GhettoPay et Airtel Money ou Moov Money">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
-          <b>Recharger et retirer</b><span>Passe de l'argent entre GhettoPay et ton numéro Airtel Money ou Moov Money, dans les deux sens.</span></button></li>
-        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/coffre.webp" data-alt="Écran du coffre d'épargne">
+          <b>Airtel et Moov</b><span class="d">Recharge ton solde depuis ton numéro Airtel Money ou Moov Money, ou retire dessus.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/coffre.webp" data-alt="Écran des coffres d'épargne avec leur progression">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-          <b>Coffre</b><span>Bloque une somme jusqu'à la date que tu choisis. Elle ne bouge plus d'ici là.</span></button></li>
-        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/tontines.webp" data-alt="Écran des tontines">
+          <b>Coffre</b><span class="d">Bloque une somme jusqu'à la date que tu choisis, pour la rentrée ou les imprévus.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/tontines.webp" data-alt="Écran des tontines avec les tours et les cotisations">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5A6.5 6.5 0 0 1 21.5 20"/></svg></span>
-          <b>Tontine</b><span>Fixe le montant et le rythme. Chacun voit qui a cotisé et à qui c'est le tour.</span></button></li>
-        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/budget.webp" data-alt="Écran du budget mensuel">
+          <b>Tontine</b><span class="d">Fixe le montant et le rythme. Chacun voit qui a cotisé et à qui c'est le tour.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/budget.webp" data-alt="Écran du budget mensuel par catégorie">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-          <b>Budget</b><span>Tes dépenses du mois, rangées par catégorie.</span></button></li>
+          <b>Budget</b><span class="d">Tes dépenses du mois, rangées par catégorie.</span></button></li>
       </ul>
-      <div class="phone" id="feat-phone" role="tabpanel"><img id="feat-img" src="screens/envoyer.webp" alt="Écran d'envoi d'argent" width="640" height="1385" loading="lazy"/></div>
+      <div>
+        <p class="feat-desc" id="feat-desc" aria-live="polite">Par numéro ou QR code. L'argent arrive tout de suite chez l'autre utilisateur.</p>
+        <div class="phone" id="feat-phone" role="tabpanel"><img id="feat-img" src="screens/envoyer.webp" alt="Écran d'envoi : montant, frais et total débité" width="640" height="1385" loading="lazy"/></div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="sec merchant" id="marchand">
   <div class="wrap">
-    <div class="m-text">
+    <div class="m-head">
       <p class="kicker"><span class="dot" aria-hidden="true"></span>Pour les commerçants</p>
       <h2>Encaisse par QR code, sans terminal.</h2>
       <p class="m-lede">Boutique, maquis, taxi ou salon : ouvre un compte marchand sur ton numéro, depuis Profil. Ton compte personnel reste à part.</p>
-      <ul class="m-list">
-        <li><b>Ton QR au comptoir.</b> Le client scanne et valide avec son PIN. Il ne paie aucun frais.</li>
-        <li><b>Un montant précis&nbsp;?</b> Tape-le avant : le client n'a plus qu'à confirmer.</li>
-        <li><b>« Ma journée ».</b> Chaque vente, le total encaissé et ta commission, en direct.</li>
-        <li><b>L'argent tout de suite.</b> Il arrive sur ta caisse à la seconde, et tu le retires vers Airtel ou Moov quand tu veux.</li>
-      </ul>
-      <div class="m-ticket" aria-label="Exemple de vente">
-        <span>Vente de 10&nbsp;000&nbsp;F</span>
-        <span>Le client paie <b>10&nbsp;000&nbsp;F</b></span>
-        <span>Commission 1&nbsp;% <b>−&nbsp;100&nbsp;F</b></span>
-        <span class="tot">Sur ta caisse <b>9&nbsp;900&nbsp;F</b></span>
-      </div>
-      <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir mon compte marchand</a>
     </div>
     <div class="duo">
       <div class="phone"><img src="screens/marchand.webp" alt="Écran Encaisser : QR code de la boutique et total du jour" width="640" height="1385" loading="lazy"/></div>
-      <div class="phone"><img src="screens/marchand-journee.webp" alt="Écran Ma journée : liste des ventes, commission et montant pour le commerçant" width="640" height="1385" loading="lazy"/></div>
+      <div class="phone"><img src="screens/marchand-journee.webp" alt="Écran Ma journée : ventes, commission et montant pour le commerçant" width="640" height="1385" loading="lazy"/></div>
+    </div>
+    <div class="m-body">
+      <ul class="m-list">
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span><span><b>Ton QR au comptoir</b>Le client scanne et valide avec son PIN. Il ne paie aucun frais.</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16l-3-2-3 2-2-2-2 2-3-2-3 2z"/><path d="M8 9h8M8 13h5"/></svg></span><span><b>Un montant précis</b>Tape-le avant : le client n'a plus qu'à confirmer.</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span><b>Ma journée</b>Chaque vente, le total encaissé et ta commission, en direct.</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span><b>L'argent tout de suite</b>Il arrive sur ta caisse à la seconde. Tu le retires vers Airtel ou Moov quand tu veux.</span></li>
+      </ul>
+      <div class="m-ticket" aria-label="Exemple de vente">
+        <p>Vente de 10&nbsp;000&nbsp;F</p>
+        <div><span>Le client paie</span><b>10&nbsp;000&nbsp;F</b></div>
+        <div><span>Commission 1&nbsp;%</span><b>−&nbsp;100&nbsp;F</b></div>
+        <div class="tot"><span>Sur ta caisse</span><b>9&nbsp;900&nbsp;F</b></div>
+      </div>
+      <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir mon compte marchand</a>
     </div>
   </div>
 </section>
@@ -326,82 +409,51 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
           <h2>Les frais, sans surprise.</h2>
           <p>Avant chaque opération, l'écran affiche ce qui part de ton solde, ce qui arrive en face et les frais. Tu valides avec ton PIN seulement si ça te va.</p>
         </div>
-        <ul>
-          <li>Recevoir, payer un commerçant, payer une facture ou du crédit : 0&nbsp;F.</li>
+        <ul class="pts">
+          <li>Recevoir, payer un commerçant, une facture ou du crédit&nbsp;: 0&nbsp;F.</li>
           <li>Pas d'abonnement, pas de frais de tenue de compte.</li>
-          <li>Les taux peuvent évoluer : l'application affiche toujours ceux en vigueur.</li>
         </ul>
       </div>
       <div class="receipt" role="group" aria-label="Tarifs GhettoPay">
         <div class="rh"><b>GHETTOPAY</b><small>TARIFS EN VIGUEUR · FCFA</small></div>
         <dl>
-          <div class="ln"><dt>Recevoir de l'argent</dt><dd>0 F</dd></div>
+          <div class="ln"><dt>Recevoir</dt><dd>0 F</dd></div>
           <div class="ln"><dt>Payer un commerçant</dt><dd>0 F</dd></div>
           <div class="ln"><dt>Facture, crédit</dt><dd>0 F</dd></div>
-          <div class="ln"><dt>Envoyer à un utilisateur</dt><dd>1,5 %</dd></div>
-          <div class="ln"><dt>Retirer vers Airtel / Moov</dt><dd>2 %</dd></div>
-          <div class="ln"><dt>Recharger depuis Airtel / Moov</dt><dd>2,5 %</dd></div>
-          <div class="ln"><dt>Casser un coffre avant la date</dt><dd>2 %</dd></div>
+          <div class="ln"><dt>Envoyer</dt><dd>1,5 %</dd></div>
+          <div class="ln"><dt>Retirer (Airtel, Moov)</dt><dd>2 %</dd></div>
+          <div class="ln"><dt>Recharger (Airtel, Moov)</dt><dd>2,5 %</dd></div>
+          <div class="ln"><dt>Casser un coffre tôt</dt><dd>2 %</dd></div>
         </dl>
         <div class="cut" aria-hidden="true"></div>
         <p class="ft">Commerçants : 1 % par vente, payé par le commerçant.</p>
       </div>
     </div>
 
-    <h3 class="ex-title" id="exemples">Exemples : ce qui est débité, ce qui est crédité</h3>
-    <div class="ex-grid">
-        <article class="ex">
-          <h3>Envoyer 10&nbsp;000&nbsp;F à un proche</h3>
-          <dl>
-            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;10&nbsp;150&nbsp;F</dd></div>
-            <div><dt>Ton proche reçoit</dt><dd class="in">+&nbsp;10&nbsp;000&nbsp;F</dd></div>
-            <div class="fee"><dt>Frais (1,5&nbsp;%)</dt><dd>150&nbsp;F</dd></div>
-          </dl>
-          <p>Les frais s'ajoutent au montant : la personne reçoit exactement la somme que tu as tapée.</p>
-        </article>
-        <article class="ex">
-          <h3>Recharger 10&nbsp;000&nbsp;F depuis Airtel ou Moov</h3>
-          <dl>
-            <div><dt>Débité de ton Mobile Money</dt><dd class="out">−&nbsp;10&nbsp;000&nbsp;F</dd></div>
-            <div><dt>Crédité sur GhettoPay</dt><dd class="in">+&nbsp;9&nbsp;750&nbsp;F</dd></div>
-            <div class="fee"><dt>Frais opérateur (2,5&nbsp;%)</dt><dd>250&nbsp;F</dd></div>
-          </dl>
-          <p>Les frais de l'opérateur sont retirés du montant qui arrive sur ton solde.</p>
-        </article>
-        <article class="ex">
-          <h3>Retirer 10&nbsp;000&nbsp;F vers ton numéro</h3>
-          <dl>
-            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;10&nbsp;200&nbsp;F</dd></div>
-            <div><dt>Reçu sur Airtel ou Moov</dt><dd class="in">+&nbsp;10&nbsp;000&nbsp;F</dd></div>
-            <div class="fee"><dt>Frais (2&nbsp;%)</dt><dd>200&nbsp;F</dd></div>
-          </dl>
-          <p>Pour retirer tout ton solde, garde de quoi couvrir les 2&nbsp;% : avec 10&nbsp;200&nbsp;F, tu retires 10&nbsp;000&nbsp;F.</p>
-        </article>
-        <article class="ex">
-          <h3>Payer 5&nbsp;000&nbsp;F chez un commerçant</h3>
-          <dl>
-            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;5&nbsp;000&nbsp;F</dd></div>
-            <div><dt>Le commerçant reçoit</dt><dd class="in">+&nbsp;4&nbsp;950&nbsp;F</dd></div>
-            <div class="fee"><dt>Frais pour toi</dt><dd>0&nbsp;F</dd></div>
-          </dl>
-          <p>Le commerçant paie une commission de 1&nbsp;% (ici 50&nbsp;F). Toi, tu paies le prix affiché.</p>
-        </article>
-        <article class="ex">
-          <h3>Payer une facture SEEG de 12&nbsp;500&nbsp;F</h3>
-          <dl>
-            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;12&nbsp;500&nbsp;F</dd></div>
-            <div class="fee"><dt>Frais</dt><dd>0&nbsp;F</dd></div>
-          </dl>
-          <p>Factures et crédit téléphonique : tu paies le montant exact, rien de plus.</p>
-        </article>
-        <article class="ex">
-          <h3>Casser un coffre de 50&nbsp;000&nbsp;F avant la date</h3>
-          <dl>
-            <div><dt>Revient sur ton solde</dt><dd class="in">+&nbsp;49&nbsp;000&nbsp;F</dd></div>
-            <div class="fee"><dt>Frais (2&nbsp;%)</dt><dd>1&nbsp;000&nbsp;F</dd></div>
-          </dl>
-          <p>À la date que tu as choisie, le coffre s'ouvre sans frais : les 50&nbsp;000&nbsp;F reviennent en entier.</p>
-        </article>
+    <div class="calc" id="calcul">
+      <h3>Calcule ce qui part et ce qui arrive</h3>
+      <p class="sub">Choisis une opération et un montant. Le calcul est le même que dans l'application.</p>
+      <div class="c-in">
+        <span class="c-lbl" id="op-l">Opération</span>
+        <fieldset class="ops-grid" aria-labelledby="op-l">
+          <input type="radio" name="op" id="o1" value="send" checked/><label for="o1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Envoyer</label>
+          <input type="radio" name="op" id="o2" value="payin"/><label for="o2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Recharger</label>
+          <input type="radio" name="op" id="o3" value="payout"/><label for="o3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Retirer</label>
+          <input type="radio" name="op" id="o4" value="merchant"/><label for="o4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5M4 9v11h16V9M3 9h18"/></svg>Commerçant</label>
+          <input type="radio" name="op" id="o5" value="bill"/><label for="o5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16l-3-2-3 2-2-2-2 2-3-2-3 2z"/><path d="M8 9h8M8 13h5"/></svg>Facture</label>
+          <input type="radio" name="op" id="o6" value="coffre"/><label for="o6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Casser un coffre</label>
+        </fieldset>
+        <label class="c-lbl" for="amt">Montant</label>
+        <div class="amt"><input id="amt" inputmode="numeric" autocomplete="off" value="10 000" aria-describedby="calc-note"/><span>FCFA</span></div>
+        <div class="presets" aria-label="Montants rapides">
+          <button type="button" data-v="5000">5 000</button><button type="button" data-v="10000">10 000</button><button type="button" data-v="25000">25 000</button><button type="button" data-v="50000">50 000</button><button type="button" data-v="100000">100 000</button>
+        </div>
+      </div>
+      <div class="c-out" aria-live="polite">
+        <span class="c-lbl" id="c-title">Envoyer 10 000 F</span>
+        <dl class="c-rows" id="c-rows"></dl>
+        <p class="c-note" id="calc-note"></p>
+      </div>
     </div>
   </div>
 </section>
@@ -417,7 +469,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
       <div><h3>Tu ne vois que ton compte</h3><p>Ton solde et tes opérations ne sont visibles que par toi. Les autres utilisateurs voient seulement ton nom quand vous échangez de l'argent.</p></div>
       <div><h3>Ni publicité, ni revente</h3><p>Nous ne vendons pas tes données et l'application ne lit pas ta position. Tu peux supprimer ton compte quand tu veux.</p></div>
     </div>
-    <p class="safe-more">Tout le détail dans notre <a href="https://www.ghettopay.com/privacy.html">politique de confidentialité</a>.</p>
+    <p class="safe-more">Tout le détail dans notre <a href="https://www.ghettopay.com/confidentialite">politique de confidentialité</a>.</p>
   </div>
 </section>
 
@@ -426,11 +478,11 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
     <div class="sec-head"><h2>Questions fréquentes</h2></div>
     <div class="faq">
       <details><summary>Qui peut ouvrir un compte&nbsp;?</summary><p>Toute personne de 18 ans et plus avec un numéro de téléphone au Gabon. L'inscription se fait dans l'application avec ton numéro, ton e-mail et un code PIN.</p></details>
-      <details><summary>Comment mettre de l'argent sur GhettoPay&nbsp;?</summary><p>Depuis l'écran Transfert, recharge ton portefeuille avec Airtel Money ou Moov Money. Tu valides le paiement sur ton téléphone, et le montant arrive sur ton solde.</p></details>
-      <details><summary>Comment récupérer mon argent&nbsp;?</summary><p>Toujours depuis Transfert : choisis un retrait vers ton numéro Airtel Money ou Moov Money. Les frais s'affichent avant de valider.</p></details>
+      <details><summary>Comment mettre de l'argent sur GhettoPay&nbsp;?</summary><p>Depuis l'écran Transfert, recharge ton portefeuille avec Airtel Money ou Moov Money. Tu valides le paiement sur ton téléphone, et le montant arrive sur ton solde, moins 2,5&nbsp;% de frais d'opérateur.</p></details>
+      <details><summary>Comment récupérer mon argent&nbsp;?</summary><p>Toujours depuis Transfert : choisis un retrait vers ton numéro Airtel Money ou Moov Money. Les 2&nbsp;% de frais s'ajoutent au montant et s'affichent avant de valider.</p></details>
       <details><summary>Comment ouvrir un compte marchand&nbsp;?</summary><p>Dans l'application, va dans Profil puis « Ouvrir un compte marchand ». Donne le nom et le quartier de ta boutique : ton QR est prêt. Le compte marchand utilise ton numéro mais reste séparé de ton compte personnel. Tu paies 1&nbsp;% par vente, tes clients ne paient rien.</p></details>
       <details><summary>Faut-il installer quelque chose&nbsp;?</summary><p>Non. GhettoPay s'ouvre dans le navigateur de ton téléphone sur <a href="https://www.ghettopay.com/">ghettopay.com</a>, et tu peux l'ajouter à ton écran d'accueil comme une application.</p></details>
-      <details><summary>Une opération n'est pas arrivée, que faire&nbsp;?</summary><p>Va sur la page <a href="https://www.ghettopay.com/support.html">Support</a>, pose ta question à l'assistant ou écris directement à l'équipe avec la référence de l'opération. Tu reçois un numéro de suivi.</p></details>
+      <details><summary>Une opération n'est pas arrivée, que faire&nbsp;?</summary><p>Va sur la page <a href="https://www.ghettopay.com/support">Support</a>, pose ta question à l'assistant ou écris directement à l'équipe avec la référence de l'opération. Tu reçois un numéro de suivi.</p></details>
       <details><summary>Comment supprimer mon compte&nbsp;?</summary><p>Retire ton solde, puis écris à contact@ghettopay.com depuis l'adresse e-mail de ton compte. La démarche complète est dans la <a href="https://www.ghettopay.com/privacy.html#suppression-compte">politique de confidentialité</a>.</p></details>
     </div>
   </div>
@@ -442,7 +494,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
     <p>Ton numéro, ton e-mail, un code PIN. Rien d'autre à préparer.</p>
     <div class="ctas">
       <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir mon compte</a>
-      <a class="btn btn-line" href="https://www.ghettopay.com/support.html">Poser une question</a>
+      <a class="btn btn-line" href="https://www.ghettopay.com/support">Poser une question</a>
     </div>
   </div>
 </section>
@@ -457,7 +509,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
     <div>
       <h4>Aide</h4>
       <ul>
-        <li><a href="https://www.ghettopay.com/support.html">Support</a></li>
+        <li><a href="https://www.ghettopay.com/support">Support</a></li>
         <li><a href="mailto:contact@ghettopay.com">contact@ghettopay.com</a></li>
         <li><a href="https://www.ghettopay.com/">Ouvrir l'application</a></li>
         <li><a href="#marchand">Compte marchand</a></li>
@@ -466,34 +518,47 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
     <div>
       <h4>Légal</h4>
       <ul>
-        <li><a href="https://www.ghettopay.com/terms.html">Conditions d'utilisation</a></li>
-        <li><a href="https://www.ghettopay.com/privacy.html">Confidentialité</a></li>
+        <li><a href="https://www.ghettopay.com/conditions">Conditions d'utilisation</a></li>
+        <li><a href="https://www.ghettopay.com/confidentialite">Confidentialité</a></li>
         <li><a href="https://www.ghettopay.com/privacy.html#suppression-compte">Supprimer mon compte</a></li>
       </ul>
     </div>
   </div>
-  <div class="wrap" style="margin-top:2rem;font-size:.84rem">© 2026 GhettoPay</div>
+  <div class="wrap copy">© 2026 GhettoPay</div>
 </footer>
 
 <script>
 (function () {
-  var top = document.getElementById('top');
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // En-tête : filet au défilement
+  var top = $('top');
   var onScroll = function () { top.classList.toggle('scrolled', window.scrollY > 8); };
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  // Les onglets changent l'écran du téléphone. Flèches gauche/droite et
-  // haut/bas pour passer d'un onglet à l'autre au clavier.
+  // Menu téléphone
+  var menu = $('menu'), burger = $('burger');
+  function openMenu() { menu.classList.add('on'); document.body.classList.add('locked'); burger.setAttribute('aria-expanded', 'true'); setTimeout(function () { $('menu-close').focus(); }, 50); }
+  function closeMenu(focus) { menu.classList.remove('on'); document.body.classList.remove('locked'); burger.setAttribute('aria-expanded', 'false'); if (focus) burger.focus(); }
+  burger.addEventListener('click', openMenu);
+  $('menu-close').addEventListener('click', function () { closeMenu(true); });
+  menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { closeMenu(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('on')) closeMenu(true); });
+
+  // Fonctions : l'onglet choisi change l'écran du téléphone
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-  var img = document.getElementById('feat-img');
-  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var img = $('feat-img'), desc = $('feat-desc');
   tabs.forEach(function (t) { var p = new Image(); p.src = t.dataset.img; });
   function select(t, focus) {
     tabs.forEach(function (x) { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; });
+    desc.textContent = t.querySelector('.d').textContent;
     if (focus) t.focus();
+    t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: calm ? 'auto' : 'smooth' });
     if (img.getAttribute('src') === t.dataset.img) return;
     var go = function () { img.src = t.dataset.img; img.alt = t.dataset.alt; img.classList.remove('swap'); };
     if (calm) return go();
-    img.classList.add('swap'); setTimeout(go, 180);
+    img.classList.add('swap'); setTimeout(go, 160);
   }
   tabs.forEach(function (t, i) {
     t.tabIndex = i === 0 ? 0 : -1;
@@ -504,6 +569,51 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
       select(tabs[(i + d + tabs.length) % tabs.length], true);
     });
   });
+
+  // Calculateur : même arrondi que l'application et le serveur
+  // (taux en millionièmes, moitié arrondie vers le haut).
+  var RATES = { send: 0.015, payin: 0.025, payout: 0.02, merchant: 0.01, coffre: 0.02 };
+  function feeOf(a, rate) { var r = Math.round(rate * 1e6); return a > 0 ? Math.floor((a * r + 500000) / 1e6) : 0; }
+  function fmt(n) { return new Intl.NumberFormat('fr-FR').format(n).replace(/\s/g, ' ') + ' F'; }
+  var input = $('amt');
+  function amount() { return Math.min(5000000, parseInt((input.value || '').replace(/\D/g, ''), 10) || 0); }
+  function row(cls, k, v) { return '<div class="c-row ' + cls + '"><dt>' + k + '</dt><dd>' + v + '</dd></div>'; }
+  function render() {
+    var op = document.querySelector('input[name="op"]:checked').value, a = amount(), fee, rows, note, title;
+    var A = fmt(a);
+    if (op === 'send') { fee = feeOf(a, RATES.send); title = 'Envoyer ' + A;
+      rows = row('out', 'Débité de ton solde', '− ' + fmt(a + fee)) + row('in', 'Ton proche reçoit', '+ ' + A) + row('fee', 'Frais (1,5 %)', fmt(fee));
+      note = 'Les frais s’ajoutent au montant : la personne reçoit exactement ce que tu as tapé.'; }
+    else if (op === 'payin') { fee = feeOf(a, RATES.payin); title = 'Recharger ' + A;
+      rows = row('out', 'Débité de ton Airtel ou Moov', '− ' + A) + row('in', 'Crédité sur GhettoPay', '+ ' + fmt(a - fee)) + row('fee', 'Frais opérateur (2,5 %)', fmt(fee));
+      note = 'Les frais de l’opérateur sont retirés du montant qui arrive sur ton solde.'; }
+    else if (op === 'payout') { fee = feeOf(a, RATES.payout); title = 'Retirer ' + A;
+      rows = row('out', 'Débité de ton solde', '− ' + fmt(a + fee)) + row('in', 'Reçu sur Airtel ou Moov', '+ ' + A) + row('fee', 'Frais (2 %)', fmt(fee));
+      note = 'Pour retirer tout ton solde, garde de quoi couvrir les 2 % : avec ' + fmt(a + fee) + ', tu retires ' + A + '.'; }
+    else if (op === 'merchant') { fee = feeOf(a, RATES.merchant); title = 'Payer ' + A + ' chez un commerçant';
+      rows = row('out', 'Débité de ton solde', '− ' + A) + row('in', 'Le commerçant reçoit', '+ ' + fmt(a - fee)) + row('fee', 'Frais pour toi', fmt(0));
+      note = 'Le commerçant paie une commission de 1 % (' + fmt(fee) + '). Toi, tu paies le prix affiché.'; }
+    else if (op === 'bill') { title = 'Payer une facture de ' + A;
+      rows = row('out', 'Débité de ton solde', '− ' + A) + row('fee', 'Frais', fmt(0));
+      note = 'Factures (SEEG…) et crédit téléphonique : tu paies le montant exact, rien de plus.'; }
+    else { fee = feeOf(a, RATES.coffre); title = 'Casser un coffre de ' + A + ' avant la date';
+      rows = row('in', 'Revient sur ton solde', '+ ' + fmt(a - fee)) + row('fee', 'Frais (2 %)', fmt(fee));
+      note = 'À la date que tu as choisie, le coffre s’ouvre sans frais : les ' + A + ' reviennent en entier.'; }
+    $('c-title').textContent = title.replace(/ /g, ' ');
+    $('c-rows').innerHTML = rows;
+    $('calc-note').textContent = note;
+  }
+  input.addEventListener('input', function () {
+    var n = amount(); var pos = input.value.length - input.selectionStart;
+    input.value = n ? new Intl.NumberFormat('fr-FR').format(n).replace(/\s/g, ' ') : '';
+    try { input.setSelectionRange(input.value.length - pos, input.value.length - pos); } catch (_) {}
+    render();
+  });
+  document.querySelectorAll('input[name="op"]').forEach(function (r) { r.addEventListener('change', render); });
+  document.querySelectorAll('.presets button').forEach(function (b) {
+    b.addEventListener('click', function () { input.value = new Intl.NumberFormat('fr-FR').format(+b.dataset.v).replace(/\s/g, ' '); render(); });
+  });
+  render();
 })();
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
