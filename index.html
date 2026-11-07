@@ -86,8 +86,8 @@ h1 .soft{color:var(--leaf)}
 .ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2.2rem}
 .ops{display:flex;align-items:center;gap:1rem;font-size:.88rem;color:var(--ink3)}
 .ops img{height:26px;width:auto;border-radius:6px}
-.phone{position:relative;width:min(100%,330px);margin-inline:auto;aspect-ratio:640/1385;border-radius:46px;padding:10px;background:#0B110D;box-shadow:0 40px 80px -40px rgba(10,40,25,.45),0 0 0 1px rgba(255,255,255,.06) inset}
-.phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:37px;background:#0A4A2E}
+.phone{position:relative;width:min(100%,330px);margin-inline:auto;aspect-ratio:640/1385;border-radius:clamp(22px,7vw,46px);padding:clamp(5px,1.5vw,10px);background:#0B110D;box-shadow:0 40px 80px -40px rgba(10,40,25,.45),0 0 0 1px rgba(255,255,255,.06) inset}
+.phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:clamp(17px,5.6vw,37px);background:#0A4A2E}
 .hero .phone{transform:rotate(2deg)}
 @media (max-width:860px){
   .hero .wrap{grid-template-columns:1fr}
@@ -128,7 +128,7 @@ h2{font:800 clamp(2rem,4.6vw,3.2rem)/1.02 var(--fd);letter-spacing:-.035em;margi
 
 /* Frais : le reçu */
 .fees{background:var(--forest);color:#EAF2EC}
-.fees .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.fees-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
 .fees h2{color:#fff}
 .fees .sec-head p{color:#B9CFC1}
 .fees ul{list-style:none;padding:0;margin:1.6rem 0 0;display:grid;gap:.7rem;color:#CFE0D5}
@@ -148,8 +148,43 @@ h2{font:800 clamp(2rem,4.6vw,3.2rem)/1.02 var(--fd);letter-spacing:-.035em;margi
 .receipt dd{order:2;margin:0;font-weight:500;white-space:nowrap}
 .receipt .cut{margin:1.2rem 0 .9rem;border-top:1.5px dashed #B8B49F}
 .receipt .ft{font-size:.8rem;color:#55554A;text-align:center}
-@media (max-width:860px){.fees .wrap{grid-template-columns:1fr}.receipt{transform:none}}
+@media (max-width:860px){.fees-top{grid-template-columns:1fr}.receipt{transform:none}}
 @media (max-width:400px){.receipt{font-size:.84rem;padding-inline:1.1rem}}
+
+
+/* Commerçants */
+.merchant{background:var(--paper2)}
+.merchant .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.m-lede{color:var(--ink2);font-size:1.08rem;margin:0 0 1.4rem;max-width:48ch}
+.m-list{list-style:none;margin:0 0 1.6rem;padding:0;display:grid;gap:.85rem}
+.m-list li{position:relative;padding-left:1.5rem;color:var(--ink2)}
+.m-list li::before{content:"";position:absolute;left:0;top:.55em;width:.65rem;height:.65rem;border-radius:3px;background:var(--gold)}
+.m-list b{color:var(--ink)}
+.m-ticket{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;align-items:baseline;margin:0 0 1.6rem;padding:.9rem 1.1rem;border-radius:14px;border:1px dashed var(--ink3);font:400 .88rem/1.4 var(--fm);color:var(--ink2)}
+.m-ticket span:first-child{flex-basis:100%;color:var(--ink3);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.m-ticket b{color:var(--ink);font-weight:500}
+.m-ticket .tot b{color:var(--leaf)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,3vw,1.6rem);align-items:start}
+.duo .phone{width:100%}
+.duo .phone:last-child{margin-top:clamp(1.5rem,6vw,3.5rem)}
+@media (max-width:860px){.merchant .wrap{grid-template-columns:1fr}.duo{max-width:480px;margin-inline:auto;width:100%}}
+
+/* Frais : exemples */
+.ex-title{margin:clamp(3rem,7vw,4.5rem) 0 1.2rem;font:800 clamp(1.4rem,3.4vw,1.9rem)/1.15 var(--fd);letter-spacing:-.02em;color:#fff}
+.ex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.ex{display:flex;flex-direction:column;padding:1.25rem 1.25rem 1.1rem;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.ex h3{margin:0 0 .9rem;font:700 1.08rem/1.3 var(--fd);color:#fff}
+.ex dl{margin:0;display:grid;gap:.5rem}
+.ex dl > div{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.ex dt{color:#C9DBCF;font-size:.93rem}
+.ex dd{margin:0;font:500 1rem/1.2 var(--fm);white-space:nowrap;color:#fff}
+.ex dd.out{color:#FFC2B8}
+.ex dd.in{color:#9BF0BE}
+.ex .fee{padding-top:.5rem;margin-top:.15rem;border-top:1px dashed rgba(255,255,255,.18)}
+.ex .fee dt,.ex .fee dd{color:#F3D27A}
+.ex p{margin:.9rem 0 0;color:#B9CFC1;font-size:.88rem;line-height:1.5}
+@media (max-width:1000px){.ex-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.ex-grid{grid-template-columns:1fr}.ex{padding:1.1rem}}
 
 /* Sécurité */
 .safe{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
@@ -197,6 +232,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
     <a class="brand" href="#" aria-label="GhettoPay, haut de page"><picture><source media="(prefers-color-scheme: dark)" srcset="screens/ghettopay-wordmark.png"/><img class="wm" src="screens/ghettopay-wordmark-dark.png" alt="GhettoPay" width="412" height="111"/></picture></a>
     <nav class="nav" aria-label="Sections">
       <a href="#fonctions">L'application</a>
+      <a href="#marchand">Commerçants</a>
       <a href="#frais">Frais</a>
       <a href="#securite">Sécurité</a>
       <a href="https://www.ghettopay.com/support.html">Support</a>
@@ -219,7 +255,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
       </div>
       <div class="ops"><span>Fonctionne avec</span><img src="screens/airtel-money.png" alt="Airtel Money"/><img src="screens/moov-money.png" alt="Moov Money"/></div>
     </div>
-    <div class="phone"><img src="screens/accueil-app.jpg" alt="Écran d'accueil de GhettoPay : solde disponible, coffre et activité récente" width="640" height="1385" fetchpriority="high"/></div>
+    <div class="phone"><img src="screens/accueil.webp" alt="Écran d'accueil de GhettoPay : solde disponible, coffre et activité récente" width="640" height="1385" fetchpriority="high"/></div>
   </div>
 </section>
 
@@ -237,6 +273,9 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
         <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/recevoir.webp" data-alt="Écran pour recevoir de l'argent avec son QR code">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></span>
           <b>Recevoir</b><span>Montre ton QR code ou donne ton numéro. Recevoir ne coûte rien.</span></button></li>
+        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/transfert.webp" data-alt="Écran de transfert entre GhettoPay et Airtel Money ou Moov Money">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
+          <b>Recharger et retirer</b><span>Passe de l'argent entre GhettoPay et ton numéro Airtel Money ou Moov Money, dans les deux sens.</span></button></li>
         <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/coffre.webp" data-alt="Écran du coffre d'épargne">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
           <b>Coffre</b><span>Bloque une somme jusqu'à la date que tu choisis. Elle ne bouge plus d'ici là.</span></button></li>
@@ -246,39 +285,123 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
         <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/budget.webp" data-alt="Écran du budget mensuel">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
           <b>Budget</b><span>Tes dépenses du mois, rangées par catégorie.</span></button></li>
-        <li><button class="tab" role="tab" aria-selected="false" aria-controls="feat-phone" data-img="screens/pin.webp" data-alt="Écran de saisie du code PIN">
-          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-          <b>Code PIN</b><span>Chaque paiement et chaque retrait passe par ton code, vérifié par nos serveurs.</span></button></li>
       </ul>
-      <div class="phone" id="feat-phone" role="tabpanel"><img id="feat-img" src="screens/envoyer.webp" alt="Écran d'envoi d'argent" width="640" height="1387" loading="lazy"/></div>
+      <div class="phone" id="feat-phone" role="tabpanel"><img id="feat-img" src="screens/envoyer.webp" alt="Écran d'envoi d'argent" width="640" height="1385" loading="lazy"/></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec merchant" id="marchand">
+  <div class="wrap">
+    <div class="m-text">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Pour les commerçants</p>
+      <h2>Encaisse par QR code, sans terminal.</h2>
+      <p class="m-lede">Boutique, maquis, taxi ou salon : ouvre un compte marchand sur ton numéro, depuis Profil. Ton compte personnel reste à part.</p>
+      <ul class="m-list">
+        <li><b>Ton QR au comptoir.</b> Le client scanne et valide avec son PIN. Il ne paie aucun frais.</li>
+        <li><b>Un montant précis&nbsp;?</b> Tape-le avant : le client n'a plus qu'à confirmer.</li>
+        <li><b>« Ma journée ».</b> Chaque vente, le total encaissé et ta commission, en direct.</li>
+        <li><b>L'argent tout de suite.</b> Il arrive sur ta caisse à la seconde, et tu le retires vers Airtel ou Moov quand tu veux.</li>
+      </ul>
+      <div class="m-ticket" aria-label="Exemple de vente">
+        <span>Vente de 10&nbsp;000&nbsp;F</span>
+        <span>Le client paie <b>10&nbsp;000&nbsp;F</b></span>
+        <span>Commission 1&nbsp;% <b>−&nbsp;100&nbsp;F</b></span>
+        <span class="tot">Sur ta caisse <b>9&nbsp;900&nbsp;F</b></span>
+      </div>
+      <a class="btn btn-gold" href="https://www.ghettopay.com/">Ouvrir mon compte marchand</a>
+    </div>
+    <div class="duo">
+      <div class="phone"><img src="screens/marchand.webp" alt="Écran Encaisser : QR code de la boutique et total du jour" width="640" height="1385" loading="lazy"/></div>
+      <div class="phone"><img src="screens/marchand-journee.webp" alt="Écran Ma journée : liste des ventes, commission et montant pour le commerçant" width="640" height="1385" loading="lazy"/></div>
     </div>
   </div>
 </section>
 
 <section class="sec fees" id="frais">
   <div class="wrap">
-    <div>
-      <div class="sec-head" style="margin-bottom:0">
-        <h2>Les frais, avant de payer.</h2>
-        <p>Pas de frais cachés ni d'abonnement. Le montant exact s'affiche à l'écran avant que tu valides avec ton PIN.</p>
+    <div class="fees-top">
+      <div>
+        <div class="sec-head" style="margin-bottom:0">
+          <h2>Les frais, sans surprise.</h2>
+          <p>Avant chaque opération, l'écran affiche ce qui part de ton solde, ce qui arrive en face et les frais. Tu valides avec ton PIN seulement si ça te va.</p>
+        </div>
+        <ul>
+          <li>Recevoir, payer un commerçant, payer une facture ou du crédit : 0&nbsp;F.</li>
+          <li>Pas d'abonnement, pas de frais de tenue de compte.</li>
+          <li>Les taux peuvent évoluer : l'application affiche toujours ceux en vigueur.</li>
+        </ul>
       </div>
-      <ul>
-        <li>Pas de code USSD à retenir, pas d'agence à trouver.</li>
-        <li>Les taux peuvent évoluer : l'application affiche toujours ceux en vigueur.</li>
-      </ul>
+      <div class="receipt" role="group" aria-label="Tarifs GhettoPay">
+        <div class="rh"><b>GHETTOPAY</b><small>TARIFS EN VIGUEUR · FCFA</small></div>
+        <dl>
+          <div class="ln"><dt>Recevoir de l'argent</dt><dd>0 F</dd></div>
+          <div class="ln"><dt>Payer un commerçant</dt><dd>0 F</dd></div>
+          <div class="ln"><dt>Facture, crédit</dt><dd>0 F</dd></div>
+          <div class="ln"><dt>Envoyer à un utilisateur</dt><dd>1,5 %</dd></div>
+          <div class="ln"><dt>Retirer vers Airtel / Moov</dt><dd>2 %</dd></div>
+          <div class="ln"><dt>Recharger depuis Airtel / Moov</dt><dd>2,5 %</dd></div>
+          <div class="ln"><dt>Casser un coffre avant la date</dt><dd>2 %</dd></div>
+        </dl>
+        <div class="cut" aria-hidden="true"></div>
+        <p class="ft">Commerçants : 1 % par vente, payé par le commerçant.</p>
+      </div>
     </div>
-    <div class="receipt" role="group" aria-label="Tarifs GhettoPay">
-      <div class="rh"><b>GHETTOPAY</b><small>TARIFS EN VIGUEUR · FCFA</small></div>
-      <dl>
-        <div class="ln"><dt>Recevoir de l'argent</dt><dd>0 F</dd></div>
-        <div class="ln"><dt>Payer un commerçant (QR)</dt><dd>0 F</dd></div>
-        <div class="ln"><dt>Envoyer à un utilisateur</dt><dd>1,5 %</dd></div>
-        <div class="ln"><dt>Retirer vers Airtel / Moov</dt><dd>2 %</dd></div>
-        <div class="ln"><dt>Recharger depuis Airtel / Moov</dt><dd>2,5 %</dd></div>
-        <div class="ln"><dt>Casser un coffre avant la date</dt><dd>2 %</dd></div>
-      </dl>
-      <div class="cut" aria-hidden="true"></div>
-      <p class="ft">Recharge : frais de l'opérateur, déduits du montant crédité.</p>
+
+    <h3 class="ex-title" id="exemples">Exemples : ce qui est débité, ce qui est crédité</h3>
+    <div class="ex-grid">
+        <article class="ex">
+          <h3>Envoyer 10&nbsp;000&nbsp;F à un proche</h3>
+          <dl>
+            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;10&nbsp;150&nbsp;F</dd></div>
+            <div><dt>Ton proche reçoit</dt><dd class="in">+&nbsp;10&nbsp;000&nbsp;F</dd></div>
+            <div class="fee"><dt>Frais (1,5&nbsp;%)</dt><dd>150&nbsp;F</dd></div>
+          </dl>
+          <p>Les frais s'ajoutent au montant : la personne reçoit exactement la somme que tu as tapée.</p>
+        </article>
+        <article class="ex">
+          <h3>Recharger 10&nbsp;000&nbsp;F depuis Airtel ou Moov</h3>
+          <dl>
+            <div><dt>Débité de ton Mobile Money</dt><dd class="out">−&nbsp;10&nbsp;000&nbsp;F</dd></div>
+            <div><dt>Crédité sur GhettoPay</dt><dd class="in">+&nbsp;9&nbsp;750&nbsp;F</dd></div>
+            <div class="fee"><dt>Frais opérateur (2,5&nbsp;%)</dt><dd>250&nbsp;F</dd></div>
+          </dl>
+          <p>Les frais de l'opérateur sont retirés du montant qui arrive sur ton solde.</p>
+        </article>
+        <article class="ex">
+          <h3>Retirer 10&nbsp;000&nbsp;F vers ton numéro</h3>
+          <dl>
+            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;10&nbsp;200&nbsp;F</dd></div>
+            <div><dt>Reçu sur Airtel ou Moov</dt><dd class="in">+&nbsp;10&nbsp;000&nbsp;F</dd></div>
+            <div class="fee"><dt>Frais (2&nbsp;%)</dt><dd>200&nbsp;F</dd></div>
+          </dl>
+          <p>Pour retirer tout ton solde, garde de quoi couvrir les 2&nbsp;% : avec 10&nbsp;200&nbsp;F, tu retires 10&nbsp;000&nbsp;F.</p>
+        </article>
+        <article class="ex">
+          <h3>Payer 5&nbsp;000&nbsp;F chez un commerçant</h3>
+          <dl>
+            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;5&nbsp;000&nbsp;F</dd></div>
+            <div><dt>Le commerçant reçoit</dt><dd class="in">+&nbsp;4&nbsp;950&nbsp;F</dd></div>
+            <div class="fee"><dt>Frais pour toi</dt><dd>0&nbsp;F</dd></div>
+          </dl>
+          <p>Le commerçant paie une commission de 1&nbsp;% (ici 50&nbsp;F). Toi, tu paies le prix affiché.</p>
+        </article>
+        <article class="ex">
+          <h3>Payer une facture SEEG de 12&nbsp;500&nbsp;F</h3>
+          <dl>
+            <div><dt>Débité de ton solde</dt><dd class="out">−&nbsp;12&nbsp;500&nbsp;F</dd></div>
+            <div class="fee"><dt>Frais</dt><dd>0&nbsp;F</dd></div>
+          </dl>
+          <p>Factures et crédit téléphonique : tu paies le montant exact, rien de plus.</p>
+        </article>
+        <article class="ex">
+          <h3>Casser un coffre de 50&nbsp;000&nbsp;F avant la date</h3>
+          <dl>
+            <div><dt>Revient sur ton solde</dt><dd class="in">+&nbsp;49&nbsp;000&nbsp;F</dd></div>
+            <div class="fee"><dt>Frais (2&nbsp;%)</dt><dd>1&nbsp;000&nbsp;F</dd></div>
+          </dl>
+          <p>À la date que tu as choisie, le coffre s'ouvre sans frais : les 50&nbsp;000&nbsp;F reviennent en entier.</p>
+        </article>
     </div>
   </div>
 </section>
@@ -305,6 +428,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
       <details><summary>Qui peut ouvrir un compte&nbsp;?</summary><p>Toute personne de 18 ans et plus avec un numéro de téléphone au Gabon. L'inscription se fait dans l'application avec ton numéro, ton e-mail et un code PIN.</p></details>
       <details><summary>Comment mettre de l'argent sur GhettoPay&nbsp;?</summary><p>Depuis l'écran Transfert, recharge ton portefeuille avec Airtel Money ou Moov Money. Tu valides le paiement sur ton téléphone, et le montant arrive sur ton solde.</p></details>
       <details><summary>Comment récupérer mon argent&nbsp;?</summary><p>Toujours depuis Transfert : choisis un retrait vers ton numéro Airtel Money ou Moov Money. Les frais s'affichent avant de valider.</p></details>
+      <details><summary>Comment ouvrir un compte marchand&nbsp;?</summary><p>Dans l'application, va dans Profil puis « Ouvrir un compte marchand ». Donne le nom et le quartier de ta boutique : ton QR est prêt. Le compte marchand utilise ton numéro mais reste séparé de ton compte personnel. Tu paies 1&nbsp;% par vente, tes clients ne paient rien.</p></details>
       <details><summary>Faut-il installer quelque chose&nbsp;?</summary><p>Non. GhettoPay s'ouvre dans le navigateur de ton téléphone sur <a href="https://www.ghettopay.com/">ghettopay.com</a>, et tu peux l'ajouter à ton écran d'accueil comme une application.</p></details>
       <details><summary>Une opération n'est pas arrivée, que faire&nbsp;?</summary><p>Va sur la page <a href="https://www.ghettopay.com/support.html">Support</a>, pose ta question à l'assistant ou écris directement à l'équipe avec la référence de l'opération. Tu reçois un numéro de suivi.</p></details>
       <details><summary>Comment supprimer mon compte&nbsp;?</summary><p>Retire ton solde, puis écris à contact@ghettopay.com depuis l'adresse e-mail de ton compte. La démarche complète est dans la <a href="https://www.ghettopay.com/privacy.html#suppression-compte">politique de confidentialité</a>.</p></details>
@@ -336,6 +460,7 @@ footer .about p{margin:.8rem 0 0;max-width:34ch}
         <li><a href="https://www.ghettopay.com/support.html">Support</a></li>
         <li><a href="mailto:contact@ghettopay.com">contact@ghettopay.com</a></li>
         <li><a href="https://www.ghettopay.com/">Ouvrir l'application</a></li>
+        <li><a href="#marchand">Compte marchand</a></li>
       </ul>
     </div>
     <div>
