@@ -8,6 +8,22 @@
 <meta name="theme-color" content="#F5F6F1"/>
 <link rel="icon" href="screens/icon-192.png"/>
 <link rel="apple-touch-icon" href="screens/icon-192.png"/>
+<!-- Écran d'accueil : la même app que ghettopay.com, en plein écran. Sans ces
+     lignes, iOS 26 crée une « app web » avec barre d'adresse et barre
+     d'outils, qui cachent la barre du bas de l'application. -->
+<link rel="manifest" href="/manifest.json"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="GhettoPay"/>
+<script>
+/* Ouverte depuis l'icône de l'écran d'accueil (pas depuis un lien de l'app,
+   qui laisse un référent) : on va droit à l'application. */
+(function(){try{
+  var app=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches;
+  if(app&&!document.referrer)location.replace('/?app');
+}catch(e){}})();
+</script>
 <meta property="og:title" content="GhettoPay — Portefeuille mobile en FCFA"/>
 <meta property="og:description" content="Envoie, reçois, épargne, cotise et encaisse en FCFA. Airtel Money et Moov Money, depuis Libreville."/>
 <meta property="og:type" content="website"/>
