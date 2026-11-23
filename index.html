@@ -17,6 +17,20 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="GhettoPay"/>
 <script>
+/* iPhone sous iOS 26 : avec la barre d'état translucide, l'app installée
+   n'obtient pas toute la hauteur de l'écran (défaut WebKit 301108, ouvert) et
+   une bande vide reste sous sa barre du bas. Barre d'état opaque (noire,
+   heure en blanc) : la vue va alors jusqu'en bas. iOS lit ce réglage quand
+   on ajoute l'icône ; même réglage dans l'app (index.html de ghettopay.com).
+   iOS 18 et moins : inchangé, la hauteur y est déjà bonne. */
+(function(){try{
+  if(!('standalone' in navigator))return;
+  if(!(window.CSS&&CSS.supports&&(CSS.supports('anchor-name','--a')||CSS.supports('animation-timeline','scroll()'))))return;
+  var m=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+  if(m)m.setAttribute('content','black');
+}catch(e){}})();
+</script>
+<script>
 /* Ouverte depuis l'icône de l'écran d'accueil (pas depuis un lien de l'app,
    qui laisse un référent) : on va droit à l'application. */
 (function(){try{
